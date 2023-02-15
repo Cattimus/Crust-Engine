@@ -16,10 +16,12 @@ private:
 	int    size[2];
 
 	//logic step callback
-	void (*LogicCallback)() = NULL;
+	void (*LogicCallback)(int*, double*, int*) = NULL;
+	void (*LogicCallbackDelta)(double, int*, double*, int*) = NULL;
 
 	//default logic step
 	void DefaultLogic();
+	void DefaultLogic(double delta);
 	
 public:
 	int renderPriority;
@@ -33,7 +35,8 @@ public:
 	//constructors(position only)
 	Object(uint id, int, int, int, int);
 	Object(uint id, int, int);
-	Object(uint id){renderPriority = 0; visible = false; this->id = id;}; 
+	Object(uint id){renderPriority = 0; visible = false; this->id = id;};
+	~Object(); //decrease refcount on texture
 
 	uint GetID();
 
@@ -57,6 +60,9 @@ public:
 	Texture* GetTextureObject();
 
 	//logic
-	void RegisterLogicCallback(void (*)());
+	void RegisterLogicCallback(void (*)(int*, double*, int*));
+	void RegisterLogicCallbackDelta(void (*)(double, int*, double*, int*));
+
 	void LogicStep();
+	void LogicStep(double delta);
 };
