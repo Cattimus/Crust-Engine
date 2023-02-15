@@ -11,6 +11,7 @@ class Texture
 private:
 	SDL_Texture* tex = NULL;
 	uint ref = 0;
+	string path;
 
 public:
 	Texture(string);
@@ -22,5 +23,5 @@ public:
 	uint GetRef();
 
 	//get raw SDL texture
-	SDL_Texture* GetTex();
+	SDL_Texture* Get();
 };
