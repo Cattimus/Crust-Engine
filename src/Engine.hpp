@@ -20,7 +20,7 @@ private:
 	SDL_Window* window = NULL;
 	SDL_Renderer* renderer = NULL;
 	Scene* selectedScene = NULL;
-	//background color
+	uint background_color[3];
 
 	//list of textures
 	vector<unique_ptr<Texture>> textures;
@@ -28,31 +28,40 @@ private:
 	//list of scenes
 	vector<unique_ptr<Scene>> scenes;
 
-	bool Init();
-	void RenderScene();
-	void RenderBlank();
-
 	//user input callback
-	void(*OnInput)() = NULL;
+	void (*OnKeyboardInput)() = NULL;
+	void (*OnMouseInput)() = NULL;
+	void (*OnControllerInput)() = NULL;
+
+	//helper functions for engine
+	bool Init();
+	void RenderBlank();
 
 public:
 	Engine();
 	~Engine();
 
 	//create the initial window
-	void CreateWindow(uint, uint, uint, uint, bool);
+	void CreateWindow(uint, uint, uint, uint, bool resizable);
 
 	//scene management functions
-	Scene* CreateScene(string);
+	Scene* CreateScene(string name);
 	Scene* SwitchScene(string);
 	void   DeleteScene(string);
-	Scene* ListScenes();
+	//mechanism to get the names of every scene
 
-	//Texture management functions
-	Texture* CreateTexture(string);
-	Texture* GetTexture(string);
-	//There is no texture delete because textures will be refcounted
+	//texture management functions
+	Texture* CreateTexture(string path);
+	Texture* GetTexture(string path);
+	//there is no texture delete because textures will be refcounted
 
 	//assign user input callback
-	void AssignInputCallback(void(*)());
+	void RegisterKeyboardCallback(void (*)());
+	void RegisterMouseCallback(void (*)());
+	void RegisterControllerCallback(void (*)());
+
+	//main logic and rendering
+	void StartMainLoop();
+	void RenderScene();
+	void SetBackgroundColor(uint, uint, uint);
 };
