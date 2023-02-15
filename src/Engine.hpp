@@ -1,0 +1,34 @@
+#pragma once
+
+#include<iostream>
+using namespace std;
+
+#include <SDL.h>
+#include <SDL_image.h>
+
+class Engine
+{
+private:
+	int screen_width = 640;
+	int screen_height = 480;
+
+	SDL_Window* window = NULL;
+	SDL_Renderer* renderer = NULL;
+
+	bool Init();
+
+public:
+	Engine();
+	~Engine();
+
+	//create the initial window
+	void CreateWindow(uint, uint, uint, uint, bool);
+
+	//scene management functions
+	void CreateScene(string);
+	void SwitchScene(string);
+	void DeleteScene(string);
+
+	//user input callback
+	void OnInput(void(*)());
+};
