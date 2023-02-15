@@ -62,7 +62,7 @@ public:
 	Scene* CreateScene(string name);
 	Scene* SwitchScene(string);
 	void   DeleteScene(string);
-	string GetSceneList();
+	string GetSceneList(); //Get a list of scene names separated by ','
 
 	//texture management functions
 	Texture* CreateTexture(string path);

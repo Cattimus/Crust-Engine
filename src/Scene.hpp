@@ -23,6 +23,7 @@ public:
 	Object* CreateObject(string texPath, uint x, uint y, uint w, uint h);
 	Object* GetObject(uint id);
 	void    DeleteObject(uint id);
+	string  GetActiveObjects(); //return a list of active object IDs separated by ','
 
 	//Trigger logic step in every object held in scene
 	void LogicStep();
