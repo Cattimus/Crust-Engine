@@ -7,6 +7,7 @@ using namespace std;
 #include <SDL_image.h>
 
 class Scene;
+class Texture;
 
 class Engine
 {
@@ -33,6 +34,11 @@ public:
 	Scene* SwitchScene(string);
 	void   DeleteScene(string);
 	Scene* ListScenes();
+
+	//Texture management functions
+	Texture* CreateTexture(string);
+	Texture* GetTexture(string);
+	//There is no texture delete because textures will be refcounted
 
 	//user input callback
 	void OnInput(void(*)());
