@@ -17,7 +17,6 @@ private:
 
 public:
 	Scene();
-	~Scene();
 
 	//object management functions
 	Object* CreateObject(string, uint, uint, uint, uint);

@@ -32,6 +32,9 @@ private:
 	void RenderScene();
 	void RenderBlank();
 
+	//user input callback
+	void(*OnInput)() = NULL;
+
 public:
 	Engine();
 	~Engine();
@@ -50,6 +53,6 @@ public:
 	Texture* GetTexture(string);
 	//There is no texture delete because textures will be refcounted
 
-	//user input callback
-	void OnInput(void(*)());
+	//assign user input callback
+	void AssignInputCallback(void(*)());
 };

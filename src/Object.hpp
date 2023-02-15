@@ -17,5 +17,4 @@ private:
 
 public:
 	Object();
-	~Object();
 };
