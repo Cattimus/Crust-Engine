@@ -10,6 +10,12 @@ set(SOURCES
 
 	src/Scene.hpp
 	src/Scene.cpp
+
+	src/Object.hpp
+	src/Object.cpp
+
+	src/Texture.hpp
+	src/Texture.cpp
 )
 
 include_directories(/usr/include/SDL2)
