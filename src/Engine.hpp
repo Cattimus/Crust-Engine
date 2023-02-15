@@ -6,6 +6,8 @@ using namespace std;
 #include <SDL.h>
 #include <SDL_image.h>
 
+class Scene;
+
 class Engine
 {
 private:
@@ -25,9 +27,9 @@ public:
 	void CreateWindow(uint, uint, uint, uint, bool);
 
 	//scene management functions
-	void CreateScene(string);
-	void SwitchScene(string);
-	void DeleteScene(string);
+	Scene* CreateScene(string);
+	Scene* SwitchScene(string);
+	void   DeleteScene(string);
 
 	//user input callback
 	void OnInput(void(*)());

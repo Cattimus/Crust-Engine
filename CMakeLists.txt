@@ -4,8 +4,12 @@ project(main)
 
 set(SOURCES 
 	src/main.cpp
+
 	src/Engine.cpp
 	src/Engine.hpp
+
+	src/Scene.hpp
+	src/Scene.cpp
 )
 
 include_directories(/usr/include/SDL2)
