@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 
-class Object;
+#include "Object.hpp"
 
 class Scene
 {

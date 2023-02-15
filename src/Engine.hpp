@@ -6,8 +6,8 @@ using namespace std;
 #include <SDL.h>
 #include <SDL_image.h>
 
-class Scene;
-class Texture;
+#include "Scene.hpp"
+#include "Texture.hpp"
 
 class Engine
 {

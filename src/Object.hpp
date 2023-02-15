@@ -3,7 +3,7 @@
 #include<iostream>
 using namespace std;
 
-class Texture;
+#include "Texture.hpp"
 
 class Object
 {
