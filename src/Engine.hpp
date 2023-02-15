@@ -17,6 +17,8 @@ private:
 	SDL_Window* window = NULL;
 	SDL_Renderer* renderer = NULL;
 
+	//list of textures
+
 	bool Init();
 
 public:
@@ -30,6 +32,7 @@ public:
 	Scene* CreateScene(string);
 	Scene* SwitchScene(string);
 	void   DeleteScene(string);
+	Scene* ListScenes();
 
 	//user input callback
 	void OnInput(void(*)());

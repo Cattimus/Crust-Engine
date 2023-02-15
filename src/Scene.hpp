@@ -9,6 +9,7 @@ class Scene
 {
 private:
 	//list of objects
+	string name;
 
 public:
 	Scene();
