@@ -1,6 +1,8 @@
 #pragma once
 
-#include<iostream>
+#include <iostream>
+#include <vector>
+#include <memory>
 using namespace std;
 
 #include <SDL.h>
@@ -17,10 +19,18 @@ private:
 
 	SDL_Window* window = NULL;
 	SDL_Renderer* renderer = NULL;
+	Scene* selectedScene = NULL;
+	//background color
 
 	//list of textures
+	vector<unique_ptr<Texture>> textures;
+
+	//list of scenes
+	vector<unique_ptr<Scene>> scenes;
 
 	bool Init();
+	void RenderScene();
+	void RenderBlank();
 
 public:
 	Engine();

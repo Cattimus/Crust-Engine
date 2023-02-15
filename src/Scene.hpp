@@ -1,6 +1,8 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
+#include <memory>
 using namespace std;
 
 #include "Object.hpp"
@@ -8,8 +10,10 @@ using namespace std;
 class Scene
 {
 private:
-	//list of objects
 	string name;
+
+	//list of objects
+	vector<unique_ptr<Object>> objects;
 
 public:
 	Scene();
