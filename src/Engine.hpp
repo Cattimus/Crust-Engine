@@ -12,8 +12,8 @@ using namespace std;
 class Engine
 {
 private:
-	int screen_width = 640;
-	int screen_height = 480;
+	int screenWidth = 640;
+	int screenHeight = 480;
 
 	SDL_Window* window = NULL;
 	SDL_Renderer* renderer = NULL;
