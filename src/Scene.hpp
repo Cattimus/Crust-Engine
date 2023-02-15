@@ -13,14 +13,18 @@ private:
 	string name;
 
 	//list of objects
+	uint ID = 0; //ID of next object, will increment with every object
 	vector<unique_ptr<Object>> objects;
 
 public:
 	Scene();
 
 	//object management functions
-	Object* CreateObject(string, uint, uint, uint, uint);
-	void    DeleteObject(Object*);
-	Object* ListObjects();
+	Object* CreateObject(string texPath, uint x, uint y, uint w, uint h);
+	Object* GetObject(uint id);
+	void    DeleteObject(uint id);
 
+	//Trigger logic step in every object held in scene
+	void LogicStep();
+	void LogicStep(double delta);
 };
