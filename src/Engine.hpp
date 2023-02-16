@@ -49,6 +49,7 @@ private:
 	bool Init();
 	void Quit(); //NOTE - destructor must be called on textures before SDL_Quit() is called.
 	void MainLoop();
+	void HandleInput();
 	void TextureCleanup(); //Delete unreferenced textures
 
 public:
