@@ -36,6 +36,7 @@ Texture::~Texture()
 	tex = NULL;
 }
 
+
 void Texture::RefInc()
 {
 	ref++;
@@ -57,4 +58,9 @@ uint Texture::GetRef()
 SDL_Texture* Texture::Get()
 {
 	return tex;
+}
+
+string Texture::GetPath()
+{
+	return path;
 }

@@ -9,7 +9,7 @@ using namespace std;
 #include <SDL_image.h>
 
 //#include "Scene.hpp"
-//#include "Texture.hpp"
+#include "Texture.hpp"
 
 class Engine
 {
@@ -37,7 +37,7 @@ private:
 	//Scene* scene;
 
 	//lists for data
-	//vector<unique_ptr<Texture>> textures;
+	vector<unique_ptr<Texture>> textures;
 	//vector<unique_ptr<Scene>> scenes;
 
 	//user input callbacks
@@ -72,6 +72,7 @@ public:
 	Scene* SwitchScene(string);
 	void   DeleteScene(string);
 	string GetSceneList(); //Get a list of scene names separated by ','
+	*/
 
 	//texture management functions
 	Texture* CreateTexture(string path);
@@ -79,11 +80,11 @@ public:
 	//there is no texture delete because textures will be refcounted
 
 	//assign user input callback
+	//WARNING - implementation for these is currently incomplete
 	void RegisterKeyboardCallback(void (*)());
 	void RegisterMouseCallback(void (*)());
 	void RegisterControllerCallback(void (*)());
 
-	*/
 	//main loop and rendering
 	void SetBackgroundColor(uint, uint, uint);
 	void RenderCurrent();

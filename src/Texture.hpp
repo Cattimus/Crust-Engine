@@ -21,6 +21,7 @@ public:
 	void RefInc();
 	void RefDec();
 	uint GetRef();
+	string GetPath();
 
 	//get raw SDL texture
 	SDL_Texture* Get();

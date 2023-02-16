@@ -43,6 +43,10 @@ void Engine::Init()
 
 void Engine::Quit()
 {
+	//destroy our values before SDL goes out of scope
+	//the only reliable way I have found to do this is to overwrite the vector.
+	textures = vector<unique_ptr<Texture>>();
+
 	if(window != NULL)
 	{
 		if(renderer != NULL)
@@ -126,4 +130,47 @@ void Engine::RenderCurrent()
 {
 	SDL_RenderClear(renderer);
 	SDL_RenderPresent(renderer);
+}
+
+Texture* Engine::CreateTexture(string path)
+{
+	//search for existing textures
+	Texture* tex = GetTexture(path);
+	if(tex)
+	{
+		tex->RefInc();
+		return tex;
+	}
+
+	//create a new texture
+	textures.push_back(make_unique<Texture>(path, renderer));
+	return textures.back().get();
+}
+
+Texture* Engine::GetTexture(string path)
+{
+	//search for existing textures
+	for(auto i = 0; i < textures.size(); i++)
+	{
+		Texture* cur = textures[i].get();
+		if(cur->GetPath() == path)
+		{
+			return cur;
+		}
+	}
+
+	return NULL;
+}
+
+void Engine::RegisterKeyboardCallback(void (*func)())
+{
+	OnKeyboardInput = func;
+}
+void Engine::RegisterMouseCallback(void (*func)())
+{
+	OnMouseInput = func;
+}
+void Engine::RegisterControllerCallback(void (*func)())
+{
+	OnControllerInput = func;
 }
