@@ -13,6 +13,8 @@ private:
 	uint ref;
 	string path;
 
+	int size[2];
+
 public:
 	Texture(string, SDL_Renderer*);
 	~Texture();
@@ -22,6 +24,9 @@ public:
 	void RefDec();
 	uint GetRef();
 	string GetPath();
+
+	int GetWidth();
+	int GetHeight();
 
 	//get raw SDL texture
 	SDL_Texture* Get();

@@ -6,6 +6,7 @@ Texture::Texture(string path, SDL_Renderer* renderer)
 	tex = NULL;
 	this->path = path;
 
+	//load image to surface
 	SDL_Surface* loadedImage = IMG_Load(path.c_str());
 	if(!loadedImage)
 	{
@@ -16,6 +17,7 @@ Texture::Texture(string path, SDL_Renderer* renderer)
 		return;
 	}
 
+	//load texture
 	tex = SDL_CreateTextureFromSurface(renderer, loadedImage);
 	if(!tex)
 	{
@@ -26,6 +28,10 @@ Texture::Texture(string path, SDL_Renderer* renderer)
 		this->path = "";
 		return;
 	}
+
+	//set size parameters
+	size[0] = loadedImage->w;
+	size[1] = loadedImage->h;
 
 	SDL_FreeSurface(loadedImage);
 }
@@ -63,4 +69,14 @@ SDL_Texture* Texture::Get()
 string Texture::GetPath()
 {
 	return path;
+}
+
+int Texture::GetWidth()
+{
+	return size[0];
+}
+
+int Texture::GetHeight()
+{
+	return size[1];
 }

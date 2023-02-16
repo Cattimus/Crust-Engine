@@ -138,7 +138,6 @@ Texture* Engine::CreateTexture(string path)
 	Texture* tex = GetTexture(path);
 	if(tex)
 	{
-		tex->RefInc();
 		return tex;
 	}
 
