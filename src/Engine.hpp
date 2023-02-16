@@ -31,7 +31,7 @@ private:
 	//SDL values
 	SDL_Window* window;
 	SDL_Renderer* renderer;
-	uint backgroundColor[3];
+	Uint8 backgroundColor[3];
 
 	//selected scene to be rendered
 	Scene* scene;
@@ -46,7 +46,7 @@ private:
 	void (*OnControllerInput)();
 
 	//helper functions for engine
-	bool Init();
+	void Init();
 	void Quit(); //NOTE - destructor must be called on textures before SDL_Quit() is called.
 	void MainLoop();
 	void HandleInput();
@@ -57,7 +57,10 @@ public:
 	~Engine();
 
 	//create the initial window
-	void CreateWindow(uint, uint, uint, uint, bool resizable);
+	void CreateWindow(string title, int x, int y, int w, int h, bool resizable);
+	void CreateWindow(string title, int w, int h, bool resizable);
+	void CreateWindow(string title, bool resizable);
+	void CreateWindow(string title);
 
 	//scene management functions
 	Scene* CreateScene(string name);
