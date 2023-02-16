@@ -12,6 +12,8 @@ Object* Scene::CreateObject(string texPath, int x, int y, int w, int h)
 	Texture* tex = GetTexture(texPath);
 	objects.push_back(make_unique<Object>(ID, tex, x, y, w, h));
 	ID++;
+
+	return objects.back().get();
 }
 
 Object* Scene::GetObject(uint id)
@@ -49,16 +51,18 @@ void Scene::DeleteObject(uint id)
 
 string Scene::GetActiveObjects()
 {
-	string to_return = "";
+	string toReturn = "";
 
 	for(auto i = 0; i < objects.size(); i++)
 	{
 		Object* cur = objects[i].get();
 
-		to_return += to_string(cur->GetID());
+		toReturn += to_string(cur->GetID());
 		if(i < objects.size() - 1)
 		{
-			to_return += ",";
+			toReturn += ",";
 		}
 	}
+
+	return toReturn;
 }
