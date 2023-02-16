@@ -14,36 +14,36 @@ using namespace std;
 class Engine
 {
 private:
-	int screenWidth = 640;
-	int screenHeight = 480;
+	int screenWidth;
+	int screenHeight;
 
 	//flags and configuration options
-	bool vsync = true;
-	int maxFps = 60;
+	bool vsync;
+	int maxFps;
 	
 	//parameters for cleanup passes
-	bool cleanupTextures = true;
-	int cleanupIntervalFrames = 300;
+	bool cleanupTextures;
+	int cleanupIntervalFrames;
 
 	//delta value for logic
 	double delta = 0;
 
 	//SDL values
-	SDL_Window* window = NULL;
-	SDL_Renderer* renderer = NULL;
-	uint background_color[3];
+	SDL_Window* window;
+	SDL_Renderer* renderer;
+	uint backgroundColor[3];
 
 	//selected scene to be rendered
-	Scene* scene = NULL;
+	Scene* scene;
 
 	//lists for data
 	vector<unique_ptr<Texture>> textures;
 	vector<unique_ptr<Scene>> scenes;
 
 	//user input callbacks
-	void (*OnKeyboardInput)() = NULL;
-	void (*OnMouseInput)() = NULL;
-	void (*OnControllerInput)() = NULL;
+	void (*OnKeyboardInput)();
+	void (*OnMouseInput)();
+	void (*OnControllerInput)();
 
 	//helper functions for engine
 	bool Init();
