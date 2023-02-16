@@ -22,5 +22,18 @@ Engine::Engine()
 
 bool Engine::Init()
 {
+	if(SDL_Init(SDL_INIT_VIDEO) < 0)
+	{
+		cout << "SDL failed to initialize. Error: " << SDL_GetError() << endl;
+		return false;
+	}
 
+	uint imageFlags = IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_WEBP;
+	if(!(IMG_Init(imageFlags) & imageFlags))
+	{
+		cout << "SDL_Image failed to initialize. Error: " << IMG_GetError() << endl;
+		return false;
+	}
+
+	return true;
 }
