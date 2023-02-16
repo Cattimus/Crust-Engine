@@ -14,10 +14,15 @@ Engine::Engine()
 	backgroundColor[0] = 0;
 	backgroundColor[1] = 0;
 	backgroundColor[2] = 0;
-	scene = NULL;
+	//scene = NULL;
 	OnKeyboardInput = NULL;
 	OnMouseInput = NULL;
 	OnControllerInput = NULL;
+}
+
+Engine::~Engine()
+{
+	Quit();
 }
 
 void Engine::Init()
@@ -38,12 +43,39 @@ void Engine::Init()
 
 void Engine::Quit()
 {
+	if(window != NULL)
+	{
+		if(renderer != NULL)
+		{
+			SDL_DestroyRenderer(renderer);
+			renderer = NULL;
+		}
+
+		SDL_DestroyWindow(window);
+		window = NULL;
+	}
+
 	IMG_Quit();
 	SDL_Quit();
 }
 
+//background color functions
+void Engine::SetBackgroundColor(uint r, uint g, uint b)
+{
+	backgroundColor[0] = r;
+	backgroundColor[1] = g;
+	backgroundColor[2] = b;
+	SetBackgroundColor();
+}
+void Engine::SetBackgroundColor()
+{
+	SDL_SetRenderDrawColor(renderer, backgroundColor[0], backgroundColor[1], backgroundColor[2], 0xFF);
+}
+
 void Engine::CreateWindow(string title, int x, int y, int w, int h, bool resizable)
 {
+	Init();
+
 	uint flags = SDL_WINDOW_SHOWN;
 	if(resizable)
 	{
@@ -74,7 +106,7 @@ void Engine::CreateWindow(string title, int x, int y, int w, int h, bool resizab
 	}
 
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-	SDL_SetRenderDrawColor(renderer, backgroundColor[0], backgroundColor[1], backgroundColor[2], 0xFF);
+	SetBackgroundColor();
 }
 void Engine::CreateWindow(string title, int w, int h, bool resizable)
 {
@@ -87,4 +119,11 @@ void Engine::CreateWindow(string title, bool resizable)
 void Engine::CreateWindow(string title)
 {
 	CreateWindow(title, -1, -1, -1, -1, false);
+}
+
+//this is a temporary function for now. This will be modified later.
+void Engine::RenderCurrent()
+{
+	SDL_RenderClear(renderer);
+	SDL_RenderPresent(renderer);
 }

@@ -8,8 +8,8 @@ using namespace std;
 #include <SDL.h>
 #include <SDL_image.h>
 
-#include "Scene.hpp"
-#include "Texture.hpp"
+//#include "Scene.hpp"
+//#include "Texture.hpp"
 
 class Engine
 {
@@ -34,11 +34,11 @@ private:
 	Uint8 backgroundColor[3];
 
 	//selected scene to be rendered
-	Scene* scene;
+	//Scene* scene;
 
 	//lists for data
-	vector<unique_ptr<Texture>> textures;
-	vector<unique_ptr<Scene>> scenes;
+	//vector<unique_ptr<Texture>> textures;
+	//vector<unique_ptr<Scene>> scenes;
 
 	//user input callbacks
 	void (*OnKeyboardInput)();
@@ -48,9 +48,13 @@ private:
 	//helper functions for engine
 	void Init();
 	void Quit(); //NOTE - destructor must be called on textures before SDL_Quit() is called.
+	void SetBackgroundColor();
+
+	/*
 	void MainLoop();
 	void HandleInput();
 	void TextureCleanup(); //Delete unreferenced textures
+	*/
 
 public:
 	Engine();
@@ -61,7 +65,10 @@ public:
 	void CreateWindow(string title, int w, int h, bool resizable);
 	void CreateWindow(string title, bool resizable);
 	void CreateWindow(string title);
+	void SetBackgroundColor(uint, uint, uint);
+	void RenderCurrent();
 
+	/*
 	//scene management functions
 	Scene* CreateScene(string name);
 	Scene* SwitchScene(string);
@@ -78,12 +85,16 @@ public:
 	void RegisterMouseCallback(void (*)());
 	void RegisterControllerCallback(void (*)());
 
+	*/
 	//main loop and rendering
 	void SetBackgroundColor(uint, uint, uint);
+	
+	/*
 	void RenderCurrent();
 	void StartMainLoop();
 
 	//call logic functions
 	void LogicStep();
 	void LogicStep(double delta);
+	*/
 };

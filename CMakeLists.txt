@@ -21,3 +21,4 @@ set(SOURCES
 include_directories(/usr/include/SDL2)
 add_executable(main ${SOURCES})
 target_link_libraries(main SDL2)
+target_link_libraries(main SDL2_image)
