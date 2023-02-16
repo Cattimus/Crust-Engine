@@ -132,20 +132,6 @@ void Engine::RenderCurrent()
 	SDL_RenderPresent(renderer);
 }
 
-Texture* Engine::CreateTexture(string path)
-{
-	//search for existing textures
-	Texture* tex = GetTexture(path);
-	if(tex)
-	{
-		return tex;
-	}
-
-	//create a new texture
-	textures.push_back(make_unique<Texture>(path, renderer));
-	return textures.back().get();
-}
-
 Texture* Engine::GetTexture(string path)
 {
 	//search for existing textures
@@ -158,7 +144,9 @@ Texture* Engine::GetTexture(string path)
 		}
 	}
 
-	return NULL;
+	//create a new texture
+	textures.push_back(make_unique<Texture>(path, renderer));
+	return textures.back().get();
 }
 
 void Engine::RegisterKeyboardCallback(void (*func)())

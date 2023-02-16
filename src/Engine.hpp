@@ -56,6 +56,10 @@ private:
 	void TextureCleanup(); //Delete unreferenced textures
 	*/
 
+	//texture management functions
+	Texture* GetTexture(string path);
+	//there is no texture delete because textures will be refcounted
+
 public:
 	Engine();
 	~Engine();
@@ -73,11 +77,6 @@ public:
 	void   DeleteScene(string);
 	string GetSceneList(); //Get a list of scene names separated by ','
 	*/
-
-	//texture management functions
-	Texture* CreateTexture(string path);
-	Texture* GetTexture(string path);
-	//there is no texture delete because textures will be refcounted
 
 	//assign user input callback
 	//WARNING - implementation for these is currently incomplete
