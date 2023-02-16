@@ -65,8 +65,6 @@ public:
 	void CreateWindow(string title, int w, int h, bool resizable);
 	void CreateWindow(string title, bool resizable);
 	void CreateWindow(string title);
-	void SetBackgroundColor(uint, uint, uint);
-	void RenderCurrent();
 
 	/*
 	//scene management functions
@@ -88,9 +86,9 @@ public:
 	*/
 	//main loop and rendering
 	void SetBackgroundColor(uint, uint, uint);
-	
-	/*
 	void RenderCurrent();
+
+	/*
 	void StartMainLoop();
 
 	//call logic functions

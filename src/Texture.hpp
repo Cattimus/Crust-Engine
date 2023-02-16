@@ -9,12 +9,12 @@ using namespace std;
 class Texture
 {
 private:
-	SDL_Texture* tex = NULL;
-	uint ref = 0;
+	SDL_Texture* tex;
+	uint ref;
 	string path;
 
 public:
-	Texture(string);
+	Texture(string, SDL_Renderer*);
 	~Texture();
 
 	//reference counting functions
