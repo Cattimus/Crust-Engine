@@ -20,6 +20,7 @@ class Engine
 private:
 	int screenWidth;
 	int screenHeight;
+	bool windowResizable;
 
 	//flags and configuration options
 	bool vsync;
@@ -80,6 +81,9 @@ public:
 	void CreateWindow(string title, int w, int h, bool resizable);
 	void CreateWindow(string title, bool resizable);
 	void CreateWindow(string title);
+	int GetWindowWidth();
+	int GetWindowHeight();
+	void SetWindowSize(int w, int h);
 
 	//scene management functions
 	Scene* CreateScene(string name);

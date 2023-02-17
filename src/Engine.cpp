@@ -2,8 +2,9 @@
 
 Engine::Engine()
 {
-	screenWidth = 640;
-	screenHeight = 480;
+	screenHeight = 720;
+	screenWidth = 1280;
+	windowResizable = true;
 	vsync = true;
 	maxFps = -1;
 	useDelta = true;
@@ -94,6 +95,10 @@ void Engine::CreateWindow(string title, int x, int y, int w, int h, bool resizab
 	{
 		flags |= SDL_WINDOW_RESIZABLE;
 	}
+	else
+	{
+		windowResizable = false;
+	}
 
 	if(x < 1)
 	{
@@ -109,6 +114,11 @@ void Engine::CreateWindow(string title, int x, int y, int w, int h, bool resizab
 	{
 		w = screenWidth;
 		h = screenHeight;
+	}
+	else
+	{
+		screenWidth = w;
+		screenHeight = h;
 	}
 
 	//set our configured flags
@@ -134,6 +144,32 @@ void Engine::CreateWindow(string title, bool resizable)
 void Engine::CreateWindow(string title)
 {
 	CreateWindow(title, -1, -1, -1, -1, false);
+}
+int Engine::GetWindowWidth()
+{
+	return screenWidth;
+}
+int Engine::GetWindowHeight()
+{
+	return screenHeight;
+}
+void Engine::SetWindowSize(int w, int h)
+{
+	if(!windowResizable)
+	{
+		return;
+	}
+
+	if(w > 0)
+	{
+		screenWidth = w;
+	}
+	if(h > 0)
+	{
+		screenHeight = h;
+	}
+
+	SDL_SetWindowSize(window, screenWidth, screenHeight);
 }
 
 Texture* Engine::GetTexture(string path)
@@ -225,7 +261,7 @@ void Engine::RegisterWindowUnfocusCallback(void (*func)())
 	{
 		return;
 	}
-	
+
 	OnWindowUnfocus = func;
 }
 
