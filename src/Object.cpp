@@ -137,3 +137,12 @@ void Object::RegisterLogicCallbackDelta(void (*func)(double, int*, double*, int*
 {
 	LogicCallbackDelta = func;
 }
+
+void Object::LogicStep()
+{
+	return;
+}
+void Object::LogicStep(double delta)
+{
+	return;
+}

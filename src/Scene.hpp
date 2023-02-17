@@ -31,9 +31,7 @@ public:
 
 	string GetName();
 
-	/*
 	//Trigger logic step in every object held in scene
 	void LogicStep();
 	void LogicStep(double delta);
-	*/
 };

@@ -67,8 +67,6 @@ public:
 	void RegisterLogicCallback(void (*)(int*, double*, int*));
 	void RegisterLogicCallbackDelta(void (*)(double, int*, double*, int*));
 
-	/*
 	void LogicStep();
 	void LogicStep(double delta);
-	*/
 };

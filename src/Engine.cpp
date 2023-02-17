@@ -220,3 +220,34 @@ string Engine::GetSceneList()
 
 	return to_return;
 }
+
+void Engine::StartMainLoop()
+{
+	MainLoop();
+}
+
+void Engine::LogicStep()
+{
+	if(scene != NULL)
+	{
+		scene->LogicStep();
+	}
+}
+
+void Engine::LogicStep(double delta)
+{
+	if(scene != NULL)
+	{
+		scene->LogicStep(delta);
+	}
+}
+
+void Engine::MainLoop()
+{
+	return;
+}
+
+void Engine::HandleInput()
+{
+	return;
+}

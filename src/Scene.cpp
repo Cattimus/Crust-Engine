@@ -71,3 +71,19 @@ string Scene::GetName()
 {
 	return name;
 }
+
+void Scene::LogicStep()
+{
+	for(auto i = 0; i < objects.size(); i++)
+	{
+		objects[i].get()->LogicStep();
+	}
+}
+
+void Scene::LogicStep(double delta)
+{
+	for(auto i = 0; i < objects.size(); i++)
+	{
+		objects[i].get()->LogicStep();
+	}
+}

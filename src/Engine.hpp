@@ -48,14 +48,12 @@ private:
 
 	//helper functions for engine
 	void Init();
-	void Quit(); //NOTE - destructor must be called on textures before SDL_Quit() is called.
+	void Quit();
 	void SetBackgroundColor();
 
-	/*
 	void MainLoop();
 	void HandleInput();
-	void TextureCleanup(); //Delete unreferenced textures
-	*/
+	//void TextureCleanup(); //Delete unreferenced textures
 
 public:
 	Engine();
@@ -82,13 +80,12 @@ public:
 	//main loop and rendering
 	void SetBackgroundColor(uint, uint, uint);
 	void RenderCurrent();
-	Texture* GetTexture(string path);
-
-	/*
 	void StartMainLoop();
+
+	//texture functions
+	Texture* GetTexture(string path);
 
 	//call logic functions
 	void LogicStep();
 	void LogicStep(double delta);
-	*/
 };
