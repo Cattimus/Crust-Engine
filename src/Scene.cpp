@@ -9,6 +9,7 @@ Scene::Scene(string name, Engine* engine)
 
 Scene::~Scene()
 {
+	//This will ensure our destructors are called in the proper order. This must be called before SDL_Quit()
 	objects = vector<unique_ptr<Object>>();
 }
 
@@ -23,8 +24,10 @@ Object* Scene::CreateObject(string texPath, int x, int y, int w, int h)
 
 Object* Scene::GetObject(uint id)
 {
+	//Search through objects
 	for(auto i = 0; i < objects.size(); i++)
 	{
+		//If the IDs match, return
 		Object* cur = objects[i].get();
 		if(cur->GetID() == id)
 		{
@@ -32,11 +35,13 @@ Object* Scene::GetObject(uint id)
 		}
 	}
 
+	//If no object is found, return NULL
 	return NULL;
 }
 
 void Scene::DeleteObject(uint id)
 {	
+	//Search for object index
 	int index = -1;
 	for(auto i = 0; i < objects.size(); i++)
 	{
@@ -48,6 +53,7 @@ void Scene::DeleteObject(uint id)
 		}
 	}
 
+	//If the index was found, delete the object
 	if(index != -1)
 	{
 		objects.erase(next(objects.begin(), index));
@@ -62,6 +68,7 @@ string Scene::GetActiveObjects()
 	{
 		Object* cur = objects[i].get();
 
+		//append object name to string
 		toReturn += to_string(cur->GetID());
 		if(i < objects.size() - 1)
 		{
