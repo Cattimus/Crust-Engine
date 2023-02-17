@@ -20,6 +20,7 @@ private:
 
 	//flags and configuration options
 	bool vsync;
+	bool useDelta;
 	int maxFps;
 	
 	//parameters for cleanup passes
@@ -45,6 +46,7 @@ private:
 	void (*OnKeyboardInput)();
 	void (*OnMouseInput)();
 	void (*OnControllerInput)();
+	void (*OnQuitEvent)();
 
 	//helper functions for engine
 	void Init();
@@ -67,6 +69,7 @@ public:
 
 	//scene management functions
 	Scene* CreateScene(string name);
+	Scene* GetScene(string name);
 	Scene* SwitchScene(string name);
 	void   DeleteScene(string name);
 	string GetSceneList(); //Get a list of scene names separated by ','
@@ -76,6 +79,7 @@ public:
 	void RegisterKeyboardCallback(void (*)());
 	void RegisterMouseCallback(void (*)());
 	void RegisterControllerCallback(void (*)());
+	void RegisterQuitCallback(void (*)());
 
 	//main loop and rendering
 	void SetBackgroundColor(uint, uint, uint);

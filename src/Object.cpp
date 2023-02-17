@@ -14,7 +14,7 @@ void Object::Init()
 Object::~Object()
 {
 	//decrease reference count if texture exists
-	if(tex != NULL)
+	if(tex)
 	{
 		tex->RefDec();
 	}

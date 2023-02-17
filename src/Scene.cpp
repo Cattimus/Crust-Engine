@@ -7,6 +7,11 @@ Scene::Scene(string name, Engine* engine)
 	this->engine = engine;
 }
 
+Scene::~Scene()
+{
+	objects = vector<unique_ptr<Object>>();
+}
+
 Object* Scene::CreateObject(string texPath, int x, int y, int w, int h)
 {
 	Texture* tex = engine->GetTexture(texPath);
@@ -78,6 +83,11 @@ void Scene::LogicStep()
 	{
 		objects[i].get()->LogicStep();
 	}
+}
+
+vector<unique_ptr<Object>>* Scene::GetObjectList()
+{
+	return &objects;
 }
 
 void Scene::LogicStep(double delta)

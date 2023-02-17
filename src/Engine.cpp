@@ -6,6 +6,7 @@ Engine::Engine()
 	screenHeight = 480;
 	vsync = true;
 	maxFps = 60;
+	useDelta = true;
 	cleanupTextures = true;
 	cleanupIntervalFrames = 300;
 	delta = 0;
@@ -45,6 +46,7 @@ void Engine::Quit()
 {
 	//destroy our values before SDL goes out of scope
 	//the only reliable way I have found to do this is to overwrite the vector.
+	scenes = vector<unique_ptr<Scene>>();
 	textures = vector<unique_ptr<Texture>>();
 
 	if(window != NULL)
@@ -125,13 +127,6 @@ void Engine::CreateWindow(string title)
 	CreateWindow(title, -1, -1, -1, -1, false);
 }
 
-//this is a temporary function for now. This will be modified later.
-void Engine::RenderCurrent()
-{
-	SDL_RenderClear(renderer);
-	SDL_RenderPresent(renderer);
-}
-
 Texture* Engine::GetTexture(string path)
 {
 	//search for existing textures
@@ -165,22 +160,32 @@ void Engine::RegisterControllerCallback(void (*func)())
 Scene* Engine::CreateScene(string name)
 {
 	scenes.push_back(make_unique<Scene>(name, this));
-	return scenes.back().get();
+	scene = scenes.back().get();
+	return scene;
 }
 
-Scene* Engine::SwitchScene(string name)
+Scene* Engine::GetScene(string name)
 {
 	for(auto i = 0; i < scenes.size(); i++)
 	{
 		auto cur = scenes[i].get();
 		if(cur->GetName() == name)
 		{
-			scene = cur;
 			return cur;
 		}
 	}
 
 	return NULL;
+}
+
+Scene* Engine::SwitchScene(string name)
+{
+	auto cur = GetScene(name);
+	if(cur)
+	{
+		scene = cur;
+	}
+	return cur;
 }
 
 void Engine::DeleteScene(string name)
@@ -228,7 +233,7 @@ void Engine::StartMainLoop()
 
 void Engine::LogicStep()
 {
-	if(scene != NULL)
+	if(scene)
 	{
 		scene->LogicStep();
 	}
@@ -236,15 +241,70 @@ void Engine::LogicStep()
 
 void Engine::LogicStep(double delta)
 {
-	if(scene != NULL)
+	if(scene)
 	{
 		scene->LogicStep(delta);
 	}
 }
 
+//this is a temporary function for now. This will be modified later.
+void Engine::RenderCurrent()
+{
+	SDL_RenderClear(renderer);
+
+	if(scene)
+	{
+		auto objects = scene->GetObjectList();
+		for(auto i = 0; i < objects->size(); i++)
+		{
+			auto cur = objects->at(i).get();
+			SDL_Rect pos
+			{
+				.x = cur->GetXPosition(),
+				.y = cur->GetYPosition(),
+				.w = cur->GetWidth(),
+				.h = cur->GetHeight()
+			};
+
+			SDL_RenderCopy(renderer, cur->GetTexture(), NULL, &pos);
+			//TODO - Switch this to RenderCopyEx for rotation
+		}
+	}
+
+	SDL_RenderPresent(renderer);
+}
+
 void Engine::MainLoop()
 {
-	return;
+	bool running = true;
+	SDL_Event e;
+
+	while(running)
+	{
+		while(SDL_PollEvent(&e) != 0)
+		{
+			switch(e.type)
+			{
+				case SDL_QUIT:
+					running = false;
+					//call quit callback here
+					break;
+			}
+		}
+
+		//perform logic step for every object
+		if(useDelta)
+		{
+			LogicStep(delta);
+		}
+		else
+		{
+			LogicStep();
+		}
+
+		//render scene
+		RenderCurrent();
+	}
 }
 
 void Engine::HandleInput()

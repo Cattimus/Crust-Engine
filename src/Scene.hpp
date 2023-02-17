@@ -22,12 +22,14 @@ private:
 
 public:
 	Scene(string name, Engine* engine);
+	~Scene();
 
 	//object management functions
 	Object* CreateObject(string texPath, int x, int y, int w, int h);
 	Object* GetObject(uint id);
 	void    DeleteObject(uint id);
 	string  GetActiveObjects(); //return a list of active object IDs separated by ','
+	vector<unique_ptr<Object>>* GetObjectList();
 
 	string GetName();
 
