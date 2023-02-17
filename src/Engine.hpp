@@ -45,7 +45,7 @@ private:
 	//How many frames should pass between checks to see if there are unused textures
 	int cleanupIntervalFrames;
 
-	//delta value for logic
+	//Delta time value for step logic
 	double delta = 0;
 
 ////////////SDL VALUES///////////////////////////////////////////
@@ -59,13 +59,13 @@ private:
 	//The background color of the window (blank color)
 	Uint8 backgroundColor[3];
 
-	//selected scene to be rendered
+	//Selected scene to be rendered
 	Scene* scene;
 
-	//list that holds texture references
+	//List that holds texture references
 	vector<unique_ptr<Texture>> textures;
 
-	//list that holds scene references
+	//List that holds scene references
 	vector<unique_ptr<Scene>> scenes;
 
 //////////USER INPUT CALLBACKS////////////////////////////////
