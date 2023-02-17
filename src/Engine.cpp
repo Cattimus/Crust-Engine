@@ -2,8 +2,8 @@
 
 Engine::Engine()
 {
-	screenHeight = 720;
-	screenWidth = 1280;
+	windowHeight = 720;
+	windowWidth = 1280;
 	windowResizable = true;
 	vsync = true;
 	maxFps = -1;
@@ -36,12 +36,14 @@ Engine::~Engine()
 
 void Engine::Init()
 {
+	//initialize SDL
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		cout << "SDL failed to initialize. Error: " << SDL_GetError() << endl;
 		exit(-1);
 	}
 
+	//Initialize SDL_IMG with png, jpg, and webp support
 	uint imageFlags = IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_WEBP;
 	if(!(IMG_Init(imageFlags) & imageFlags))
 	{
@@ -86,6 +88,7 @@ void Engine::SetBackgroundColor()
 	SDL_SetRenderDrawColor(renderer, backgroundColor[0], backgroundColor[1], backgroundColor[2], 0xFF);
 }
 
+//initialize SDL and create a window
 void Engine::CreateWindow(string title, int x, int y, int w, int h, bool resizable)
 {
 	Init();
@@ -112,13 +115,13 @@ void Engine::CreateWindow(string title, int x, int y, int w, int h, bool resizab
 
 	if(w < 1 || h < 1)
 	{
-		w = screenWidth;
-		h = screenHeight;
+		w = windowWidth;
+		h = windowHeight;
 	}
 	else
 	{
-		screenWidth = w;
-		screenHeight = h;
+		windowWidth = w;
+		windowHeight = h;
 	}
 
 	//set our configured flags
@@ -147,11 +150,11 @@ void Engine::CreateWindow(string title)
 }
 int Engine::GetWindowWidth()
 {
-	return screenWidth;
+	return windowWidth;
 }
 int Engine::GetWindowHeight()
 {
-	return screenHeight;
+	return windowHeight;
 }
 void Engine::SetWindowSize(int w, int h)
 {
@@ -162,14 +165,14 @@ void Engine::SetWindowSize(int w, int h)
 
 	if(w > 0)
 	{
-		screenWidth = w;
+		windowWidth = w;
 	}
 	if(h > 0)
 	{
-		screenHeight = h;
+		windowHeight = h;
 	}
 
-	SDL_SetWindowSize(window, screenWidth, screenHeight);
+	SDL_SetWindowSize(window, windowWidth, windowHeight);
 }
 
 Texture* Engine::GetTexture(string path)
@@ -452,11 +455,11 @@ void Engine::SetFlags()
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, (useBilinear) ? "1" : "0");
 }
 
-void Engine::UseBilinearScaling()
+void Engine::UseBilinearFiltering()
 {
 	useBilinear = true;
 }
-void Engine::UseNearestScaling()
+void Engine::UseNearestFiltering()
 {
 	useBilinear = false;
 }
