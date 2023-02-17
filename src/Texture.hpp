@@ -9,17 +9,22 @@ using namespace std;
 class Texture
 {
 private:
+	//Pointer to the SDL texture object
 	SDL_Texture* tex;
+	//How many things reference this texture
 	uint ref;
+	//Path to the source file (for possible reconstruction)
 	string path;
 
+	//Size data (w,h)
 	int size[2];
 
 public:
 	Texture(string, SDL_Renderer*);
 	~Texture();
 
-	//reference counting functions
+//////////////REFERENCE COUNTING FUNCTIONS//////////////////////
+
 	void RefInc();
 	void RefDec();
 	uint GetRef();
@@ -28,6 +33,6 @@ public:
 	int GetWidth();
 	int GetHeight();
 
-	//get raw SDL texture
+	//Get raw SDL texture
 	SDL_Texture* Get();
 };

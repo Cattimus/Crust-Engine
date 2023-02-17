@@ -2,11 +2,12 @@
 
 Texture::Texture(string path, SDL_Renderer* renderer)
 {
+	//Initialize values
 	ref = 0;
 	tex = NULL;
 	this->path = path;
 
-	//load image to surface
+	//Load image to surface
 	SDL_Surface* loadedImage = IMG_Load(path.c_str());
 	if(!loadedImage)
 	{
@@ -17,7 +18,7 @@ Texture::Texture(string path, SDL_Renderer* renderer)
 		return;
 	}
 
-	//load texture
+	//Load texture object
 	tex = SDL_CreateTextureFromSurface(renderer, loadedImage);
 	if(!tex)
 	{
@@ -29,10 +30,11 @@ Texture::Texture(string path, SDL_Renderer* renderer)
 		return;
 	}
 
-	//set size parameters
+	//Set size parameters
 	size[0] = loadedImage->w;
 	size[1] = loadedImage->h;
 
+	//Free up unused memory
 	SDL_FreeSurface(loadedImage);
 }
 
