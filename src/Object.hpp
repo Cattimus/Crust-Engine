@@ -8,65 +8,102 @@ using namespace std;
 class Object
 {
 private:
+
+	//Unique ID for the object (at least in the scene)
 	uint id;
+
+	//Pointer to the texture object that will be used for rendering
 	Texture* tex;
 
+	//Position data (x,y)
 	int    pos[2];
+
+	//Velocity data (x,y)
 	double vel[2];
+
+	//Size data (w,h)
 	int    size[2];
 
 	//logic step callback
-	void (*LogicCallback)(int*, double*, int*) = NULL;
-	void (*LogicCallbackDelta)(double, int*, double*, int*) = NULL;
+	//Parameters: position data(x,y), velocity data(x,y), size data(w,h)
+	void (*LogicCallback)(int*, double*, int*);
 
-	/*
-	//default logic step
+	//Logic step callback
+	//Parameters: delta value, position data(x,y), velocity data(x,y), size data(w,h)
+	void (*LogicCallbackDelta)(double, int*, double*, int*);
+
+	//Default logic step
 	void DefaultLogic();
+	//Default logic step (with delta time)
 	void DefaultLogic(double delta);
-	*/
 
+	//Helper functions to initialize values
 	void Init();
 
 public:
+	//Should this object be rendered in front of(+) or behind(-) other objects
 	int renderPriority;
+	//Should this object be rendered
 	bool visible;
 
-	//constructors(visible)
+//////////////CONSTRUCTORS - VISIBLE OBJECT////////////////////////////
+
 	Object(uint id, Texture* tex, int x, int y, int w, int h);
 	Object(uint id, Texture* tex, int w, int h);
 	Object(uint id, Texture* tex);
 
-	//constructors(position only)
+/////////////CONSTRUCTORS - POSITION ONLY/////////////////////////
+
 	Object(uint id, int x, int y, int w, int h);
 	Object(uint id, int w, int h);
 	Object(uint id);
-	~Object(); //decrease refcount on texture
 
+	//Decrease refcount on texture to make sure it is deleted
+	~Object();
+
+	//Return the object ID
 	uint GetID();
 
-	//position functions
+////////////////POSITION FUNCTIONS//////////////////////////////
+
 	void SetPosition(int x, int y);
 	int  GetXPosition();
 	int  GetYPosition();
 
-	//velocity functions
+//////////////////////VELOCITY FUNCTIONS//////////////////////////
+
 	void   SetVelocity(double x, double y);
 	double GetXVelocity();
 	double GetYVelocity();
 
-	//size functions
+/////////////////////SIZE FUNCTIONS////////////////////////////
+
 	void SetSize(int w, int h);
 	int  GetWidth();
 	int  GetHeight();
 
-	//texture functions
+///////////////////TEXTURE FUNCTIONS//////////////////////////
+
+	//Return the SDL_Texture* for rendering
 	SDL_Texture* GetTexture();
+
+	//Return the Texture object
 	Texture* GetTextureObject();
 
-	//logic
-	void RegisterLogicCallback(void (*)(int*, double*, int*));
-	void RegisterLogicCallbackDelta(void (*)(double, int*, double*, int*));
+//////////////////////LOGIC CALLBACKS////////////////////////////
 
+	//Register the callback that will be activated on a logic step
+	void RegisterLogicCallback(void (*)(int*, double*, int*));
+	//Deactivate the callback that will be activated on every logic step
+	void ClearLogicCallback();
+
+	//Register the callback that will be activated on a logic step (with delta time)
+	void RegisterLogicCallbackDelta(void (*)(double, int*, double*, int*));
+	//Deactivate teh callback that will be activated on every logic step (with delta time)
+	void ClearLogicCallbackDelta();
+
+	//Function that will be executed on logic step
 	void LogicStep();
+	//Function that will be executed on logic step (with delta time)
 	void LogicStep(double delta);
 };
