@@ -12,6 +12,9 @@ class Scene;
 #include "Scene.hpp"
 #include "Texture.hpp"
 
+//TODO - implement frame limiting if vsync isn't set
+
+
 class Engine
 {
 private:
@@ -21,6 +24,7 @@ private:
 	//flags and configuration options
 	bool vsync;
 	bool useDelta;
+	bool useBilinear;
 	int maxFps;
 	
 	//parameters for cleanup passes
@@ -55,6 +59,7 @@ private:
 
 	void MainLoop();
 	void HandleInput();
+	void AdjustFlags();
 	//void TextureCleanup(); //Delete unreferenced textures
 
 public:
@@ -92,4 +97,11 @@ public:
 	//call logic functions
 	void LogicStep();
 	void LogicStep(double delta);
+
+	//functions to adjust engine parameters
+	void UseBilinearScaling();
+	void UseNearestScaling();
+	void EnableVsync();
+	void DisableVsync();
+	void SetFrameLimit(uint limit);
 };

@@ -7,10 +7,11 @@ int main()
 {
 	Engine engine;
 	engine.SetBackgroundColor(0x32, 0x60, 0xA8);
-	engine.CreateWindow("Test window", true);
-	engine.RenderCurrent();
+	engine.EnableVsync();
+	engine.UseBilinearScaling();
+	engine.CreateWindow("Crust engine demo", true);
 	Scene* scene = engine.CreateScene("main");
-	scene->CreateObject("../media/test.png", 100, 100, 150, 150);
+	scene->CreateObject("../media/test.png", 200, 100, 250, 250);
 	engine.StartMainLoop();
 	return 0;
 }

@@ -7,6 +7,7 @@ Engine::Engine()
 	vsync = true;
 	maxFps = 60;
 	useDelta = true;
+	useBilinear = true;
 	cleanupTextures = true;
 	cleanupIntervalFrames = 300;
 	delta = 0;
@@ -279,6 +280,8 @@ void Engine::MainLoop()
 	bool running = true;
 	SDL_Event e;
 
+	int lastFrame = SDL_GetTicks();
+
 	while(running)
 	{
 		while(SDL_PollEvent(&e) != 0)
@@ -304,10 +307,45 @@ void Engine::MainLoop()
 
 		//render scene
 		RenderCurrent();
+
+		int now = SDL_GetTicks();
+		delta = (now - lastFrame) / (double)1000;
+		lastFrame = now;
 	}
 }
 
 void Engine::HandleInput()
 {
 	return;
+}
+
+void Engine::AdjustFlags()
+{
+	SDL_SetHint(SDL_HINT_RENDER_VSYNC, (vsync) ? "1" : "0");
+	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, (useBilinear) ? "1" : "0");
+}
+
+void Engine::UseBilinearScaling()
+{
+	useBilinear = true;
+	AdjustFlags();
+}
+void Engine::UseNearestScaling()
+{
+	useBilinear = false;
+	AdjustFlags();
+}
+void Engine::EnableVsync()
+{
+	vsync = true;
+	AdjustFlags();
+}
+void Engine::DisableVsync()
+{
+	vsync = false;
+	AdjustFlags();
+}
+void Engine::SetFrameLimit(uint limit)
+{
+	maxFps = limit;
 }
