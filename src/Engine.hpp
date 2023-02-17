@@ -8,7 +8,8 @@ using namespace std;
 #include <SDL.h>
 #include <SDL_image.h>
 
-//#include "Scene.hpp"
+class Scene;
+#include "Scene.hpp"
 #include "Texture.hpp"
 
 class Engine
@@ -34,11 +35,11 @@ private:
 	Uint8 backgroundColor[3];
 
 	//selected scene to be rendered
-	//Scene* scene;
+	Scene* scene;
 
 	//lists for data
 	vector<unique_ptr<Texture>> textures;
-	//vector<unique_ptr<Scene>> scenes;
+	vector<unique_ptr<Scene>> scenes;
 
 	//user input callbacks
 	void (*OnKeyboardInput)();
@@ -56,10 +57,6 @@ private:
 	void TextureCleanup(); //Delete unreferenced textures
 	*/
 
-	//texture management functions
-	Texture* GetTexture(string path);
-	//there is no texture delete because textures will be refcounted
-
 public:
 	Engine();
 	~Engine();
@@ -70,13 +67,11 @@ public:
 	void CreateWindow(string title, bool resizable);
 	void CreateWindow(string title);
 
-	/*
 	//scene management functions
 	Scene* CreateScene(string name);
-	Scene* SwitchScene(string);
-	void   DeleteScene(string);
+	Scene* SwitchScene(string name);
+	void   DeleteScene(string name);
 	string GetSceneList(); //Get a list of scene names separated by ','
-	*/
 
 	//assign user input callback
 	//WARNING - implementation for these is currently incomplete
@@ -87,6 +82,7 @@ public:
 	//main loop and rendering
 	void SetBackgroundColor(uint, uint, uint);
 	void RenderCurrent();
+	Texture* GetTexture(string path);
 
 	/*
 	void StartMainLoop();

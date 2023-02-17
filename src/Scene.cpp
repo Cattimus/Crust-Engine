@@ -1,15 +1,15 @@
 #include "Scene.hpp"
 
-Scene::Scene(string name, Texture* (*GetTexture)(string))
+Scene::Scene(string name, Engine* engine)
 {
 	ID = 0;
 	this->name = name;
-	this->GetTexture = GetTexture;
+	this->engine = engine;
 }
 
 Object* Scene::CreateObject(string texPath, int x, int y, int w, int h)
 {
-	Texture* tex = GetTexture(texPath);
+	Texture* tex = engine->GetTexture(texPath);
 	objects.push_back(make_unique<Object>(ID, tex, x, y, w, h));
 	ID++;
 
@@ -65,4 +65,9 @@ string Scene::GetActiveObjects()
 	}
 
 	return toReturn;
+}
+
+string Scene::GetName()
+{
+	return name;
 }

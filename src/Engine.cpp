@@ -14,7 +14,7 @@ Engine::Engine()
 	backgroundColor[0] = 0;
 	backgroundColor[1] = 0;
 	backgroundColor[2] = 0;
-	//scene = NULL;
+	scene = NULL;
 	OnKeyboardInput = NULL;
 	OnMouseInput = NULL;
 	OnControllerInput = NULL;
@@ -160,4 +160,63 @@ void Engine::RegisterMouseCallback(void (*func)())
 void Engine::RegisterControllerCallback(void (*func)())
 {
 	OnControllerInput = func;
+}
+
+Scene* Engine::CreateScene(string name)
+{
+	scenes.push_back(make_unique<Scene>(name, this));
+	return scenes.back().get();
+}
+
+Scene* Engine::SwitchScene(string name)
+{
+	for(auto i = 0; i < scenes.size(); i++)
+	{
+		auto cur = scenes[i].get();
+		if(cur->GetName() == name)
+		{
+			scene = cur;
+			return cur;
+		}
+	}
+
+	return NULL;
+}
+
+void Engine::DeleteScene(string name)
+{
+	//get index of scene
+	int index = -1;
+	for(auto i = 0; i < scenes.size(); i++)
+	{
+		auto cur = scenes[i].get();
+		if(cur->GetName() == name)
+		{
+			index = i;
+			break;
+		}
+	}
+
+	//delete scene
+	if(index > -1)
+	{
+		scenes.erase(scenes.begin() + index);
+	}
+}
+
+string Engine::GetSceneList()
+{
+	string to_return = "";
+	for(auto i = 0; i < scenes.size(); i++)
+	{
+		auto cur = scenes[i].get();
+		to_return += cur->GetName();
+
+		if(i < scenes.size() - 1)
+		{
+			to_return += ",";
+		}
+	}
+
+	return to_return;
 }

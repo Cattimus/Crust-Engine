@@ -5,7 +5,9 @@
 #include <memory>
 using namespace std;
 
+class Engine;
 #include "Object.hpp"
+#include "Engine.hpp"
 
 class Scene
 {
@@ -16,16 +18,18 @@ private:
 	uint ID; //ID of next object, will increment with every object
 	vector<unique_ptr<Object>> objects;
 
-	Texture* (*GetTexture)(string);
+	Engine* engine;
 
 public:
-	Scene(string name, Texture* (*GetTexture)(string));
+	Scene(string name, Engine* engine);
 
 	//object management functions
 	Object* CreateObject(string texPath, int x, int y, int w, int h);
 	Object* GetObject(uint id);
 	void    DeleteObject(uint id);
 	string  GetActiveObjects(); //return a list of active object IDs separated by ','
+
+	string GetName();
 
 	/*
 	//Trigger logic step in every object held in scene
