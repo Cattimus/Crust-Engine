@@ -153,9 +153,80 @@ Texture* Engine::GetTexture(string path)
 	return textures.back().get();
 }
 
+void Engine::RegisterQuitEventCallback(void(*func)())
+{
+	if(!func)
+	{
+		return;
+	}
+
+	OnQuitEvent = func;
+}
+
 void Engine::RegisterKeyboardCallback(void (*func)(bool, char))
 {
+	if(!func)
+	{
+		return;
+	}
+
 	OnKeyboardInput = func;
+}
+
+void Engine::RegisterMouseMoveCallback(void (*func)(int, int, int, int))
+{
+	if(!func)
+	{
+		return;
+	}
+
+	OnMouseMove = func;
+}
+void Engine::RegisterMouseClickCallback(void (*func)(bool, int, int, int, int))
+{
+	if(!func)
+	{
+		return;
+	}
+
+	OnMouseClick = func;
+}
+void Engine::RegisterMousewheelCallback(void (*func)(int, int))
+{
+	if(!func)
+	{
+		return;
+	}
+
+	OnMouseWheel = func;
+}
+
+void Engine::RegisterWindowResizeCallback(void (*func)(int, int))
+{
+	if(!func)
+	{
+		return;
+	}
+
+	OnWindowResize = func;
+}
+void Engine::RegisterWindowFocusCallback(void (*func)())
+{
+	if(!func)
+	{
+		return;
+	}
+
+	OnWindowFocus = func;
+}
+void Engine::RegisterWindowUnfocusCallback(void (*func)())
+{
+	if(!func)
+	{
+		return;
+	}
+	
+	OnWindowUnfocus = func;
 }
 
 Scene* Engine::CreateScene(string name)
@@ -290,7 +361,7 @@ void Engine::MainLoop()
 			{
 				case SDL_QUIT:
 					running = false;
-					//call quit callback here
+					OnQuitEvent();
 					break;
 
 				case SDL_KEYDOWN:

@@ -50,12 +50,12 @@ private:
 	void (*OnKeyboardInput)(bool, char); //(bool pressed/released, char key)
 	
 	//mouse
-	void (*OnMouseMove)();
-	void (*OnMouseClick)();
-	void (*OnMouseWheel)();
+	void (*OnMouseMove)(int, int, int, int); //(x, y, x(relative), y(relative))
+	void (*OnMouseClick)(bool, int, int, int, int); //(bool(up/down), button, # of clicks, x, y)
+	void (*OnMouseWheel)(int, int); //(horizontal scroll, vertical scroll)
 
 	//window
-	void (*OnWindowResize)();
+	void (*OnWindowResize)(int, int); //(width, height)
 	void (*OnWindowFocus)();
 	void (*OnWindowUnfocus)();
 
@@ -88,12 +88,21 @@ public:
 	void   DeleteScene(string name);
 	string GetSceneList(); //Get a list of scene names separated by ','
 
+	//SDL quit event callback
+	void RegisterQuitEventCallback(void(*)());
+
 	//assign user input callback
-	//WARNING - implementation for these is currently incomplete
 	void RegisterKeyboardCallback(void (*)(bool, char));
-	void RegisterMouseCallback(void (*)());
-	void RegisterControllerCallback(void (*)());
-	void RegisterQuitCallback(void (*)());
+
+	//mouse callbacks
+	void RegisterMouseMoveCallback(void (*)(int, int, int, int));
+	void RegisterMouseClickCallback(void (*)(bool, int, int, int, int));
+	void RegisterMousewheelCallback(void (*)(int, int));
+
+	//window callbacks
+	void RegisterWindowResizeCallback(void (*OnWindowResize)(int, int));
+	void RegisterWindowFocusCallback(void (*OnWindowFocus)());
+	void RegisterWindowUnfocusCallback(void (*OnWindowUnfocus)());
 
 	//main loop and rendering
 	void SetBackgroundColor(uint, uint, uint);
