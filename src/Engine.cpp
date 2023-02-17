@@ -201,6 +201,10 @@ void Engine::RegisterQuitEventCallback(void(*func)())
 
 	OnQuitEvent = func;
 }
+void Engine::ClearQuitEventCallback()
+{
+	OnQuitEvent = NULL;
+}
 
 void Engine::RegisterKeyboardCallback(void (*func)(bool, char))
 {
@@ -210,6 +214,10 @@ void Engine::RegisterKeyboardCallback(void (*func)(bool, char))
 	}
 
 	OnKeyboardInput = func;
+}
+void Engine::ClearKeyboardCallback()
+{
+	OnKeyboardInput = NULL;
 }
 
 void Engine::RegisterMouseMoveCallback(void (*func)(int, int, int, int))
@@ -221,6 +229,11 @@ void Engine::RegisterMouseMoveCallback(void (*func)(int, int, int, int))
 
 	OnMouseMove = func;
 }
+void Engine::ClearMouseMoveCallback()
+{
+	OnMouseMove = NULL;
+}
+
 void Engine::RegisterMouseClickCallback(void (*func)(bool, int, int, int, int))
 {
 	if(!func)
@@ -230,6 +243,11 @@ void Engine::RegisterMouseClickCallback(void (*func)(bool, int, int, int, int))
 
 	OnMouseClick = func;
 }
+void Engine::ClearMouseClickCallback()
+{
+	OnMouseClick = NULL;
+}
+
 void Engine::RegisterMousewheelCallback(void (*func)(int, int))
 {
 	if(!func)
@@ -238,6 +256,10 @@ void Engine::RegisterMousewheelCallback(void (*func)(int, int))
 	}
 
 	OnMouseWheel = func;
+}
+void Engine::ClearMousewheelCallback()
+{
+	OnMouseWheel = NULL;
 }
 
 void Engine::RegisterWindowResizeCallback(void (*func)(int, int))
@@ -249,6 +271,11 @@ void Engine::RegisterWindowResizeCallback(void (*func)(int, int))
 
 	OnWindowResize = func;
 }
+void Engine::ClearWindowResizeCallback()
+{
+	OnWindowResize = NULL;
+}
+
 void Engine::RegisterWindowFocusCallback(void (*func)())
 {
 	if(!func)
@@ -258,6 +285,11 @@ void Engine::RegisterWindowFocusCallback(void (*func)())
 
 	OnWindowFocus = func;
 }
+void Engine::ClearWindowFocusCallback()
+{
+	OnWindowFocus = NULL;
+}
+
 void Engine::RegisterWindowUnfocusCallback(void (*func)())
 {
 	if(!func)
@@ -266,6 +298,10 @@ void Engine::RegisterWindowUnfocusCallback(void (*func)())
 	}
 
 	OnWindowUnfocus = func;
+}
+void Engine::ClearWindowUnfocusCallback()
+{
+	OnWindowUnfocus = NULL;
 }
 
 Scene* Engine::CreateScene(string name)

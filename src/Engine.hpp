@@ -138,6 +138,8 @@ public:
 	void CreateWindow(string title);
 	int GetWindowWidth();
 	int GetWindowHeight();
+
+	//Change window size. -1 may be passed to keep that parameter the same.
 	void SetWindowSize(int w, int h);
 
 ///////////////SCENE MANAGEMENT FUNCTIONS//////////////////////////////
