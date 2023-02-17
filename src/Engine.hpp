@@ -47,9 +47,18 @@ private:
 	vector<unique_ptr<Scene>> scenes;
 
 	//user input callbacks
-	void (*OnKeyboardInput)();
-	void (*OnMouseInput)();
-	void (*OnControllerInput)();
+	void (*OnKeyboardInput)(bool, char); //(bool pressed/released, char key)
+	
+	//mouse
+	void (*OnMouseMove)();
+	void (*OnMouseClick)();
+	void (*OnMouseWheel)();
+
+	//window
+	void (*OnWindowResize)();
+	void (*OnWindowFocus)();
+	void (*OnWindowUnfocus)();
+
 	void (*OnQuitEvent)();
 
 	//helper functions for engine
@@ -81,7 +90,7 @@ public:
 
 	//assign user input callback
 	//WARNING - implementation for these is currently incomplete
-	void RegisterKeyboardCallback(void (*)());
+	void RegisterKeyboardCallback(void (*)(bool, char));
 	void RegisterMouseCallback(void (*)());
 	void RegisterControllerCallback(void (*)());
 	void RegisterQuitCallback(void (*)());

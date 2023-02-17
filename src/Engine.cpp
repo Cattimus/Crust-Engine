@@ -17,9 +17,15 @@ Engine::Engine()
 	backgroundColor[1] = 0;
 	backgroundColor[2] = 0;
 	scene = NULL;
+
 	OnKeyboardInput = NULL;
-	OnMouseInput = NULL;
-	OnControllerInput = NULL;
+	OnMouseMove = NULL;
+	OnMouseClick = NULL;
+	OnMouseWheel = NULL;
+	OnWindowResize = NULL;
+	OnWindowFocus = NULL;
+	OnWindowUnfocus = NULL;
+	OnQuitEvent = NULL;
 }
 
 Engine::~Engine()
@@ -147,17 +153,9 @@ Texture* Engine::GetTexture(string path)
 	return textures.back().get();
 }
 
-void Engine::RegisterKeyboardCallback(void (*func)())
+void Engine::RegisterKeyboardCallback(void (*func)(bool, char))
 {
 	OnKeyboardInput = func;
-}
-void Engine::RegisterMouseCallback(void (*func)())
-{
-	OnMouseInput = func;
-}
-void Engine::RegisterControllerCallback(void (*func)())
-{
-	OnControllerInput = func;
 }
 
 Scene* Engine::CreateScene(string name)
@@ -294,6 +292,12 @@ void Engine::MainLoop()
 					running = false;
 					//call quit callback here
 					break;
+
+				case SDL_KEYDOWN:
+				case SDL_KEYUP:
+					OnKeyboardInput((e.type == SDL_KEYUP) ? 1 : 0, (char)e.key.keysym.sym);
+				break;
+
 			}
 		}
 
