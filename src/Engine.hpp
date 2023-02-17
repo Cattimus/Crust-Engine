@@ -12,7 +12,7 @@ class Scene;
 #include "Scene.hpp"
 #include "Texture.hpp"
 
-//TODO - implement frame limiting if vsync isn't set
+//TODO - implement keeping track of average FPS
 
 
 class Engine
@@ -59,7 +59,7 @@ private:
 
 	void MainLoop();
 	void HandleInput();
-	void AdjustFlags();
+	void SetFlags();
 	//void TextureCleanup(); //Delete unreferenced textures
 
 public:

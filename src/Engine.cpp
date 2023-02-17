@@ -5,7 +5,7 @@ Engine::Engine()
 	screenWidth = 640;
 	screenHeight = 480;
 	vsync = true;
-	maxFps = 60;
+	maxFps = -1;
 	useDelta = true;
 	useBilinear = true;
 	cleanupTextures = true;
@@ -105,6 +105,8 @@ void Engine::CreateWindow(string title, int x, int y, int w, int h, bool resizab
 		h = screenHeight;
 	}
 
+	//set our configured flags
+	SetFlags();
 	window = SDL_CreateWindow(title.c_str(), x, y, w, h, flags);
 	if(!window)
 	{
@@ -309,7 +311,21 @@ void Engine::MainLoop()
 		RenderCurrent();
 
 		int now = SDL_GetTicks();
-		delta = (now - lastFrame) / (double)1000;
+		auto execTime = (now - lastFrame);
+
+		//limit framerate
+		if(maxFps > 0)
+		{
+			double limit = 1000 / (double)maxFps;
+			double wait = limit - execTime;
+			if(wait > 0)
+			{
+				SDL_Delay(wait);
+			}
+		}
+
+		now = SDL_GetTicks();
+		delta = (now - lastFrame);
 		lastFrame = now;
 	}
 }
@@ -319,7 +335,7 @@ void Engine::HandleInput()
 	return;
 }
 
-void Engine::AdjustFlags()
+void Engine::SetFlags()
 {
 	SDL_SetHint(SDL_HINT_RENDER_VSYNC, (vsync) ? "1" : "0");
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, (useBilinear) ? "1" : "0");
@@ -328,22 +344,18 @@ void Engine::AdjustFlags()
 void Engine::UseBilinearScaling()
 {
 	useBilinear = true;
-	AdjustFlags();
 }
 void Engine::UseNearestScaling()
 {
 	useBilinear = false;
-	AdjustFlags();
 }
 void Engine::EnableVsync()
 {
 	vsync = true;
-	AdjustFlags();
 }
 void Engine::DisableVsync()
 {
 	vsync = false;
-	AdjustFlags();
 }
 void Engine::SetFrameLimit(uint limit)
 {
