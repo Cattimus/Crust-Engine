@@ -12,7 +12,8 @@ class Scene;
 #include "Scene.hpp"
 #include "Texture.hpp"
 
-//TODO - implement keeping track of average FPS
+//TODO - Implement keeping track of average FPS
+//TODO - Implement fullscreen mode
 
 class Engine
 {

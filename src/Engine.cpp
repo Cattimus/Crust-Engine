@@ -59,6 +59,7 @@ void Engine::Quit()
 	scenes = vector<unique_ptr<Scene>>();
 	textures = vector<unique_ptr<Texture>>();
 
+	//These steps are unecessary but it is good practice
 	if(window != NULL)
 	{
 		if(renderer != NULL)
@@ -93,6 +94,7 @@ void Engine::CreateWindow(string title, int x, int y, int w, int h, bool resizab
 {
 	Init();
 
+	//Initialize a new window. Shown is always active, resizable is optional
 	uint flags = SDL_WINDOW_SHOWN;
 	if(resizable)
 	{
@@ -103,16 +105,17 @@ void Engine::CreateWindow(string title, int x, int y, int w, int h, bool resizab
 		windowResizable = false;
 	}
 
+	//If x and y are not defined, we pass SDL_WINDOWPOS_UNDEFINED for a random location
 	if(x < 1)
 	{
 		x = SDL_WINDOWPOS_UNDEFINED;
 	}
-
 	if(y < 1)
 	{
 		y = SDL_WINDOWPOS_UNDEFINED;
 	}
 
+	//Set the width and height
 	if(w < 1 || h < 1)
 	{
 		w = windowWidth;
@@ -124,7 +127,7 @@ void Engine::CreateWindow(string title, int x, int y, int w, int h, bool resizab
 		windowHeight = h;
 	}
 
-	//set our configured flags
+	//Set our configured flags
 	SetFlags();
 	window = SDL_CreateWindow(title.c_str(), x, y, w, h, flags);
 	if(!window)
@@ -133,6 +136,7 @@ void Engine::CreateWindow(string title, int x, int y, int w, int h, bool resizab
 		exit(-1);
 	}
 
+	//Create renderer from window
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SetBackgroundColor();
 }
@@ -177,7 +181,7 @@ void Engine::SetWindowSize(int w, int h)
 
 Texture* Engine::GetTexture(string path)
 {
-	//search for existing textures
+	//Search for existing textures
 	for(auto i = 0; i < textures.size(); i++)
 	{
 		Texture* cur = textures[i].get();
@@ -187,7 +191,7 @@ Texture* Engine::GetTexture(string path)
 		}
 	}
 
-	//create a new texture
+	//Create a new texture if an existing one isn't found
 	textures.push_back(make_unique<Texture>(path, renderer));
 	return textures.back().get();
 }
@@ -313,6 +317,7 @@ Scene* Engine::CreateScene(string name)
 
 Scene* Engine::GetScene(string name)
 {
+	//Search for an existing scene
 	for(auto i = 0; i < scenes.size(); i++)
 	{
 		auto cur = scenes[i].get();
@@ -322,22 +327,26 @@ Scene* Engine::GetScene(string name)
 		}
 	}
 
+	//Return NULL to signify scene does not exist
 	return NULL;
 }
 
 Scene* Engine::SwitchScene(string name)
 {
+	//Get scene from list
 	auto cur = GetScene(name);
+	//If scene exists, set the current scene to that
 	if(cur)
 	{
 		scene = cur;
 	}
+	//If the scene does not exist, this will return null. if it does, it will return the scene
 	return cur;
 }
 
 void Engine::DeleteScene(string name)
 {
-	//get index of scene
+	//Get index of scene
 	int index = -1;
 	for(auto i = 0; i < scenes.size(); i++)
 	{
@@ -349,7 +358,7 @@ void Engine::DeleteScene(string name)
 		}
 	}
 
-	//delete scene
+	//Delete scene
 	if(index > -1)
 	{
 		scenes.erase(scenes.begin() + index);
@@ -358,12 +367,15 @@ void Engine::DeleteScene(string name)
 
 string Engine::GetSceneList()
 {
+	//Go through each scene one by one
 	string to_return = "";
 	for(auto i = 0; i < scenes.size(); i++)
 	{
+		//Append the scene's name to our string
 		auto cur = scenes[i].get();
 		to_return += cur->GetName();
 
+		//Append a , to that, unless it is the last element
 		if(i < scenes.size() - 1)
 		{
 			to_return += ",";
@@ -394,16 +406,18 @@ void Engine::LogicStep(double delta)
 	}
 }
 
-//this is a temporary function for now. This will be modified later.
 void Engine::RenderCurrent()
 {
+	//Clear the existing screen by filling it with background color
 	SDL_RenderClear(renderer);
 
 	if(scene)
 	{
+		//Iterate through the list of objects in our scene
 		auto objects = scene->GetObjectList();
 		for(auto i = 0; i < objects->size(); i++)
 		{
+			//Construct an SDL_Rect for the object based on position and size
 			auto cur = objects->at(i).get();
 			SDL_Rect pos
 			{
@@ -413,6 +427,7 @@ void Engine::RenderCurrent()
 				.h = cur->GetHeight()
 			};
 
+			//Render to the screen
 			SDL_RenderCopy(renderer, cur->GetTexture(), NULL, &pos);
 			//TODO - Switch this to RenderCopyEx for rotation
 		}
@@ -426,6 +441,7 @@ void Engine::MainLoop()
 	bool running = true;
 	SDL_Event e;
 
+	//Time since the last frame was executed
 	int lastFrame = SDL_GetTicks();
 
 	while(running)
@@ -434,11 +450,13 @@ void Engine::MainLoop()
 		{
 			switch(e.type)
 			{
+				//Quit out of the program
 				case SDL_QUIT:
 					running = false;
 					OnQuitEvent();
 					break;
 
+				//Keyboard input
 				case SDL_KEYDOWN:
 				case SDL_KEYUP:
 					OnKeyboardInput((e.type == SDL_KEYUP) ? 1 : 0, (char)e.key.keysym.sym);
@@ -447,7 +465,7 @@ void Engine::MainLoop()
 			}
 		}
 
-		//perform logic step for every object
+		//Perform logic step for every object
 		if(useDelta)
 		{
 			LogicStep(delta);
@@ -460,10 +478,11 @@ void Engine::MainLoop()
 		//render scene
 		RenderCurrent();
 
+		//See how long the scene took to render
 		int now = SDL_GetTicks();
 		auto execTime = (now - lastFrame);
 
-		//limit framerate
+		//Limit framerate (if required)
 		if(maxFps > 0)
 		{
 			double limit = 1000 / (double)maxFps;
@@ -474,6 +493,7 @@ void Engine::MainLoop()
 			}
 		}
 
+		//Update delta time
 		now = SDL_GetTicks();
 		delta = (now - lastFrame);
 		lastFrame = now;
