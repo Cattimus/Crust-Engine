@@ -531,3 +531,21 @@ void Engine::SetFrameLimit(uint limit)
 {
 	maxFps = limit;
 }
+
+void Engine::TextureCleanup()
+{
+	//Theoretically this for loop is fine. it will check the size every time since it is using textures.size()
+	for(auto i = 0; i < textures.size(); i++)
+	{
+		Texture* cur = textures[i].get();
+
+		//Delete texture if it is no longer referenced
+		if(cur->GetRef() == 0)
+		{
+			textures.erase(textures.begin() + i);
+
+			//Check the same index again, since we have deleted the texture at this index
+			i--;
+		}
+	}
+}

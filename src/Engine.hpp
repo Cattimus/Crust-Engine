@@ -125,7 +125,8 @@ private:
 	void SetFlags();
 
 	//Helper function to delete unreferenced textures
-	//void TextureCleanup(); //Delete unreferenced textures
+	//WARNING - THIS IS NOT IMPLEMENTED YET
+	void TextureCleanup();
 
 public:
 	Engine();
