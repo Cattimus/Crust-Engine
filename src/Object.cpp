@@ -4,8 +4,8 @@ void Object::Init()
 {
 	id = 0;
 	tex = NULL;
-	LogicCallback = NULL;
-	LogicCallbackDelta = NULL;
+	OnLogicStep = NULL;
+	OnLogicStepDelta = NULL;
 	SetPosition(0,0);
 	SetSize(0,0);
 	SetVelocity(0,0);
@@ -131,26 +131,44 @@ Texture* Object::GetTextureObject()
 
 void Object::RegisterLogicCallback(LogicFunc func)
 {
-	LogicCallback = func;
+	OnLogicStep = func;
 }
 void Object::RegisterLogicCallbackDelta(LogicFuncDelta func)
 {
-	LogicCallbackDelta = func;
+	OnLogicStepDelta = func;
+}
+
+CrustObjData Object::GetData()
+{
+	//Construct object data struct
+	CrustObjData temp = 
+	{
+		.x = pos,
+		.y = pos+1,
+
+		.velX = vel,
+		.velY = vel+1,
+
+		.w = size,
+		.h = size+1
+	};
+
+	return temp;
 }
 
 void Object::LogicStep()
 {
-	if(LogicCallback)
+	if(OnLogicStep)
 	{
-		LogicCallback(pos, vel, size);
+		OnLogicStep(GetData());
 	}
 	//else call default logic
 }
 void Object::LogicStep(double delta)
 {
-	if(LogicCallbackDelta)
+	if(OnLogicStepDelta)
 	{
-		LogicCallbackDelta(delta, pos, vel, size);
+		OnLogicStepDelta(delta, GetData());
 	}
 	//else call default logic
 }

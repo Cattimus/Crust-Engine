@@ -5,8 +5,26 @@ using namespace std;
 
 #include "Texture.hpp"
 
-typedef void (*LogicFunc)(double*, double*, int*);
-typedef void (*LogicFuncDelta)(double, double*, double*, int*);
+typedef struct CrustObjData
+{
+	double* x;
+	double* y;
+
+	double* velX;
+	double* velY;
+
+	int* w;
+	int* h;
+}CrustObjData;
+
+//Parameters: object data (position and velocity)
+typedef void (*LogicFunc)(CrustObjData);
+
+//Parameters: delta time, object data (position and velocity)
+typedef void (*LogicFuncDelta)(double, CrustObjData);
+
+//Parameters: object data self, object data collide
+typedef void (*CollisionFunc)(CrustObjData, CrustObjData);
 
 class Object
 {
@@ -19,7 +37,7 @@ private:
 	Texture* tex;
 
 	//Position data (x,y)
-	double    pos[2];
+	double pos[2];
 
 	//Velocity data (x,y)
 	double vel[2];
@@ -27,15 +45,15 @@ private:
 	//Size data (w,h)
 	int    size[2];
 
-	//logic step callback
-	//Parameters: position data(x,y), velocity data(x,y), size data(w,h)
-	LogicFunc LogicCallback; 
-	//void (*LogicCallback)(double*, double*, int*);
-
 	//Logic step callback
-	//Parameters: delta value, position data(x,y), velocity data(x,y), size data(w,h)
-	LogicFuncDelta LogicCallbackDelta;
-	//void (*LogicCallbackDelta)(double, double*, double*, int*);
+	LogicFunc OnLogicStep; 
+
+	//Logic step callback(with delta time)
+	LogicFuncDelta OnLogicStepDelta;
+
+	//Collision callback
+	CollisionFunc OnCollision;
+
 
 	//Default logic step
 	void DefaultLogic();
@@ -44,6 +62,8 @@ private:
 
 	//Helper functions to initialize values
 	void Init();
+
+	CrustObjData GetData();
 
 public:
 	//Should this object be rendered in front of(+) or behind(-) other objects
@@ -104,8 +124,13 @@ public:
 
 	//Register the callback that will be activated on a logic step (with delta time)
 	void RegisterLogicCallbackDelta(LogicFuncDelta func);
-	//Deactivate teh callback that will be activated on every logic step (with delta time)
+	//Deactivate the callback that will be activated on every logic step (with delta time)
 	void ClearLogicCallbackDelta();
+
+	//Register the callback that will be activated when an object collides with another
+	void RegisterCollisionCallback(CollisionFunc func);
+	//Deactivate the callback that will be activated when an object collides with another
+	void ClearCollisionCallback();
 
 	//Function that will be executed on logic step
 	void LogicStep();

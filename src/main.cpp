@@ -5,9 +5,9 @@ using namespace std;
 
 
 
-void logicDelta(double delta, double* pos, double* vel, int* size) {
-	pos[0] += (vel[0] * delta);
-	pos[1] += (vel[1] * delta);
+void logicDelta(double delta, CrustObjData self) {
+	*self.x += (*self.velX * (delta / (double)1000));
+	*self.y += (*self.velY * (delta / (double)1000));
 }
 
 int main()
@@ -27,7 +27,7 @@ int main()
 
 	//set up logic for our object
 	obj->RegisterLogicCallbackDelta(logicDelta);
-	obj->SetVelocity(1, 0);
+	obj->SetVelocity(25, 0);
 
 	//start rendering
 	engine.StartMainLoop();
