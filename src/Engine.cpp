@@ -196,7 +196,7 @@ Texture* Engine::GetTexture(string path)
 	return textures.back().get();
 }
 
-void Engine::RegisterQuitEventCallback(void(*func)())
+void Engine::RegisterQuitEventCallback(QuitEventCallback func)
 {
 	if(!func)
 	{
@@ -210,7 +210,7 @@ void Engine::ClearQuitEventCallback()
 	OnQuitEvent = NULL;
 }
 
-void Engine::RegisterKeyboardCallback(void (*func)(bool, char))
+void Engine::RegisterKeyboardCallback(KeyboardEventCallback func)
 {
 	if(!func)
 	{
@@ -224,7 +224,7 @@ void Engine::ClearKeyboardCallback()
 	OnKeyboardInput = NULL;
 }
 
-void Engine::RegisterMouseMoveCallback(void (*func)(int, int, int, int))
+void Engine::RegisterMouseMoveCallback(MouseMoveCallback func)
 {
 	if(!func)
 	{
@@ -238,7 +238,7 @@ void Engine::ClearMouseMoveCallback()
 	OnMouseMove = NULL;
 }
 
-void Engine::RegisterMouseClickCallback(void (*func)(bool, int, int, int, int))
+void Engine::RegisterMouseClickCallback(MouseClickCallback func)
 {
 	if(!func)
 	{
@@ -252,7 +252,7 @@ void Engine::ClearMouseClickCallback()
 	OnMouseClick = NULL;
 }
 
-void Engine::RegisterMousewheelCallback(void (*func)(int, int))
+void Engine::RegisterMousewheelCallback(MouseWheelCallback func)
 {
 	if(!func)
 	{
@@ -266,7 +266,7 @@ void Engine::ClearMousewheelCallback()
 	OnMouseWheel = NULL;
 }
 
-void Engine::RegisterWindowResizeCallback(void (*func)(int, int))
+void Engine::RegisterWindowResizeCallback(WindowResizeCallback func)
 {
 	if(!func)
 	{
@@ -280,7 +280,7 @@ void Engine::ClearWindowResizeCallback()
 	OnWindowResize = NULL;
 }
 
-void Engine::RegisterWindowFocusCallback(void (*func)())
+void Engine::RegisterWindowFocusCallback(WindowFocusCallback func)
 {
 	if(!func)
 	{
@@ -294,7 +294,7 @@ void Engine::ClearWindowFocusCallback()
 	OnWindowFocus = NULL;
 }
 
-void Engine::RegisterWindowUnfocusCallback(void (*func)())
+void Engine::RegisterWindowUnfocusCallback(WindowUnfocusCallback func)
 {
 	if(!func)
 	{

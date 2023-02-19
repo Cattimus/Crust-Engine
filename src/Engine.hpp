@@ -15,6 +15,23 @@ class Scene;
 //TODO - Implement keeping track of average FPS
 //TODO - Implement fullscreen mode
 
+//Params: (pressed/released, keycode)
+typedef void (*KeyboardEventCallback)(bool, char);
+
+//Params: (x position, y position, x movement, y movement)
+typedef void (*MouseMoveCallback)(int, int, int, int);	
+//Params: (pressed/released, mouse button, # of clicks (single or double), x position, y position)
+typedef void (*MouseClickCallback)(bool, int, int, int, int);
+//Params: (horizontal scroll amount, vertical scroll amount)
+typedef void (*MouseWheelCallback)(int, int);
+
+//Params: (width, height)
+typedef void (*WindowResizeCallback)(int, int);
+typedef void (*WindowFocusCallback)();
+typedef void (*WindowUnfocusCallback)();
+
+typedef void (*QuitEventCallback)();
+
 class Engine
 {
 private:
@@ -73,36 +90,36 @@ private:
 
 	//Callback that will activate on keyboard input
 	//Params: (pressed/released, keycode)
-	void (*OnKeyboardInput)(bool, char);
+	KeyboardEventCallback OnKeyboardInput;
 	
 /////////////MOUSE CALLBACKS/////////////////////////////////
 
 	//Callback that will activate when the mouse is moved
 	//Params: (x position, y position, x movement, y movement)
-	void (*OnMouseMove)(int, int, int, int);
+	MouseMoveCallback OnMouseMove;
 
 	//Callback that will activate when the mouse is clicked
 	//Params: (pressed/released, mouse button, # of clicks (single or double), x position, y position)
-	void (*OnMouseClick)(bool, int, int, int, int);
+	MouseClickCallback OnMouseClick;
 
 	//Callback that will activate when the mouse wheel is scrolled
 	//Params: (horizontal scroll amount, vertical scroll amount)
-	void (*OnMouseWheel)(int, int);
+	MouseWheelCallback OnMouseWheel;
 
 ////////////WINDOW CALLBACKS//////////////////////////////////////
 
 	//Callback that will activate when the window is resized
 	//Params: (width, height)
-	void (*OnWindowResize)(int, int);
+	WindowResizeCallback OnWindowResize;
 
 	//Callback that will activate when the window gains focus
-	void (*OnWindowFocus)();
+	WindowFocusCallback OnWindowFocus;
 
 	//Callback that will activate when the window loses focus
-	void (*OnWindowUnfocus)();
+	WindowUnfocusCallback OnWindowUnfocus;
 
 	//Callback that will activate when SDL has shut down
-	void (*OnQuitEvent)();
+	QuitEventCallback OnQuitEvent;
 
 //////////////HELPER FUNCTIONS FOR ENGINE///////////////////////////
 
@@ -163,28 +180,28 @@ public:
 
 ///////////////CALLBACK MANAGEMENT//////////////////////////////////
 
-	void RegisterQuitEventCallback(void(*)());
+	void RegisterQuitEventCallback(QuitEventCallback func);
 	void ClearQuitEventCallback();
 
-	void RegisterKeyboardCallback(void (*)(bool, char));
+	void RegisterKeyboardCallback(KeyboardEventCallback func);
 	void ClearKeyboardCallback();
 
-	void RegisterMouseMoveCallback(void (*)(int, int, int, int));
+	void RegisterMouseMoveCallback(MouseMoveCallback func);
 	void ClearMouseMoveCallback();
 
-	void RegisterMouseClickCallback(void (*)(bool, int, int, int, int));
+	void RegisterMouseClickCallback(MouseClickCallback func);
 	void ClearMouseClickCallback();
 
-	void RegisterMousewheelCallback(void (*)(int, int));
+	void RegisterMousewheelCallback(MouseWheelCallback func);
 	void ClearMousewheelCallback();
 
-	void RegisterWindowResizeCallback(void (*)(int, int));
+	void RegisterWindowResizeCallback(WindowResizeCallback func);
 	void ClearWindowResizeCallback();
 
-	void RegisterWindowFocusCallback(void (*)());
+	void RegisterWindowFocusCallback(WindowFocusCallback func);
 	void ClearWindowFocusCallback();
 
-	void RegisterWindowUnfocusCallback(void (*)());
+	void RegisterWindowUnfocusCallback(WindowUnfocusCallback func);
 	void ClearWindowUnfocusCallback();
 
 //////////////MAIN LOOP AND RENDERING//////////////////////////
