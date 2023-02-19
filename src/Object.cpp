@@ -172,3 +172,11 @@ void Object::LogicStep(double delta)
 	}
 	//else call default logic
 }
+
+void Object::Collision(Object& B)
+{
+	if(OnCollision)
+	{
+		OnCollision(GetData(), B.GetData());
+	}
+}

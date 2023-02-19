@@ -136,4 +136,7 @@ public:
 	void LogicStep();
 	//Function that will be executed on logic step (with delta time)
 	void LogicStep(double delta);
+
+	//Function that will execute when objects have collided
+	void Collision(Object& B);
 };
