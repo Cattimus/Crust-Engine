@@ -421,8 +421,8 @@ void Engine::RenderCurrent()
 			auto cur = objects->at(i).get();
 			SDL_Rect pos
 			{
-				.x = cur->GetXPosition(),
-				.y = cur->GetYPosition(),
+				.x = (int)cur->GetXPosition(),
+				.y = (int)cur->GetYPosition(),
 				.w = cur->GetWidth(),
 				.h = cur->GetHeight()
 			};
@@ -453,13 +453,19 @@ void Engine::MainLoop()
 				//Quit out of the program
 				case SDL_QUIT:
 					running = false;
-					OnQuitEvent();
+					if(OnQuitEvent)
+					{
+						OnQuitEvent();
+					}
 					break;
 
 				//Keyboard input
 				case SDL_KEYDOWN:
 				case SDL_KEYUP:
-					OnKeyboardInput((e.type == SDL_KEYUP) ? 1 : 0, (char)e.key.keysym.sym);
+					if(OnKeyboardInput)
+					{
+						OnKeyboardInput((e.type == SDL_KEYUP) ? 1 : 0, (char)e.key.keysym.sym);
+					}
 				break;
 
 			}
@@ -548,4 +554,14 @@ void Engine::TextureCleanup()
 			i--;
 		}
 	}
+}
+
+void Engine::EnableDelta()
+{
+	useDelta = true;
+}
+
+void Engine::DisableDelta()
+{
+	useDelta = false;
 }

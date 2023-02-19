@@ -214,7 +214,11 @@ public:
 	//Use nearest texture filtering
 	void UseNearestFiltering();
 
+	void EnableDelta();
+	void DisableDelta();
+
 	void EnableVsync();
 	void DisableVsync();
+	
 	void SetFrameLimit(uint limit);
 };
