@@ -101,6 +101,6 @@ void Scene::LogicStep(double delta)
 {
 	for(auto i = 0; i < objects.size(); i++)
 	{
-		objects[i].get()->LogicStep();
+		objects[i].get()->LogicStep(delta);
 	}
 }

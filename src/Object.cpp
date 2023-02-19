@@ -78,16 +78,16 @@ uint Object::GetID()
 	return id;
 }
 
-void Object::SetPosition(int x, int y)
+void Object::SetPosition(double x, double y)
 {
 	pos[0] = x;
 	pos[1] = y;
 }
-int Object::GetXPosition()
+double Object::GetXPosition()
 {
 	return pos[0];
 }
-int Object::GetYPosition()
+double Object::GetYPosition()
 {
 	return pos[1];
 }
@@ -129,20 +129,28 @@ Texture* Object::GetTextureObject()
 	return tex;
 }
 
-void Object::RegisterLogicCallback(void (*func)(int*, double*, int*))
+void Object::RegisterLogicCallback(LogicFunc func)
 {
 	LogicCallback = func;
 }
-void Object::RegisterLogicCallbackDelta(void (*func)(double, int*, double*, int*))
+void Object::RegisterLogicCallbackDelta(LogicFuncDelta func)
 {
 	LogicCallbackDelta = func;
 }
 
 void Object::LogicStep()
 {
-	return;
+	if(LogicCallback)
+	{
+		LogicCallback(pos, vel, size);
+	}
+	//else call default logic
 }
 void Object::LogicStep(double delta)
 {
-	return;
+	if(LogicCallbackDelta)
+	{
+		LogicCallbackDelta(delta, pos, vel, size);
+	}
+	//else call default logic
 }

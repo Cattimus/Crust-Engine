@@ -5,6 +5,9 @@ using namespace std;
 
 #include "Texture.hpp"
 
+typedef void (*LogicFunc)(double*, double*, int*);
+typedef void (*LogicFuncDelta)(double, double*, double*, int*);
+
 class Object
 {
 private:
@@ -16,7 +19,7 @@ private:
 	Texture* tex;
 
 	//Position data (x,y)
-	int    pos[2];
+	double    pos[2];
 
 	//Velocity data (x,y)
 	double vel[2];
@@ -26,11 +29,13 @@ private:
 
 	//logic step callback
 	//Parameters: position data(x,y), velocity data(x,y), size data(w,h)
-	void (*LogicCallback)(int*, double*, int*);
+	LogicFunc LogicCallback; 
+	//void (*LogicCallback)(double*, double*, int*);
 
 	//Logic step callback
 	//Parameters: delta value, position data(x,y), velocity data(x,y), size data(w,h)
-	void (*LogicCallbackDelta)(double, int*, double*, int*);
+	LogicFuncDelta LogicCallbackDelta;
+	//void (*LogicCallbackDelta)(double, double*, double*, int*);
 
 	//Default logic step
 	void DefaultLogic();
@@ -66,9 +71,9 @@ public:
 
 ////////////////POSITION FUNCTIONS//////////////////////////////
 
-	void SetPosition(int x, int y);
-	int  GetXPosition();
-	int  GetYPosition();
+	void SetPosition(double x, double y);
+	double  GetXPosition();
+	double  GetYPosition();
 
 //////////////////////VELOCITY FUNCTIONS//////////////////////////
 
@@ -93,12 +98,12 @@ public:
 //////////////////////LOGIC CALLBACKS////////////////////////////
 
 	//Register the callback that will be activated on a logic step
-	void RegisterLogicCallback(void (*)(int*, double*, int*));
+	void RegisterLogicCallback(LogicFunc func);
 	//Deactivate the callback that will be activated on every logic step
 	void ClearLogicCallback();
 
 	//Register the callback that will be activated on a logic step (with delta time)
-	void RegisterLogicCallbackDelta(void (*)(double, int*, double*, int*));
+	void RegisterLogicCallbackDelta(LogicFuncDelta func);
 	//Deactivate teh callback that will be activated on every logic step (with delta time)
 	void ClearLogicCallbackDelta();
 
