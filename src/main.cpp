@@ -17,48 +17,40 @@ void keyboard(bool pressed, char key)
 	switch(key)
 	{
 		case 'w':
-			if(!pressed)
-			{
-				controlled->SetVelocity(controlled->GetXVelocity(), maxVeloc * -1);
-			}
-			else
-			{
-				controlled->SetVelocity(controlled->GetXVelocity(), 0);
-			}
+		{
+			double x = controlled->GetXVelocity();
+			double y = maxVeloc * -1;
+
+			controlled->SetVelocity(x, (pressed) ? 0 : y);
 			break;
+		}
 
 		case 's':
-			if(!pressed)
-			{
-				controlled->SetVelocity(controlled->GetXVelocity(), maxVeloc);
-			}
-			else
-			{
-				controlled->SetVelocity(controlled->GetXVelocity(), 0);
-			}
+		{
+			double x = controlled->GetXVelocity();
+			double y = maxVeloc;
+
+			controlled->SetVelocity(x, (pressed) ? 0 : y);
 			break;
+		}
 
 		case 'a':
-			if(!pressed)
-			{
-				controlled->SetVelocity(maxVeloc * -1, controlled->GetYVelocity());
-			}
-			else
-			{
-				controlled->SetVelocity(0, controlled->GetYVelocity());
-			}
+		{
+			double x = maxVeloc * -1;
+			double y = controlled->GetYVelocity();
+			
+			controlled->SetVelocity((pressed) ? 0 : x, y);
 			break;
+		}
 		
 		case 'd':
-			if(!pressed)
-			{
-				controlled->SetVelocity(maxVeloc, controlled->GetYVelocity());
-			}
-			else
-			{
-				controlled->SetVelocity(0, controlled->GetYVelocity());
-			}
+		{
+			double x = maxVeloc;
+			double y = controlled->GetYVelocity();
+			
+			controlled->SetVelocity((pressed) ? 0 : x, y);
 			break;
+		}
 	}
 }
 
