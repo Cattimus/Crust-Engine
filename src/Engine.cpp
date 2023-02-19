@@ -427,9 +427,13 @@ void Engine::RenderCurrent()
 				.h = cur->GetHeight()
 			};
 
+			//calculate center of object
+			SDL_Point center;
+			center.x = pos.w / 2 + cur->GetRotationOffsetX();
+			center.y = pos.h / 2 + cur->GetRotationOffsetY();
+
 			//Render to the screen
-			SDL_RenderCopy(renderer, cur->GetTexture(), NULL, &pos);
-			//TODO - Switch this to RenderCopyEx for rotation
+			SDL_RenderCopyEx(renderer, cur->GetTexture(), NULL, &pos, cur->GetRotation(), &center, SDL_FLIP_NONE);
 		}
 	}
 
@@ -464,7 +468,15 @@ void Engine::MainLoop()
 				case SDL_KEYUP:
 					if(OnKeyboardInput)
 					{
-						OnKeyboardInput((e.type == SDL_KEYUP) ? 1 : 0, (char)e.key.keysym.sym);
+						OnKeyboardInput((e.type == SDL_KEYDOWN) ? 1 : 0, (char)e.key.keysym.sym);
+					}
+				break;
+
+				case SDL_MOUSEBUTTONDOWN:
+				case SDL_MOUSEBUTTONUP:
+					if(OnMouseClick)
+					{
+						OnMouseClick(e.type == SDL_MOUSEBUTTONDOWN, e.button.button, e.button.clicks, e.button.x, e.button.y);
 					}
 				break;
 

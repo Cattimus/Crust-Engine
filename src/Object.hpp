@@ -15,6 +15,9 @@ typedef struct CrustObjData
 
 	int* w;
 	int* h;
+
+	double* rotation;
+	double* rotVeloc;
 }CrustObjData;
 
 //Parameters: object data (position and velocity)
@@ -39,11 +42,17 @@ private:
 	//Position data (x,y)
 	double pos[2];
 
+	//Center of rotation
+	double centerOffset[2];
+
 	//Velocity data (x,y)
 	double vel[2];
 
 	//Size data (w,h)
 	int    size[2];
+
+	double rotation;
+	double rotVeloc;
 
 	//Logic step callback
 	LogicFunc OnLogicStep; 
@@ -106,6 +115,18 @@ public:
 	void SetSize(int w, int h);
 	int  GetWidth();
 	int  GetHeight();
+
+//////////////////////ROTATION////////////////////////////////
+
+	void SetRotation(double rotation);
+	double GetRotation();
+
+	void SetRotationVelocity(double rotVeloc);
+	double GetRotationVelocity();
+
+	void SetRotationOffset(double x, double y);
+	double GetRotationOffsetX();
+	double GetRotationOffsetY();
 
 ///////////////////TEXTURE FUNCTIONS//////////////////////////
 

@@ -3,14 +3,32 @@ using namespace std;
 
 #include "Engine.hpp"
 
-Object* controlled;
 double maxVeloc = 500;
+Object* controlled;
+Scene* active;
+Engine engine;
 
 void logicDelta(double delta, CrustObjData self) 
 {
 	*self.x += (*self.velX * (delta / (double)1000));
 	*self.y += (*self.velY * (delta / (double)1000));
+	*self.rotation += (*self.rotVeloc * (delta / (double)1000));
 }
+
+//spawn a new cat on click
+void mouseClick(bool pressed, int button, int clicks, int x, int y)
+{
+	if(pressed && button)
+	{
+		//spawn new cat
+		Object* newcat = active->CreateObject(controlled->GetTextureObject()->GetPath(), x, y, controlled->GetWidth(), controlled->GetHeight());
+
+		//match rotation velocity of the current one
+		newcat->SetRotation(controlled->GetRotation());
+		newcat->SetRotationVelocity(controlled->GetRotationVelocity());
+		controlled = newcat;
+	}
+} 
 
 void keyboard(bool pressed, char key)
 {
@@ -21,7 +39,7 @@ void keyboard(bool pressed, char key)
 			double x = controlled->GetXVelocity();
 			double y = maxVeloc * -1;
 
-			controlled->SetVelocity(x, (pressed) ? 0 : y);
+			controlled->SetVelocity(x, (pressed) ? y : 0);
 			break;
 		}
 
@@ -30,7 +48,7 @@ void keyboard(bool pressed, char key)
 			double x = controlled->GetXVelocity();
 			double y = maxVeloc;
 
-			controlled->SetVelocity(x, (pressed) ? 0 : y);
+			controlled->SetVelocity(x, (pressed) ? y : 0);
 			break;
 		}
 
@@ -39,7 +57,7 @@ void keyboard(bool pressed, char key)
 			double x = maxVeloc * -1;
 			double y = controlled->GetYVelocity();
 			
-			controlled->SetVelocity((pressed) ? 0 : x, y);
+			controlled->SetVelocity((pressed) ? x : 0, y);
 			break;
 		}
 		
@@ -48,7 +66,19 @@ void keyboard(bool pressed, char key)
 			double x = maxVeloc;
 			double y = controlled->GetYVelocity();
 			
-			controlled->SetVelocity((pressed) ? 0 : x, y);
+			controlled->SetVelocity((pressed) ? x : 0, y);
+			break;
+		}
+
+		case 'r':
+		{
+			controlled->SetRotationVelocity(controlled->GetRotationVelocity() + 5);
+			break;
+		}
+
+		case 'z':
+		{
+			controlled->SetRotationVelocity(controlled->GetRotationVelocity() - 5);
 			break;
 		}
 	}
@@ -56,7 +86,6 @@ void keyboard(bool pressed, char key)
 
 int main()
 {
-	Engine engine;
 	engine.SetBackgroundColor(0x32, 0x60, 0xA8);
 
 	//config options
@@ -72,6 +101,7 @@ int main()
 
 	//set up callbacks for user input
 	engine.RegisterKeyboardCallback(keyboard);
+	engine.RegisterMouseClickCallback(mouseClick);
 
 	//set up logic for our object
 	obj->RegisterLogicCallbackDelta(logicDelta);

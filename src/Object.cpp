@@ -9,6 +9,8 @@ void Object::Init()
 	SetPosition(0,0);
 	SetSize(0,0);
 	SetVelocity(0,0);
+	SetRotationOffset(0,0);
+	rotation = 0;
 }
 
 Object::~Object()
@@ -150,7 +152,10 @@ CrustObjData Object::GetData()
 		.velY = vel+1,
 
 		.w = size,
-		.h = size+1
+		.h = size+1,
+
+		.rotation = &rotation,
+		.rotVeloc = &rotVeloc
 	};
 
 	return temp;
@@ -179,4 +184,37 @@ void Object::Collision(Object& B)
 	{
 		OnCollision(GetData(), B.GetData());
 	}
+}
+
+void Object::SetRotation(double rotation)
+{
+	this->rotation = rotation;
+}
+void Object::SetRotationVelocity(double rotVeloc)
+{
+	this->rotVeloc = rotVeloc;
+}
+double Object::GetRotation()
+{
+	return rotation;
+}
+double Object::GetRotationVelocity()
+{
+	return rotVeloc;
+}
+
+void Object::SetRotationOffset(double x, double y)
+{
+	centerOffset[0] = x;
+	centerOffset[1] = y;
+}
+
+double Object::GetRotationOffsetX()
+{
+	return centerOffset[0];
+}
+
+double Object::GetRotationOffsetY()
+{
+	return centerOffset[1];
 }
