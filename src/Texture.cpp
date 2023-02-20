@@ -5,6 +5,10 @@ Texture::Texture(string path, SDL_Renderer* renderer)
 	//Initialize values
 	ref = 0;
 	tex = NULL;
+	offset[0] = 0;
+	offset[1] = 0;
+	size[0] = 0;
+	size[1] = 0;
 	this->path = path;
 
 	//Load image to surface
@@ -81,4 +85,13 @@ int Texture::GetWidth()
 int Texture::GetHeight()
 {
 	return size[1];
+}
+
+int Texture::GetXOffset() 
+{
+	return offset[0];
+}
+int Texture::GetYOffset()
+{
+	return offset[1];
 }

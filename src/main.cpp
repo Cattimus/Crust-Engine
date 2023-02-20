@@ -5,7 +5,7 @@ using namespace std;
 
 double maxVeloc = 500;
 Object* controlled;
-Scene* active;
+Scene* scene;
 Engine engine;
 
 void logicDelta(double delta, CrustObjData self) 
@@ -21,11 +21,19 @@ void mouseClick(bool pressed, int button, int clicks, int x, int y)
 	if(pressed && button)
 	{
 		//spawn new cat
-		Object* newcat = active->CreateObject(controlled->GetTextureObject()->GetPath(), x, y, controlled->GetWidth(), controlled->GetHeight());
+		x -= controlled->GetWidth() / 2;
+		y -= controlled->GetHeight() / 2;
+		Object* newcat = scene->CreateObject(controlled->GetTextureObject()->GetPath(), x, y, controlled->GetWidth(), controlled->GetHeight());
+		if(!newcat)
+		{
+			cout << "Object creation failed!" << endl;
+			return;
+		}
 
 		//match rotation velocity of the current one
 		newcat->SetRotation(controlled->GetRotation());
 		newcat->SetRotationVelocity(controlled->GetRotationVelocity());
+		newcat->RegisterLogicCallbackDelta(logicDelta);
 		controlled = newcat;
 	}
 } 
@@ -81,6 +89,15 @@ void keyboard(bool pressed, char key)
 			controlled->SetRotationVelocity(controlled->GetRotationVelocity() - 5);
 			break;
 		}
+
+		case 'p':
+		{
+			if(pressed)
+			{
+				cout << engine.GetReport();
+			}
+			break;
+		}
 	}
 }
 
@@ -94,8 +111,8 @@ int main()
 	engine.EnableDelta();
 
 	//set up scene
-	engine.CreateWindow("Crust engine demo", true);
-	Scene* scene = engine.CreateScene("main");
+	engine.CreateWindow("Crust engine demo", false);
+	scene = engine.CreateScene("main");
 	Object* obj = scene->CreateObject("../media/test.png", 200, 100, 250, 250);
 	controlled = obj;
 

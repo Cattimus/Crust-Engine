@@ -238,4 +238,7 @@ public:
 	void DisableVsync();
 	
 	void SetFrameLimit(uint limit);
+
+	//Generate report about the current amount of objects
+	string GetReport();
 };

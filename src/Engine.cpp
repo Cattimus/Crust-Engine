@@ -417,9 +417,10 @@ void Engine::RenderCurrent()
 		auto objects = scene->GetObjectList();
 		for(auto i = 0; i < objects->size(); i++)
 		{
-			//Construct an SDL_Rect for the object based on position and size
 			auto cur = objects->at(i).get();
-			SDL_Rect pos
+
+			//Construct an SDL_Rect for the object based on position and size
+			SDL_Rect objPos
 			{
 				.x = (int)cur->GetXPosition(),
 				.y = (int)cur->GetYPosition(),
@@ -429,11 +430,11 @@ void Engine::RenderCurrent()
 
 			//calculate center of object
 			SDL_Point center;
-			center.x = pos.w / 2 + cur->GetRotationOffsetX();
-			center.y = pos.h / 2 + cur->GetRotationOffsetY();
+			center.x = objPos.w / 2 + cur->GetRotationOffsetX();
+			center.y = objPos.h / 2 + cur->GetRotationOffsetY();
 
 			//Render to the screen
-			SDL_RenderCopyEx(renderer, cur->GetTexture(), NULL, &pos, cur->GetRotation(), &center, SDL_FLIP_NONE);
+			SDL_RenderCopyEx(renderer, cur->GetTexture(), NULL, &objPos, cur->GetRotation(), &center, SDL_FLIP_NONE);
 		}
 	}
 
@@ -576,4 +577,20 @@ void Engine::EnableDelta()
 void Engine::DisableDelta()
 {
 	useDelta = false;
+}
+
+string Engine::GetReport()
+{
+	string toReturn = "";
+
+	toReturn += "Textures[" + to_string(textures.size()) + "]\n\n";
+	for(auto i = 0; i < scenes.size(); i++)
+	{
+		auto cur = scenes[i].get();
+
+		int objects = cur->GetObjectList()->size();
+		toReturn += cur->GetName() + ": " + "Objects[" + to_string(objects) + "]\n";
+	}
+
+	return toReturn;
 }

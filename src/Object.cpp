@@ -11,6 +11,7 @@ void Object::Init()
 	SetVelocity(0,0);
 	SetRotationOffset(0,0);
 	rotation = 0;
+	rotVeloc = 0;
 }
 
 Object::~Object()

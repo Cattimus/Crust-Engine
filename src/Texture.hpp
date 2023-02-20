@@ -19,6 +19,9 @@ private:
 	//Size data (w,h)
 	int size[2];
 
+	//Position offset(x,y)
+	int offset[2];
+
 public:
 	Texture(string, SDL_Renderer*);
 	~Texture();
@@ -32,6 +35,9 @@ public:
 
 	int GetWidth();
 	int GetHeight();
+
+	int GetXOffset();
+	int GetYOffset();
 
 	//Get raw SDL texture
 	SDL_Texture* Get();
