@@ -16,10 +16,10 @@ Scene::~Scene()
 Object* Scene::CreateObject(string texPath, int x, int y, int w, int h)
 {
 	Texture* tex = engine->GetTexture(texPath);
-	objects[ID] = make_unique<Object>(ID, tex, x, y, w, h);
+	Object* toReturn = (objects[ID] = make_unique<Object>(ID, tex, x, y, w, h)).get();
 	ID++;
 
-	return objects[ID].get();
+	return toReturn;
 }
 
 Object* Scene::GetObject(uint id)
@@ -35,22 +35,9 @@ Object* Scene::GetObject(uint id)
 
 void Scene::DeleteObject(uint id)
 {	
-	//Search for object index
-	int index = -1;
-	for(auto i = 0; i < objects.size(); i++)
+	if(objects.find(id) != objects.end())
 	{
-		Object* cur = objects[i].get();
-		if(cur->GetID() == id)
-		{
-			index = i;
-			break;
-		}
-	}
-
-	//If the index was found, delete the object
-	if(index != -1)
-	{
-		objects.erase(next(objects.begin(), index));
+		objects.erase(objects.find(id));
 	}
 }
 
@@ -58,18 +45,16 @@ string Scene::GetActiveObjects()
 {
 	string toReturn = "";
 
-	for(auto i = 0; i < objects.size(); i++)
+	for(auto &i : objects)
 	{
-		Object* cur = objects[i].get();
+		Object* cur = i.second.get();
 
 		//append object name to string
 		toReturn += to_string(cur->GetID());
-		if(i < objects.size() - 1)
-		{
-			toReturn += ",";
-		}
+		toReturn += ",";
 	}
 
+	toReturn.pop_back();
 	return toReturn;
 }
 
