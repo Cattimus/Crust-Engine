@@ -10,33 +10,27 @@ Scene::Scene(string name, Engine* engine)
 Scene::~Scene()
 {
 	//This will ensure our destructors are called in the proper order. This must be called before SDL_Quit()
-	objects = vector<unique_ptr<Object>>();
+	objects = unordered_map<uint, unique_ptr<Object>>();
 }
 
 Object* Scene::CreateObject(string texPath, int x, int y, int w, int h)
 {
 	Texture* tex = engine->GetTexture(texPath);
-	objects.push_back(make_unique<Object>(ID, tex, x, y, w, h));
+	objects[ID] = make_unique<Object>(ID, tex, x, y, w, h);
 	ID++;
 
-	return objects.back().get();
+	return objects[ID].get();
 }
 
 Object* Scene::GetObject(uint id)
 {
-	//Search through objects
-	for(auto i = 0; i < objects.size(); i++)
+	//Object with the ID does not exist
+	if(objects.find(ID) == objects.end())
 	{
-		//If the IDs match, return
-		Object* cur = objects[i].get();
-		if(cur->GetID() == id)
-		{
-			return cur;
-		}
+		return NULL;
 	}
 
-	//If no object is found, return NULL
-	return NULL;
+	return objects[ID].get();
 }
 
 void Scene::DeleteObject(uint id)
@@ -84,23 +78,34 @@ string Scene::GetName()
 	return name;
 }
 
-void Scene::LogicStep()
+void Scene::RegisterEvent(Event<Scene> event)
 {
-	for(auto i = 0; i < objects.size(); i++)
+	string name = event.GetName();
+	events[name] = event;
+}
+
+void Scene::DeleteEvent(string name)
+{
+	//Event does not exist
+	if(events.find(name) == events.end())
 	{
-		objects[i].get()->LogicStep();
+		return;
 	}
+
+	events.erase(events.find(name));
 }
 
-vector<unique_ptr<Object>>* Scene::GetObjectList()
+void Scene::DoEvents()
 {
-	return &objects;
-}
-
-void Scene::LogicStep(double delta)
-{
-	for(auto i = 0; i < objects.size(); i++)
+	//Perform event actions for scene
+	for(auto &i : events) 
 	{
-		objects[i].get()->LogicStep(delta);
+		i.second.Check();
+	}
+
+	//Perform event actions for objects
+	for(auto &i : objects)
+	{
+		i.second.get()->DoEvents();
 	}
 }

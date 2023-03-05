@@ -1,13 +1,14 @@
 #pragma once
 
 #include <iostream>
-#include <vector>
+#include <unordered_map>
 #include <memory>
 using namespace std;
 
 class Engine;
 #include "Object.hpp"
 #include "Engine.hpp"
+#include "Event.hpp"
 
 class Scene
 {
@@ -20,7 +21,8 @@ private:
 	uint ID; 
 
 	//Data storage for all of the objects that are currently active
-	vector<unique_ptr<Object>> objects;
+	unordered_map<uint, unique_ptr<Object>> objects;
+	unordered_map<string, Event<Scene>> events;
 
 	//Reference to the engine so we can access textures
 	Engine* engine;
@@ -40,19 +42,19 @@ public:
 	Object* GetObject(uint id);
 
 	//Delete an object by ID
-	void    DeleteObject(uint id);
+	void DeleteObject(uint id);
 
 	//Returns a list of all currently active objects separated by ','
-	string  GetActiveObjects();
+	string GetActiveObjects();
 
 	//Return a direct pointer to the object list
-	vector<unique_ptr<Object>>* GetObjectList();
+	unordered_map<uint, unique_ptr<Object>>* GetObjectList();
 
 	//Return the name of the Scene
 	string GetName();
 
-	//Trigger logic step in every object held in scene
-	void LogicStep();
-	//Trigger logic step in every object in the scene with delta timing
-	void LogicStep(double delta);
+/////////////////////EVENT FUNCTIONS/////////////////////////
+	void RegisterEvent(Event<Scene> event);
+	void DeleteEvent(string name);
+	void DoEvents();
 };

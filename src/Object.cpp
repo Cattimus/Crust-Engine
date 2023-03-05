@@ -171,6 +171,12 @@ void Object::RegisterEvent(Event<Object> event)
 
 void Object::DeleteEvent(string name)
 {
+	//Event does not exist
+	if(events.find(name) == events.end())
+	{
+		return;
+	}
+
 	events.erase(events.find(name));
 }
 
