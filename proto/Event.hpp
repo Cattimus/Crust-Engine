@@ -46,7 +46,7 @@ public:
 		action = func;
 	}
 
-	void check()
+	void Check()
 	{
 		//check for null condition or action
 		if(!(condition && action))
@@ -57,6 +57,7 @@ public:
 		//perform action if condition is met
 		if(condition(parent))
 		{
+			cout << "Event: " << name << " is activating.\n";
 			action(parent);
 		}
 	}

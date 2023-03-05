@@ -37,4 +37,12 @@ public:
 	{
 		events.push_back(Event<Testclass>(this, name, condition, action));
 	}
+
+	void CheckEvents()
+	{
+		for(int i = 0; i < events.size(); i++)
+		{
+			events[i].Check();
+		}
+	}
 };
