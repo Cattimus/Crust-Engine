@@ -5,6 +5,11 @@ project(main)
 set(SOURCES 
 	src/main.cpp
 
+	src/Event.hpp
+
+	src/Texture.hpp
+	src/Texture.cpp
+
 	src/Engine.cpp
 	src/Engine.hpp
 
@@ -13,9 +18,6 @@ set(SOURCES
 
 	src/Object.hpp
 	src/Object.cpp
-
-	src/Texture.hpp
-	src/Texture.cpp
 )
 
 set(SOURCES_PROTOTYPE

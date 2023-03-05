@@ -63,6 +63,11 @@ string Scene::GetName()
 	return name;
 }
 
+unordered_map<uint, unique_ptr<Object>>* Scene::GetObjectList()
+{
+	return &objects;
+}
+
 void Scene::RegisterEvent(Event<Scene> event)
 {
 	string name = event.GetName();

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <iostream>
 using namespace std;
 
 template <typename T>
@@ -18,19 +19,60 @@ private:
 	//Function pointer to action
 	void (*action)(T* parent);
 
-
 public:
-	Event(T* parent, string name, bool (*condition)(T*), void (*action)(T*));
-	Event(T* parent, string name);
+	Event(T* parent, string name, bool (*condition)(T*), void (*action)(T*))
+	{
+		this->parent = parent;
+		this->name = name;
+		this->condition = condition;
+		this->action = action;
+	}
+
+	Event(T* parent, string name)
+	{
+		this->parent = parent;
+		this->name = name;
+	}
+
+	Event()
+	{
+		action = NULL;
+		name = "";
+		parent = NULL;
+		condition = NULL;
+	}
 
 	//Register condition
-	void RegisterCondition(bool (*func)(T*));
+	void RegisterCondition(bool (*func)(T*))
+	{
+		condition = func;
+	}
 
 	//Register action
-	void RegisterAction(void (*func)(T*));
+	void RegisterAction(void (*func)(T*))
+	{
+		action = func;
+	}
 
 	//Check to see if condition is true, if it is, activate action
-	void Check();
+	void Check()
+	{
+		//check for null condition or action
+		if(!(condition && action))
+		{
+			return;
+		}
 
-	string GetName();
+		//perform action if condition is met
+		if(condition(parent))
+		{
+			cout << "Event: " << name << " is activating.\n";
+			action(parent);
+		}
+	}
+
+	string GetName()
+	{
+		return name;
+	}
 };
