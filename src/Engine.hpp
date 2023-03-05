@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include <vector>
+#include <unordered_map>
 #include <memory>
 using namespace std;
 
@@ -13,24 +13,6 @@ class Scene;
 #include "Texture.hpp"
 
 //TODO - Implement keeping track of average FPS
-//TODO - Implement fullscreen mode
-
-//Params: (pressed/released, keycode)
-typedef void (*KeyboardEventCallback)(bool, char);
-
-//Params: (x position, y position, x movement, y movement)
-typedef void (*MouseMoveCallback)(int, int, int, int);	
-//Params: (pressed/released, mouse button, # of clicks (single or double), x position, y position)
-typedef void (*MouseClickCallback)(bool, int, int, int, int);
-//Params: (horizontal scroll amount, vertical scroll amount)
-typedef void (*MouseWheelCallback)(int, int);
-
-//Params: (width, height)
-typedef void (*WindowResizeCallback)(int, int);
-typedef void (*WindowFocusCallback)();
-typedef void (*WindowUnfocusCallback)();
-
-typedef void (*QuitEventCallback)();
 
 class Engine
 {
@@ -81,45 +63,10 @@ private:
 	Scene* scene;
 
 	//List that holds texture references
-	vector<unique_ptr<Texture>> textures;
+	unordered_map<string, unique_ptr<Texture>> textures;
 
 	//List that holds scene references
-	vector<unique_ptr<Scene>> scenes;
-
-//////////USER INPUT CALLBACKS////////////////////////////////
-
-	//Callback that will activate on keyboard input
-	//Params: (pressed/released, keycode)
-	KeyboardEventCallback OnKeyboardInput;
-	
-/////////////MOUSE CALLBACKS/////////////////////////////////
-
-	//Callback that will activate when the mouse is moved
-	//Params: (x position, y position, x movement, y movement)
-	MouseMoveCallback OnMouseMove;
-
-	//Callback that will activate when the mouse is clicked
-	//Params: (pressed/released, mouse button, # of clicks (single or double), x position, y position)
-	MouseClickCallback OnMouseClick;
-
-	//Callback that will activate when the mouse wheel is scrolled
-	//Params: (horizontal scroll amount, vertical scroll amount)
-	MouseWheelCallback OnMouseWheel;
-
-////////////WINDOW CALLBACKS//////////////////////////////////////
-
-	//Callback that will activate when the window is resized
-	//Params: (width, height)
-	WindowResizeCallback OnWindowResize;
-
-	//Callback that will activate when the window gains focus
-	WindowFocusCallback OnWindowFocus;
-
-	//Callback that will activate when the window loses focus
-	WindowUnfocusCallback OnWindowUnfocus;
-
-	//Callback that will activate when SDL has shut down
-	QuitEventCallback OnQuitEvent;
+	unordered_map<string, unique_ptr<Scene>> scenes;
 
 //////////////HELPER FUNCTIONS FOR ENGINE///////////////////////////
 
@@ -177,32 +124,6 @@ public:
 
 	//Returns a list of all active scene names separated by ','
 	string GetSceneList();
-
-///////////////CALLBACK MANAGEMENT//////////////////////////////////
-
-	void RegisterQuitEventCallback(QuitEventCallback func);
-	void ClearQuitEventCallback();
-
-	void RegisterKeyboardCallback(KeyboardEventCallback func);
-	void ClearKeyboardCallback();
-
-	void RegisterMouseMoveCallback(MouseMoveCallback func);
-	void ClearMouseMoveCallback();
-
-	void RegisterMouseClickCallback(MouseClickCallback func);
-	void ClearMouseClickCallback();
-
-	void RegisterMousewheelCallback(MouseWheelCallback func);
-	void ClearMousewheelCallback();
-
-	void RegisterWindowResizeCallback(WindowResizeCallback func);
-	void ClearWindowResizeCallback();
-
-	void RegisterWindowFocusCallback(WindowFocusCallback func);
-	void ClearWindowFocusCallback();
-
-	void RegisterWindowUnfocusCallback(WindowUnfocusCallback func);
-	void ClearWindowUnfocusCallback();
 
 //////////////MAIN LOOP AND RENDERING//////////////////////////
 

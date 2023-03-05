@@ -18,15 +18,6 @@ Engine::Engine()
 	backgroundColor[1] = 0;
 	backgroundColor[2] = 0;
 	scene = NULL;
-
-	OnKeyboardInput = NULL;
-	OnMouseMove = NULL;
-	OnMouseClick = NULL;
-	OnMouseWheel = NULL;
-	OnWindowResize = NULL;
-	OnWindowFocus = NULL;
-	OnWindowUnfocus = NULL;
-	OnQuitEvent = NULL;
 }
 
 Engine::~Engine()
@@ -56,8 +47,8 @@ void Engine::Quit()
 {
 	//destroy our values before SDL goes out of scope
 	//the only reliable way I have found to do this is to overwrite the vector.
-	scenes = vector<unique_ptr<Scene>>();
-	textures = vector<unique_ptr<Texture>>();
+	scenes = unordered_map<string, unique_ptr<Scene>>();
+	textures = unordered_map<string, unique_ptr<Texture>>();
 
 	//These steps are unecessary but it is good practice
 	if(window != NULL)
@@ -181,153 +172,27 @@ void Engine::SetWindowSize(int w, int h)
 
 Texture* Engine::GetTexture(string path)
 {
-	//Search for existing textures
-	for(auto i = 0; i < textures.size(); i++)
+	if(textures.find(path) != textures.end())
 	{
-		Texture* cur = textures[i].get();
-		if(cur->GetPath() == path)
-		{
-			return cur;
-		}
+		return textures[path].get();
 	}
 
 	//Create a new texture if an existing one isn't found
-	textures.push_back(make_unique<Texture>(path, renderer));
-	return textures.back().get();
-}
-
-void Engine::RegisterQuitEventCallback(QuitEventCallback func)
-{
-	if(!func)
-	{
-		return;
-	}
-
-	OnQuitEvent = func;
-}
-void Engine::ClearQuitEventCallback()
-{
-	OnQuitEvent = NULL;
-}
-
-void Engine::RegisterKeyboardCallback(KeyboardEventCallback func)
-{
-	if(!func)
-	{
-		return;
-	}
-
-	OnKeyboardInput = func;
-}
-void Engine::ClearKeyboardCallback()
-{
-	OnKeyboardInput = NULL;
-}
-
-void Engine::RegisterMouseMoveCallback(MouseMoveCallback func)
-{
-	if(!func)
-	{
-		return;
-	}
-
-	OnMouseMove = func;
-}
-void Engine::ClearMouseMoveCallback()
-{
-	OnMouseMove = NULL;
-}
-
-void Engine::RegisterMouseClickCallback(MouseClickCallback func)
-{
-	if(!func)
-	{
-		return;
-	}
-
-	OnMouseClick = func;
-}
-void Engine::ClearMouseClickCallback()
-{
-	OnMouseClick = NULL;
-}
-
-void Engine::RegisterMousewheelCallback(MouseWheelCallback func)
-{
-	if(!func)
-	{
-		return;
-	}
-
-	OnMouseWheel = func;
-}
-void Engine::ClearMousewheelCallback()
-{
-	OnMouseWheel = NULL;
-}
-
-void Engine::RegisterWindowResizeCallback(WindowResizeCallback func)
-{
-	if(!func)
-	{
-		return;
-	}
-
-	OnWindowResize = func;
-}
-void Engine::ClearWindowResizeCallback()
-{
-	OnWindowResize = NULL;
-}
-
-void Engine::RegisterWindowFocusCallback(WindowFocusCallback func)
-{
-	if(!func)
-	{
-		return;
-	}
-
-	OnWindowFocus = func;
-}
-void Engine::ClearWindowFocusCallback()
-{
-	OnWindowFocus = NULL;
-}
-
-void Engine::RegisterWindowUnfocusCallback(WindowUnfocusCallback func)
-{
-	if(!func)
-	{
-		return;
-	}
-
-	OnWindowUnfocus = func;
-}
-void Engine::ClearWindowUnfocusCallback()
-{
-	OnWindowUnfocus = NULL;
+	return (textures[path] = make_unique<Texture>(path, renderer)).get();
 }
 
 Scene* Engine::CreateScene(string name)
 {
-	scenes.push_back(make_unique<Scene>(name, this));
-	scene = scenes.back().get();
-	return scene;
+	return (scenes[name] = (make_unique<Scene>(name, this))).get();
 }
 
 Scene* Engine::GetScene(string name)
 {
-	//Search for an existing scene
-	for(auto i = 0; i < scenes.size(); i++)
+	if(scenes.find(name) != scenes.end())
 	{
-		auto cur = scenes[i].get();
-		if(cur->GetName() == name)
-		{
-			return cur;
-		}
+		return scenes[name].get();
 	}
 
-	//Return NULL to signify scene does not exist
 	return NULL;
 }
 
@@ -335,33 +200,22 @@ Scene* Engine::SwitchScene(string name)
 {
 	//Get scene from list
 	auto cur = GetScene(name);
+
 	//If scene exists, set the current scene to that
 	if(cur)
 	{
 		scene = cur;
 	}
+
 	//If the scene does not exist, this will return null. if it does, it will return the scene
 	return cur;
 }
 
 void Engine::DeleteScene(string name)
 {
-	//Get index of scene
-	int index = -1;
-	for(auto i = 0; i < scenes.size(); i++)
+	if(scenes.find(name) != scenes.end())
 	{
-		auto cur = scenes[i].get();
-		if(cur->GetName() == name)
-		{
-			index = i;
-			break;
-		}
-	}
-
-	//Delete scene
-	if(index > -1)
-	{
-		scenes.erase(scenes.begin() + index);
+		scenes.erase(scenes.find(name));
 	}
 }
 
@@ -369,41 +223,21 @@ string Engine::GetSceneList()
 {
 	//Go through each scene one by one
 	string to_return = "";
-	for(auto i = 0; i < scenes.size(); i++)
+	for(auto &i : scenes)
 	{
 		//Append the scene's name to our string
-		auto cur = scenes[i].get();
+		auto cur = i.second.get();
 		to_return += cur->GetName();
-
-		//Append a , to that, unless it is the last element
-		if(i < scenes.size() - 1)
-		{
-			to_return += ",";
-		}
+		to_return += ",";
 	}
 
+	to_return.pop_back();
 	return to_return;
 }
 
 void Engine::StartMainLoop()
 {
 	MainLoop();
-}
-
-void Engine::LogicStep()
-{
-	if(scene)
-	{
-		scene->LogicStep();
-	}
-}
-
-void Engine::LogicStep(double delta)
-{
-	if(scene)
-	{
-		scene->LogicStep(delta);
-	}
 }
 
 void Engine::RenderCurrent()
@@ -415,9 +249,9 @@ void Engine::RenderCurrent()
 	{
 		//Iterate through the list of objects in our scene
 		auto objects = scene->GetObjectList();
-		for(auto i = 0; i < objects->size(); i++)
+		for(auto &i : *objects)
 		{
-			auto cur = objects->at(i).get();
+			auto cur = i.second.get();
 
 			//Construct an SDL_Rect for the object based on position and size
 			SDL_Rect objPos
@@ -458,42 +292,8 @@ void Engine::MainLoop()
 				//Quit out of the program
 				case SDL_QUIT:
 					running = false;
-					if(OnQuitEvent)
-					{
-						OnQuitEvent();
-					}
-					break;
-
-				//Keyboard input
-				case SDL_KEYDOWN:
-				case SDL_KEYUP:
-					if(OnKeyboardInput)
-					{
-						OnKeyboardInput((e.type == SDL_KEYDOWN) ? 1 : 0, (char)e.key.keysym.sym);
-					}
-				break;
-
-				case SDL_MOUSEBUTTONDOWN:
-				case SDL_MOUSEBUTTONUP:
-					if(OnMouseClick)
-					{
-						OnMouseClick(e.type == SDL_MOUSEBUTTONDOWN, e.button.button, e.button.clicks, e.button.x, e.button.y);
-					}
-				break;
-
 			}
 		}
-
-		//Perform logic step for every object
-		if(useDelta)
-		{
-			LogicStep(delta);
-		}
-		else
-		{
-			LogicStep();
-		}
-
 		//render scene
 		RenderCurrent();
 
@@ -553,18 +353,14 @@ void Engine::SetFrameLimit(uint limit)
 
 void Engine::TextureCleanup()
 {
-	//Theoretically this for loop is fine. it will check the size every time since it is using textures.size()
-	for(auto i = 0; i < textures.size(); i++)
+	for(auto &i : textures)
 	{
-		Texture* cur = textures[i].get();
+		Texture* cur = i.second.get();
 
 		//Delete texture if it is no longer referenced
 		if(cur->GetRef() == 0)
 		{
-			textures.erase(textures.begin() + i);
-
-			//Check the same index again, since we have deleted the texture at this index
-			i--;
+			textures.erase(textures.find(cur->GetPath()));
 		}
 	}
 }
@@ -579,14 +375,15 @@ void Engine::DisableDelta()
 	useDelta = false;
 }
 
+//TODO - this may need a rework
 string Engine::GetReport()
 {
 	string toReturn = "";
 
 	toReturn += "Textures[" + to_string(textures.size()) + "]\n\n";
-	for(auto i = 0; i < scenes.size(); i++)
+	for(auto &i : scenes)
 	{
-		auto cur = scenes[i].get();
+		auto cur = i.second.get();
 
 		int objects = cur->GetObjectList()->size();
 		toReturn += cur->GetName() + ": " + "Objects[" + to_string(objects) + "]\n";

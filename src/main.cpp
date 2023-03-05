@@ -8,99 +8,6 @@ Object* controlled;
 Scene* scene;
 Engine engine;
 
-void logicDelta(double delta, CrustObjData self) 
-{
-	*self.x += (*self.velX * (delta / (double)1000));
-	*self.y += (*self.velY * (delta / (double)1000));
-	*self.rotation += (*self.rotVeloc * (delta / (double)1000));
-}
-
-//spawn a new cat on click
-void mouseClick(bool pressed, int button, int clicks, int x, int y)
-{
-	if(pressed && button)
-	{
-		//spawn new cat
-		x -= controlled->GetWidth() / 2;
-		y -= controlled->GetHeight() / 2;
-		Object* newcat = scene->CreateObject(controlled->GetTextureObject()->GetPath(), x, y, controlled->GetWidth(), controlled->GetHeight());
-		if(!newcat)
-		{
-			cout << "Object creation failed!" << endl;
-			return;
-		}
-
-		//match rotation velocity of the current one
-		newcat->SetRotation(controlled->GetRotation());
-		newcat->SetRotationVelocity(controlled->GetRotationVelocity());
-		newcat->RegisterLogicCallbackDelta(logicDelta);
-		controlled = newcat;
-	}
-} 
-
-void keyboard(bool pressed, char key)
-{
-	switch(key)
-	{
-		case 'w':
-		{
-			double x = controlled->GetXVelocity();
-			double y = maxVeloc * -1;
-
-			controlled->SetVelocity(x, (pressed) ? y : 0);
-			break;
-		}
-
-		case 's':
-		{
-			double x = controlled->GetXVelocity();
-			double y = maxVeloc;
-
-			controlled->SetVelocity(x, (pressed) ? y : 0);
-			break;
-		}
-
-		case 'a':
-		{
-			double x = maxVeloc * -1;
-			double y = controlled->GetYVelocity();
-			
-			controlled->SetVelocity((pressed) ? x : 0, y);
-			break;
-		}
-		
-		case 'd':
-		{
-			double x = maxVeloc;
-			double y = controlled->GetYVelocity();
-			
-			controlled->SetVelocity((pressed) ? x : 0, y);
-			break;
-		}
-
-		case 'r':
-		{
-			controlled->SetRotationVelocity(controlled->GetRotationVelocity() + 5);
-			break;
-		}
-
-		case 'z':
-		{
-			controlled->SetRotationVelocity(controlled->GetRotationVelocity() - 5);
-			break;
-		}
-
-		case 'p':
-		{
-			if(pressed)
-			{
-				cout << engine.GetReport();
-			}
-			break;
-		}
-	}
-}
-
 int main()
 {
 	engine.SetBackgroundColor(0x32, 0x60, 0xA8);
@@ -115,13 +22,6 @@ int main()
 	scene = engine.CreateScene("main");
 	Object* obj = scene->CreateObject("../media/test.png", 200, 100, 250, 250);
 	controlled = obj;
-
-	//set up callbacks for user input
-	engine.RegisterKeyboardCallback(keyboard);
-	engine.RegisterMouseClickCallback(mouseClick);
-
-	//set up logic for our object
-	obj->RegisterLogicCallbackDelta(logicDelta);
 
 	//start rendering
 	engine.StartMainLoop();
