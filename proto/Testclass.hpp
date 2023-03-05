@@ -1,5 +1,11 @@
 #pragma once
 
+#include <vector>
+#include <string>
+using namespace std;
+
+#include "Event.hpp"
+
 class Testclass 
 {
 public:
@@ -7,6 +13,8 @@ public:
 	int y;
 	int w;
 	int h;
+
+	vector<Event<Testclass>> events;
 
 	Testclass()
 	{
@@ -24,4 +32,9 @@ public:
 		this->h = h;
 	}
 
+	//register a new event
+	void RegisterEvent(bool (*condition)(Testclass*), void (*action)(Testclass*), string name)
+	{
+		events.push_back(Event<Testclass>(this, name, condition, action));
+	}
 };
