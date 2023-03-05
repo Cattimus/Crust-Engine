@@ -44,3 +44,9 @@ void Event<T>::Check()
 		action(parent);
 	}
 }
+
+template <typename T>
+string Event<T>::GetName()
+{
+	return name;
+}

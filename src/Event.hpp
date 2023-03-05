@@ -31,4 +31,6 @@ public:
 
 	//Check to see if condition is true, if it is, activate action
 	void Check();
+
+	string GetName();
 };

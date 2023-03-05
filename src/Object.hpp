@@ -1,33 +1,11 @@
 #pragma once
 
-#include<iostream>
+#include <iostream>
+#include <unordered_map>
 using namespace std;
 
 #include "Texture.hpp"
-
-typedef struct CrustObjData
-{
-	double* x;
-	double* y;
-
-	double* velX;
-	double* velY;
-
-	int* w;
-	int* h;
-
-	double* rotation;
-	double* rotVeloc;
-}CrustObjData;
-
-//Parameters: object data (position and velocity)
-typedef void (*LogicFunc)(CrustObjData);
-
-//Parameters: delta time, object data (position and velocity)
-typedef void (*LogicFuncDelta)(double, CrustObjData);
-
-//Parameters: object data self, object data collide
-typedef void (*CollisionFunc)(CrustObjData, CrustObjData);
+#include "Event.hpp"
 
 class Object
 {
@@ -54,25 +32,11 @@ private:
 	double rotation;
 	double rotVeloc;
 
-	//Logic step callback
-	LogicFunc OnLogicStep; 
-
-	//Logic step callback(with delta time)
-	LogicFuncDelta OnLogicStepDelta;
-
-	//Collision callback
-	CollisionFunc OnCollision;
-
-
-	//Default logic step
-	void DefaultLogic();
-	//Default logic step (with delta time)
-	void DefaultLogic(double delta);
+	//Collection of all events sorted by name
+	unordered_map<string, Event<Object>> events;
 
 	//Helper functions to initialize values
 	void Init();
-
-	CrustObjData GetData();
 
 public:
 	//Should this object be rendered in front of(+) or behind(-) other objects
@@ -136,28 +100,9 @@ public:
 	//Return the Texture object
 	Texture* GetTextureObject();
 
-//////////////////////LOGIC CALLBACKS////////////////////////////
+//////////////////EVENT FUNCTIONS///////////////////////////
 
-	//Register the callback that will be activated on a logic step
-	void RegisterLogicCallback(LogicFunc func);
-	//Deactivate the callback that will be activated on every logic step
-	void ClearLogicCallback();
-
-	//Register the callback that will be activated on a logic step (with delta time)
-	void RegisterLogicCallbackDelta(LogicFuncDelta func);
-	//Deactivate the callback that will be activated on every logic step (with delta time)
-	void ClearLogicCallbackDelta();
-
-	//Register the callback that will be activated when an object collides with another
-	void RegisterCollisionCallback(CollisionFunc func);
-	//Deactivate the callback that will be activated when an object collides with another
-	void ClearCollisionCallback();
-
-	//Function that will be executed on logic step
-	void LogicStep();
-	//Function that will be executed on logic step (with delta time)
-	void LogicStep(double delta);
-
-	//Function that will execute when objects have collided
-	void Collision(Object& B);
+	void RegisterEvent(Event<Object> event);
+	void DeleteEvent(string name);
+	void DoEvents();
 };

@@ -4,8 +4,6 @@ void Object::Init()
 {
 	id = 0;
 	tex = NULL;
-	OnLogicStep = NULL;
-	OnLogicStepDelta = NULL;
 	SetPosition(0,0);
 	SetSize(0,0);
 	SetVelocity(0,0);
@@ -132,61 +130,6 @@ Texture* Object::GetTextureObject()
 	return tex;
 }
 
-void Object::RegisterLogicCallback(LogicFunc func)
-{
-	OnLogicStep = func;
-}
-void Object::RegisterLogicCallbackDelta(LogicFuncDelta func)
-{
-	OnLogicStepDelta = func;
-}
-
-CrustObjData Object::GetData()
-{
-	//Construct object data struct
-	CrustObjData temp = 
-	{
-		.x = pos,
-		.y = pos+1,
-
-		.velX = vel,
-		.velY = vel+1,
-
-		.w = size,
-		.h = size+1,
-
-		.rotation = &rotation,
-		.rotVeloc = &rotVeloc
-	};
-
-	return temp;
-}
-
-void Object::LogicStep()
-{
-	if(OnLogicStep)
-	{
-		OnLogicStep(GetData());
-	}
-	//else call default logic
-}
-void Object::LogicStep(double delta)
-{
-	if(OnLogicStepDelta)
-	{
-		OnLogicStepDelta(delta, GetData());
-	}
-	//else call default logic
-}
-
-void Object::Collision(Object& B)
-{
-	if(OnCollision)
-	{
-		OnCollision(GetData(), B.GetData());
-	}
-}
-
 void Object::SetRotation(double rotation)
 {
 	this->rotation = rotation;
@@ -218,4 +161,23 @@ double Object::GetRotationOffsetX()
 double Object::GetRotationOffsetY()
 {
 	return centerOffset[1];
+}
+
+void Object::RegisterEvent(Event<Object> event)
+{
+	string name = event.GetName();
+	events[name] = event;
+}
+
+void Object::DeleteEvent(string name)
+{
+	events.erase(events.find(name));
+}
+
+void Object::DoEvents()
+{
+	for(auto &i : events) 
+	{
+		i.second.Check();
+	}
 }
