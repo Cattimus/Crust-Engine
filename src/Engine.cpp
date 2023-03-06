@@ -296,6 +296,10 @@ void Engine::MainLoop()
 					running = false;
 			}
 		}
+
+		//Execute events
+		DoEvents();
+
 		//render scene
 		RenderCurrent();
 
@@ -392,4 +396,46 @@ string Engine::GetReport()
 	}
 
 	return toReturn;
+}
+
+void Engine::RegisterEvent(Event<Engine> event)
+{
+	string name = event.GetName();
+	events[name] = event;
+}
+
+void Engine::DeleteEvent(string name)
+{
+	//Event does not exist
+	if(events.find(name) == events.end())
+	{
+		return;
+	}
+
+	events.erase(events.find(name));
+}
+
+void Engine::DoEvents()
+{
+	//Perform event actions for scene
+	for(auto &i : events) 
+	{
+		i.second.Check();
+	}
+
+	//Perform event actions for scenes
+	for(auto &i : scenes)
+	{
+		i.second.get()->DoEvents();
+	}
+}
+
+Event<Engine>* Engine::GetEvent(string name)
+{
+	if(events.find(name) == events.end())
+	{
+		return NULL;
+	}
+
+	return &events[name];
 }

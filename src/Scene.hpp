@@ -55,6 +55,7 @@ public:
 
 /////////////////////EVENT FUNCTIONS/////////////////////////
 	void RegisterEvent(Event<Scene> event);
+	Event<Scene>* GetEvent(string name);
 	void DeleteEvent(string name);
 	void DoEvents();
 };

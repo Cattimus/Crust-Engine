@@ -19,6 +19,8 @@ private:
 	//Function pointer to action
 	void (*action)(T* parent);
 
+	bool debug = false;
+
 public:
 	Event(T* parent, string name, bool (*condition)(T*), void (*action)(T*))
 	{
@@ -66,7 +68,11 @@ public:
 		//perform action if condition is met
 		if(condition(parent))
 		{
-			cout << "Event: " << name << " is activating.\n";
+			if(debug)
+			{
+				cout << "Event: " << name << " is activating.\n";
+			}
+
 			action(parent);
 		}
 	}
@@ -74,5 +80,15 @@ public:
 	string GetName()
 	{
 		return name;
+	}
+
+	void EnableDebug()
+	{
+		debug = true;
+	}
+
+	void DisableDebug()
+	{
+		debug = false;
 	}
 };

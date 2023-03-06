@@ -99,3 +99,13 @@ void Scene::DoEvents()
 		i.second.get()->DoEvents();
 	}
 }
+
+Event<Scene>* Scene::GetEvent(string name)
+{
+	if(events.find(name) == events.end())
+	{
+		return NULL;
+	}
+
+	return &events[name];
+}

@@ -187,3 +187,13 @@ void Object::DoEvents()
 		i.second.Check();
 	}
 }
+
+Event<Object>* Object::GetEvent(string name)
+{
+	if(events.find(name) == events.end())
+	{
+		return NULL;
+	}
+
+	return &events[name];
+}

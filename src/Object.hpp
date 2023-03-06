@@ -103,6 +103,7 @@ public:
 //////////////////EVENT FUNCTIONS///////////////////////////
 
 	void RegisterEvent(Event<Object> event);
+	Event<Object>* GetEvent(string name);
 	void DeleteEvent(string name);
 	void DoEvents();
 };

@@ -68,6 +68,9 @@ private:
 	//List that holds scene references
 	unordered_map<string, unique_ptr<Scene>> scenes;
 
+	//List that holds events
+	unordered_map<string, Event<Engine>> events;
+
 //////////////HELPER FUNCTIONS FOR ENGINE///////////////////////////
 
 	//Helper function to initialize SDL
@@ -162,4 +165,11 @@ public:
 
 	//Generate report about the current amount of objects
 	string GetReport();
+
+///////////////EVENT FUNCTIONS////////////////////////////////
+
+	void RegisterEvent(Event<Engine> event);
+	Event<Engine>* GetEvent(string name);
+	void DeleteEvent(string name);
+	void DoEvents();
 };
