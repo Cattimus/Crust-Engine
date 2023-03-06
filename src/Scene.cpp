@@ -16,10 +16,10 @@ Scene::~Scene()
 Object* Scene::CreateObject(string texPath, int x, int y, int w, int h)
 {
 	Texture* tex = engine->GetTexture(texPath);
-	Object* toReturn = (objects[ID] = make_unique<Object>(ID, tex, x, y, w, h)).get();
+	Object* to_return = (objects[ID] = make_unique<Object>(ID, tex, x, y, w, h)).get();
 	ID++;
 
-	return toReturn;
+	return to_return;
 }
 
 Object* Scene::GetObject(uint id)

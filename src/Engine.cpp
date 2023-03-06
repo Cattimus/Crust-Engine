@@ -183,7 +183,9 @@ Texture* Engine::GetTexture(string path)
 
 Scene* Engine::CreateScene(string name)
 {
-	return (scenes[name] = (make_unique<Scene>(name, this))).get();
+	auto to_return = (scenes[name] = make_unique<Scene>(name, this)).get();
+	scene = to_return;
+	return to_return;
 }
 
 Scene* Engine::GetScene(string name)
