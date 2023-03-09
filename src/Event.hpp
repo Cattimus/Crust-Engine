@@ -59,14 +59,14 @@ public:
 	//Check to see if condition is true, if it is, activate action
 	void Check()
 	{
-		//check for null condition or action
-		if(!(condition && action))
+		//check for null parent or action
+		if(!(action && parent))
 		{
 			return;
 		}
 
-		//perform action if condition is met
-		if(condition(parent))
+		//perform action by default if condition is unset
+		if(!condition)
 		{
 			if(debug)
 			{
@@ -75,6 +75,34 @@ public:
 
 			action(parent);
 		}
+
+		//perform action if condition is met
+		else if(condition(parent))
+		{
+			if(debug)
+			{
+				cout << "Event: " << name << " is activating.\n";
+			}
+
+			action(parent);
+		}
+	}
+
+	//Activate event without a condition check
+	void Activate()
+	{
+		//check for null parent or action
+		if(!(action && parent))
+		{
+			return;
+		}
+
+		if(debug)
+		{
+			cout << "Event: " << name << " is activating.\n";
+		}
+
+		action(parent);
 	}
 
 	string GetName()

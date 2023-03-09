@@ -21,26 +21,27 @@ int main()
 	engine.CreateWindow("Crust engine demo", false);
 	scene = engine.CreateScene("main");
 
+	scene->RegisterEvent(
+		Event<Scene>(scene, "Object Create",
 
-	scene->RegisterEvent(Event<Scene>(scene, "Object Create",
+			//condition
+			[](Scene* p)
+			{
+				static int prev_size;
+				int current_size = p->GetObjectList()->size();
+				bool to_return = (current_size > prev_size);
+				prev_size = current_size;
+				return to_return;
+			},
 
-	//condition
-	[](Scene* p)
-	{
-		static int prev_size;
-		int current_size = p->GetObjectList()->size();
-		bool to_return = (current_size > prev_size);
-		prev_size = current_size;
-		return to_return;
-	},
+			//action
+			[](Scene* p)
+			{
+				return;
+			}
 
-	//action
-	[](auto p)
-	{
-		return;
-	}
-
-	));
+		)
+	);
 
 	//enable printing for event
 	scene->GetEvent("Object Create")->EnableDebug();
@@ -48,28 +49,28 @@ int main()
 	Object* obj = scene->CreateObject("../media/test.png", 200, 100, 250, 250);
 	controlled = obj;
 
+	obj->SetVelocity(0.5, 0);
+
 	//Register a new event using lambda expressions
-	obj->RegisterEvent(Event<Object>(obj, "Move", 
+	obj->RegisterEvent(
+		Event<Object>(obj, "Move", 
+			//condition(always run)
+			NULL,
 
-	//condition(always run)
-	[](Object* parent) -> bool
-	{
-		return true;
-	},
+			//action (move object)
+			[](Object* parent)
+			{
+				auto xvel = parent->GetXVelocity();
+				auto yvel = parent->GetYVelocity();
 
-	//action (move object)
-	[](Object* parent)
-	{
-		auto xvel = parent->GetXVelocity();
-		auto yvel = parent->GetYVelocity();
+				auto xpos = parent->GetXPosition();
+				auto ypos = parent->GetYPosition();
 
-		auto xpos = parent->GetXPosition();
-		auto ypos = parent->GetYPosition();
-
-		parent->SetPosition(xpos + xvel, ypos + yvel);
-	}
+				parent->SetPosition(xpos + xvel, ypos + yvel);
+			}
 	
-	));
+		)
+	);
 
 	//start rendering
 	engine.StartMainLoop();

@@ -18,6 +18,9 @@ Engine::Engine()
 	backgroundColor[1] = 0;
 	backgroundColor[2] = 0;
 	scene = NULL;
+
+	//Keyboard input event
+	events["KeyboardInput"] = Event<Engine>(this, "KeyboardInput");
 }
 
 Engine::~Engine()
@@ -438,4 +441,14 @@ Event<Engine>* Engine::GetEvent(string name)
 	}
 
 	return &events[name];
+}
+
+void Engine::DoEvent(string name)
+{
+	if(events.find(name) == events.end())
+	{
+		return;
+	}
+
+	events[name].Activate();
 }

@@ -57,7 +57,7 @@ private:
 	SDL_Renderer* renderer;
 
 	//The background color of the window (blank color)
-	Uint8 backgroundColor[3];
+	uint8_t backgroundColor[3];
 
 	//Selected scene to be rendered
 	Scene* scene;
@@ -123,7 +123,7 @@ public:
 	Scene* SwitchScene(string name);
 
 	//Delete a scene
-	void   DeleteScene(string name);
+	void DeleteScene(string name);
 
 	//Returns a list of all active scene names separated by ','
 	string GetSceneList();
@@ -172,4 +172,5 @@ public:
 	Event<Engine>* GetEvent(string name);
 	void DeleteEvent(string name);
 	void DoEvents();
+	void DoEvent(string name);
 };
