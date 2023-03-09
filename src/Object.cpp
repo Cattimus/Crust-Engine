@@ -180,7 +180,7 @@ void Object::DeleteEvent(string name)
 	events.erase(events.find(name));
 }
 
-void Object::DoEvents()
+void Object::CheckEvents()
 {
 	for(auto &i : events) 
 	{

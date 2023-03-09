@@ -105,5 +105,5 @@ public:
 	void RegisterEvent(Event<Object> event);
 	Event<Object>* GetEvent(string name);
 	void DeleteEvent(string name);
-	void DoEvents();
+	void CheckEvents();
 };

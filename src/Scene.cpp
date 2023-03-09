@@ -85,7 +85,7 @@ void Scene::DeleteEvent(string name)
 	events.erase(events.find(name));
 }
 
-void Scene::DoEvents()
+void Scene::CheckEvents()
 {
 	//Perform event actions for scene
 	for(auto &i : events) 
@@ -96,7 +96,7 @@ void Scene::DoEvents()
 	//Perform event actions for objects
 	for(auto &i : objects)
 	{
-		i.second.get()->DoEvents();
+		i.second.get()->CheckEvents();
 	}
 }
 

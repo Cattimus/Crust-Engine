@@ -46,7 +46,7 @@ private:
 	int cleanupIntervalFrames;
 
 	//Delta time value for step logic
-	double delta = 0;
+	double delta;
 
 ////////////SDL VALUES///////////////////////////////////////////
 
@@ -71,6 +71,9 @@ private:
 	//List that holds events
 	unordered_map<string, Event<Engine>> events;
 
+////////////////////KEYBOARD INPUT VALUES////////////////////////
+	uint32_t last_scancode;
+
 //////////////HELPER FUNCTIONS FOR ENGINE///////////////////////////
 
 	//Helper function to initialize SDL
@@ -92,7 +95,6 @@ private:
 	void SetFlags();
 
 	//Helper function to delete unreferenced textures
-	//WARNING - THIS IS NOT IMPLEMENTED YET
 	void TextureCleanup();
 
 public:
@@ -168,9 +170,21 @@ public:
 
 ///////////////EVENT FUNCTIONS////////////////////////////////
 
+	//Register a new event
 	void RegisterEvent(Event<Engine> event);
+
+	//Get a reference to an existing event
 	Event<Engine>* GetEvent(string name);
+
+	//Remove an event
 	void DeleteEvent(string name);
-	void DoEvents();
+
+	//Check all events
+	void CheckEvents();
+
+	//Activate an event without checking condition
 	void DoEvent(string name);
+
+	//Get keyboard scancode
+	uint32_t GetScancode();
 };

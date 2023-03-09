@@ -301,7 +301,7 @@ void Engine::MainLoop()
 		}
 
 		//Execute events
-		DoEvents();
+		CheckEvents();
 
 		//render scene
 		RenderCurrent();
@@ -418,7 +418,7 @@ void Engine::DeleteEvent(string name)
 	events.erase(events.find(name));
 }
 
-void Engine::DoEvents()
+void Engine::CheckEvents()
 {
 	//Perform event actions for scene
 	for(auto &i : events) 
@@ -429,7 +429,7 @@ void Engine::DoEvents()
 	//Perform event actions for scenes
 	for(auto &i : scenes)
 	{
-		i.second.get()->DoEvents();
+		i.second.get()->CheckEvents();
 	}
 }
 
@@ -451,4 +451,9 @@ void Engine::DoEvent(string name)
 	}
 
 	events[name].Activate();
+}
+
+uint32_t Engine::GetScancode()
+{
+	return last_scancode;
 }
