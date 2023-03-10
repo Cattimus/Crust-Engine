@@ -19,31 +19,42 @@ private:
 	//Function pointer to action
 	void (*action)(T* parent);
 
-	bool debug = false;
+	bool debug;
+	
+	bool autoExec;
+
+	//Helper function to null-initialize all values
+	void init()
+	{
+		this->parent = NULL;
+		this->name = "";
+		this->condition = NULL;
+		this->action = NULL;
+		this->debug = false;
+		this->autoExec = false;
+	}
 
 public:
 	Event(T* parent, string name, bool (*condition)(T*), void (*action)(T*))
 	{
+		init();
 		this->parent = parent;
 		this->name = name;
 		this->condition = condition;
 		this->action = action;
+		autoExec = true;
 	}
 
 	Event(T* parent, string name)
 	{
+		init();
 		this->parent = parent;
 		this->name = name;
-		this->action = NULL;
-		this->condition = NULL;
 	}
 
 	Event()
 	{
-		action = NULL;
-		name = "";
-		parent = NULL;
-		condition = NULL;
+		init();
 	}
 
 	//Register condition
@@ -61,6 +72,11 @@ public:
 	//Check to see if condition is true, if it is, activate action
 	void Check()
 	{
+		if(!autoExec)
+		{
+			return;
+		}
+
 		//check for null parent or action
 		if(!(action && parent))
 		{
@@ -72,7 +88,7 @@ public:
 		{
 			if(debug)
 			{
-				cout << "Event: " << name << " is activating.\n";
+				cout << "Event: [" << name << "] is activating.\n";
 			}
 
 			action(parent);
@@ -83,7 +99,7 @@ public:
 		{
 			if(debug)
 			{
-				cout << "Event: " << name << " is activating.\n";
+				cout << "Event [" << name << "] is activating.\n";
 			}
 
 			action(parent);
@@ -101,7 +117,7 @@ public:
 
 		if(debug)
 		{
-			cout << "Event: " << name << " is activating.\n";
+			cout << "Event [" << name << "] is activating.\n";
 		}
 
 		action(parent);
@@ -120,5 +136,15 @@ public:
 	void DisableDebug()
 	{
 		debug = false;
+	}
+
+	void EnableAuto()
+	{
+		autoExec = true;
+	}
+
+	void DisableAuto()
+	{
+		autoExec = false;
 	}
 };

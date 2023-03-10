@@ -8,7 +8,7 @@ Object* controlled;
 Scene* scene;
 Engine engine;
 
-void HandleInput(Engine* p)
+void HandleKeyboardInput(Engine* p)
 {
 	switch(p->GetKeycode())
 	{
@@ -35,7 +35,6 @@ void HandleInput(Engine* p)
 			controlled->SetVelocity(p->KeyDown() ? maxVeloc : 0, controlled->GetYVelocity());
 			break;
 		}
-		
 	}
 }
 
@@ -101,7 +100,9 @@ int main()
 		)
 	);
 
-	engine.GetEventHandler()->GetEvent("KeyboardInput")->RegisterAction(HandleInput);
+	engine.GetEventHandler()->GetEvent("KeyboardInput")->RegisterAction(HandleKeyboardInput);
+	engine.GetEventHandler()->GetEvent("Quit")->RegisterAction([](auto p){return;});
+	engine.GetEventHandler()->GetEvent("Quit")->EnableDebug();
 
 	//start rendering
 	engine.StartMainLoop();
