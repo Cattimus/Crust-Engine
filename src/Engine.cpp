@@ -20,7 +20,23 @@ Engine::Engine()
 	scene = NULL;
 
 	//Keyboard input event
-	events.RegisterEvent(Event<Engine>(this, "KeyboardInput", [](auto p){return false;}, NULL));
+	events.RegisterEvent(Event<Engine>(this, "KeyboardInput"));
+
+	//Mouse events
+	events.RegisterEvent(Event<Engine>(this, "MouseButton"));
+	events.RegisterEvent(Event<Engine>(this, "MouseWheel"));
+	events.RegisterEvent(Event<Engine>(this, "MouseMoved"));
+
+	//Window Events
+	events.RegisterEvent(Event<Engine>(this, "WindowFocus"));
+	events.RegisterEvent(Event<Engine>(this, "WindowUnfocus"));
+	events.RegisterEvent(Event<Engine>(this, "WindowMoved"));
+	events.RegisterEvent(Event<Engine>(this, "WindowMinimized"));
+	events.RegisterEvent(Event<Engine>(this, "WindowMaximized"));
+	events.RegisterEvent(Event<Engine>(this, "WindowRestored"));
+
+	//Quit event
+	events.RegisterEvent(Event<Engine>(this, "Quit"));
 }
 
 Engine::~Engine()
@@ -296,6 +312,7 @@ void Engine::MainLoop()
 			{
 				//Quit out of the program
 				case SDL_QUIT:
+					events.DoEvent("Quit");
 					running = false;
 				break;
 
