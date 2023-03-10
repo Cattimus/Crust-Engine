@@ -330,7 +330,12 @@ void Engine::MainLoop()
 
 		//Execute events
 		events.CheckEvents();
-		scene->CheckEvents();
+
+		//Execute scene events
+		if(scene)
+		{
+			scene->CheckEvents();
+		}
 
 		//render scene
 		RenderCurrent();
@@ -450,4 +455,9 @@ bool Engine::KeyDown()
 bool Engine::KeyRepeat()
 {
 	return keyRepeat;
+}
+
+double Engine::GetDelta()
+{
+	return delta;
 }

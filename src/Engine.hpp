@@ -162,6 +162,7 @@ public:
 
 	void EnableDelta();
 	void DisableDelta();
+	double GetDelta();
 
 	void EnableVsync();
 	void DisableVsync();
