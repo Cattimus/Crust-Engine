@@ -3,10 +3,41 @@ using namespace std;
 
 #include "Engine.hpp"
 
-double maxVeloc = 500;
+double maxVeloc = 5;
 Object* controlled;
 Scene* scene;
 Engine engine;
+
+void HandleInput(Engine* p)
+{
+	switch(p->GetKeycode())
+	{
+		case SDLK_w:
+		{
+			controlled->SetVelocity(controlled->GetXVelocity(), p->KeyDown() ? maxVeloc * -1 : 0);
+			break;
+		}
+
+		case SDLK_s:
+		{
+			controlled->SetVelocity(controlled->GetXVelocity(), p->KeyDown() ? maxVeloc : 0);
+			break;
+		}
+
+		case SDLK_a:
+		{
+			controlled->SetVelocity(p->KeyDown() ? maxVeloc * -1 : 0, controlled->GetYVelocity());
+			break;
+		}
+
+		case SDLK_d:
+		{
+			controlled->SetVelocity(p->KeyDown() ? maxVeloc : 0, controlled->GetYVelocity());
+			break;
+		}
+		
+	}
+}
 
 int main()
 {
@@ -49,8 +80,6 @@ int main()
 	Object* obj = scene->CreateObject("../media/test.png", 200, 100, 250, 250);
 	controlled = obj;
 
-	obj->SetVelocity(0.5, 0);
-
 	//Register a new event using lambda expressions
 	obj->RegisterEvent(
 		Event<Object>(obj, "Move", 
@@ -71,6 +100,8 @@ int main()
 	
 		)
 	);
+
+	engine.GetEvent("KeyboardInput")->RegisterAction(HandleInput);
 
 	//start rendering
 	engine.StartMainLoop();

@@ -72,7 +72,9 @@ private:
 	unordered_map<string, Event<Engine>> events;
 
 ////////////////////KEYBOARD INPUT VALUES////////////////////////
-	uint32_t last_scancode;
+	uint32_t lastKeycode;
+	bool keyDown;
+	bool keyRepeat;
 
 //////////////HELPER FUNCTIONS FOR ENGINE///////////////////////////
 
@@ -185,6 +187,14 @@ public:
 	//Activate an event without checking condition
 	void DoEvent(string name);
 
-	//Get keyboard scancode
-	uint32_t GetScancode();
+///////////////////KEYBOARD EVENT FUNCTIONS//////////////////////
+
+	//Get keyboard keycode
+	uint32_t GetKeycode();
+
+	//Get key up/down status
+	bool KeyDown();
+
+	//Get key repeat status
+	bool KeyRepeat();
 };

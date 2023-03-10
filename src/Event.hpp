@@ -34,6 +34,8 @@ public:
 	{
 		this->parent = parent;
 		this->name = name;
+		this->action = NULL;
+		this->condition = NULL;
 	}
 
 	Event()

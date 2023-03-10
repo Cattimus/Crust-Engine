@@ -297,6 +297,17 @@ void Engine::MainLoop()
 				//Quit out of the program
 				case SDL_QUIT:
 					running = false;
+				break;
+
+				//keyboard input
+				case SDL_KEYDOWN:
+				case SDL_KEYUP:
+					keyDown = e.key.state;
+					lastKeycode = e.key.keysym.sym;
+					keyRepeat = e.key.repeat;
+					DoEvent("KeyboardInput");
+				break;
+
 			}
 		}
 
@@ -453,7 +464,19 @@ void Engine::DoEvent(string name)
 	events[name].Activate();
 }
 
-uint32_t Engine::GetScancode()
+uint32_t Engine::GetKeycode()
 {
-	return last_scancode;
+	return lastKeycode;
+}
+
+//Get key up/down status
+bool Engine::KeyDown()
+{
+	return keyDown;
+}
+
+//Get key repeat status
+bool Engine::KeyRepeat()
+{
+	return keyRepeat;
 }
