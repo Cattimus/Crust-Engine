@@ -52,7 +52,7 @@ int main()
 	engine.CreateWindow("Crust engine demo", false);
 	scene = engine.CreateScene("main");
 
-	scene->RegisterEvent(
+	scene->GetEventHandler()->RegisterEvent(
 		Event<Scene>(scene, "Object Create",
 
 			//condition
@@ -75,13 +75,13 @@ int main()
 	);
 
 	//enable printing for event
-	scene->GetEvent("Object Create")->EnableDebug();
+	scene->GetEventHandler()->GetEvent("Object Create")->EnableDebug();
 
 	Object* obj = scene->CreateObject("../media/test.png", 200, 100, 250, 250);
 	controlled = obj;
 
 	//Register a new event using lambda expressions
-	obj->RegisterEvent(
+	obj->GetEventHandler()->RegisterEvent(
 		Event<Object>(obj, "Move", 
 			//condition(always run)
 			NULL,
@@ -101,7 +101,7 @@ int main()
 		)
 	);
 
-	engine.GetEvent("KeyboardInput")->RegisterAction(HandleInput);
+	engine.GetEventHandler()->GetEvent("KeyboardInput")->RegisterAction(HandleInput);
 
 	//start rendering
 	engine.StartMainLoop();

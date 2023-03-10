@@ -5,7 +5,7 @@
 using namespace std;
 
 #include "Texture.hpp"
-#include "Event.hpp"
+#include "EventHandler.hpp"
 
 class Object
 {
@@ -33,7 +33,7 @@ private:
 	double rotVeloc;
 
 	//Collection of all events sorted by name
-	unordered_map<string, Event<Object>> events;
+	EventHandler<Object> events;
 
 	//Helper functions to initialize values
 	void Init();
@@ -102,8 +102,6 @@ public:
 
 //////////////////EVENT FUNCTIONS///////////////////////////
 
-	void RegisterEvent(Event<Object> event);
-	Event<Object>* GetEvent(string name);
-	void DeleteEvent(string name);
-	void CheckEvents();
+	EventHandler<Object>* GetEventHandler();
+
 };

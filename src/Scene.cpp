@@ -68,44 +68,17 @@ unordered_map<uint, unique_ptr<Object>>* Scene::GetObjectList()
 	return &objects;
 }
 
-void Scene::RegisterEvent(Event<Scene> event)
+EventHandler<Scene>* Scene::GetEventHandler()
 {
-	string name = event.GetName();
-	events[name] = event;
-}
-
-void Scene::DeleteEvent(string name)
-{
-	//Event does not exist
-	if(events.find(name) == events.end())
-	{
-		return;
-	}
-
-	events.erase(events.find(name));
+	return &events;
 }
 
 void Scene::CheckEvents()
 {
-	//Perform event actions for scene
-	for(auto &i : events) 
-	{
-		i.second.Check();
-	}
+	events.CheckEvents();
 
-	//Perform event actions for objects
 	for(auto &i : objects)
 	{
-		i.second.get()->CheckEvents();
+		i.second.get()->GetEventHandler()->CheckEvents();
 	}
-}
-
-Event<Scene>* Scene::GetEvent(string name)
-{
-	if(events.find(name) == events.end())
-	{
-		return NULL;
-	}
-
-	return &events[name];
 }

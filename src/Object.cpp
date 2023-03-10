@@ -163,37 +163,7 @@ double Object::GetRotationOffsetY()
 	return centerOffset[1];
 }
 
-void Object::RegisterEvent(Event<Object> event)
+EventHandler<Object>* Object::GetEventHandler()
 {
-	string name = event.GetName();
-	events[name] = event;
-}
-
-void Object::DeleteEvent(string name)
-{
-	//Event does not exist
-	if(events.find(name) == events.end())
-	{
-		return;
-	}
-
-	events.erase(events.find(name));
-}
-
-void Object::CheckEvents()
-{
-	for(auto &i : events) 
-	{
-		i.second.Check();
-	}
-}
-
-Event<Object>* Object::GetEvent(string name)
-{
-	if(events.find(name) == events.end())
-	{
-		return NULL;
-	}
-
-	return &events[name];
+	return &events;
 }

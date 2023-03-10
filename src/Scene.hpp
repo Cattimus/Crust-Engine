@@ -8,7 +8,7 @@ using namespace std;
 class Engine;
 #include "Object.hpp"
 #include "Engine.hpp"
-#include "Event.hpp"
+#include "EventHandler.hpp"
 
 class Scene
 {
@@ -22,7 +22,7 @@ private:
 
 	//Data storage for all of the objects that are currently active
 	unordered_map<uint, unique_ptr<Object>> objects;
-	unordered_map<string, Event<Scene>> events;
+	EventHandler<Scene> events;
 
 	//Reference to the engine so we can access textures
 	Engine* engine;
@@ -54,8 +54,6 @@ public:
 	string GetName();
 
 /////////////////////EVENT FUNCTIONS/////////////////////////
-	void RegisterEvent(Event<Scene> event);
-	Event<Scene>* GetEvent(string name);
-	void DeleteEvent(string name);
+	EventHandler<Scene>* GetEventHandler();
 	void CheckEvents();
 };

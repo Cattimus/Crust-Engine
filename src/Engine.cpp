@@ -20,7 +20,7 @@ Engine::Engine()
 	scene = NULL;
 
 	//Keyboard input event
-	events["KeyboardInput"] = Event<Engine>(this, "KeyboardInput");
+	events.RegisterEvent(Event<Engine>(this, "KeyboardInput", [](auto p){return false;}, NULL));
 }
 
 Engine::~Engine()
@@ -305,14 +305,15 @@ void Engine::MainLoop()
 					keyDown = e.key.state;
 					lastKeycode = e.key.keysym.sym;
 					keyRepeat = e.key.repeat;
-					DoEvent("KeyboardInput");
+					events.DoEvent("KeyboardInput");
 				break;
 
 			}
 		}
 
 		//Execute events
-		CheckEvents();
+		events.CheckEvents();
+		scene->CheckEvents();
 
 		//render scene
 		RenderCurrent();
@@ -412,56 +413,9 @@ string Engine::GetReport()
 	return toReturn;
 }
 
-void Engine::RegisterEvent(Event<Engine> event)
+EventHandler<Engine>* Engine::GetEventHandler()
 {
-	string name = event.GetName();
-	events[name] = event;
-}
-
-void Engine::DeleteEvent(string name)
-{
-	//Event does not exist
-	if(events.find(name) == events.end())
-	{
-		return;
-	}
-
-	events.erase(events.find(name));
-}
-
-void Engine::CheckEvents()
-{
-	//Perform event actions for scene
-	for(auto &i : events) 
-	{
-		i.second.Check();
-	}
-
-	//Perform event actions for scenes
-	for(auto &i : scenes)
-	{
-		i.second.get()->CheckEvents();
-	}
-}
-
-Event<Engine>* Engine::GetEvent(string name)
-{
-	if(events.find(name) == events.end())
-	{
-		return NULL;
-	}
-
-	return &events[name];
-}
-
-void Engine::DoEvent(string name)
-{
-	if(events.find(name) == events.end())
-	{
-		return;
-	}
-
-	events[name].Activate();
+	return &events;
 }
 
 uint32_t Engine::GetKeycode()

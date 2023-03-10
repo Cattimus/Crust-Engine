@@ -11,6 +11,7 @@ using namespace std;
 class Scene;
 #include "Scene.hpp"
 #include "Texture.hpp"
+#include "EventHandler.hpp"
 
 //TODO - Implement keeping track of average FPS
 
@@ -68,8 +69,8 @@ private:
 	//List that holds scene references
 	unordered_map<string, unique_ptr<Scene>> scenes;
 
-	//List that holds events
-	unordered_map<string, Event<Engine>> events;
+	//Event handler
+	EventHandler<Engine> events;
 
 ////////////////////KEYBOARD INPUT VALUES////////////////////////
 	uint32_t lastKeycode;
@@ -170,22 +171,8 @@ public:
 	//Generate report about the current amount of objects
 	string GetReport();
 
-///////////////EVENT FUNCTIONS////////////////////////////////
-
-	//Register a new event
-	void RegisterEvent(Event<Engine> event);
-
-	//Get a reference to an existing event
-	Event<Engine>* GetEvent(string name);
-
-	//Remove an event
-	void DeleteEvent(string name);
-
-	//Check all events
-	void CheckEvents();
-
-	//Activate an event without checking condition
-	void DoEvent(string name);
+///////////////////EVENT HANDLER FUNCTIONS////////////////////////
+	EventHandler<Engine>* GetEventHandler();
 
 ///////////////////KEYBOARD EVENT FUNCTIONS//////////////////////
 
