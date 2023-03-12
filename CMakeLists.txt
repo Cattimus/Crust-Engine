@@ -18,6 +18,12 @@ set(SOURCES
 
 	src/Object.hpp
 	src/Object.cpp
+
+	src/Entity.hpp
+	src/Entity.cpp
+
+	src/Hitbox.hpp
+	src/Hitbox.cpp
 )
 
 set(SOURCES_PROTOTYPE
