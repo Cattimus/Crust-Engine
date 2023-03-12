@@ -27,6 +27,8 @@ public:
 
 	EventHandler<Object>* GetEventHandler();
 
+	virtual void Render(SDL_Renderer* r);
+
 //////////////////////COLLISIONS///////////////////////////
 
 	bool IsCollidingWith(Object& b);

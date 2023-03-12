@@ -274,22 +274,7 @@ void Engine::RenderCurrent()
 		{
 			auto cur = i.second.get();
 
-			//Construct an SDL_Rect for the object based on position and size
-			SDL_Rect objPos
-			{
-				.x = (int)cur->GetXPosition(),
-				.y = (int)cur->GetYPosition(),
-				.w = cur->GetWidth(),
-				.h = cur->GetHeight()
-			};
-
-			//calculate center of object
-			SDL_Point center;
-			center.x = objPos.w / 2 + cur->GetRotationOffsetX();
-			center.y = objPos.h / 2 + cur->GetRotationOffsetY();
-
-			//Render to the screen
-			SDL_RenderCopyEx(renderer, cur->GetTexture(), NULL, &objPos, cur->GetRotation(), &center, SDL_FLIP_NONE);
+			cur->Render(renderer);
 		}
 	}
 

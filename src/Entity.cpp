@@ -31,3 +31,28 @@ Entity::Entity(uint id, Texture* tex) : Object(id, 0, 0,tex->GetWidth(), tex->Ge
 {
 	Init(tex);
 }
+
+void Entity::Render(SDL_Renderer* r)
+{
+	if(!r)
+	{
+		return;
+	}
+
+	//Construct an SDL_Rect for the object based on position and size
+	SDL_Rect objPos
+	{
+		.x = (int)x,
+		.y = (int)y,
+		.w = w,
+		.h = h
+	};
+
+	//calculate center of object
+	SDL_Point center;
+	center.x = w / 2 + centerOffsetX;
+	center.y = h / 2 + centerOffsetY;
+
+	//Render to the screen
+	SDL_RenderCopyEx(r, tex->Get(), NULL, &objPos, GetRotation(), &center, SDL_FLIP_NONE);
+}

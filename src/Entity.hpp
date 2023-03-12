@@ -18,9 +18,6 @@ class Entity : public Object
 	//Pointer to the texture object that will be used for rendering
 	Texture* tex;
 
-	//Collection of all events sorted by name
-	EventHandler<Entity> events;
-
 	void Init(Texture* tex);
 
 public:
@@ -45,11 +42,6 @@ public:
 	//Return the Texture object
 	Texture* GetTextureObject();
 
-//////////////////EVENT FUNCTIONS///////////////////////////
-
-	EventHandler<Entity>* GetEventHandler();
-
-//////////////////////COLLISIONS///////////////////////////
-
-	bool IsCollidingWith(Entity& b);
+	//Render object
+	void Render(SDL_Renderer* r);
 };
