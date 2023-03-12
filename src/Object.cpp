@@ -1,19 +1,16 @@
 #include "Object.hpp"
 
-Object::Object(uint id, int x, int y, int w, int h)
+Object::Object(uint id, int x, int y, int w, int h) : Position(x,y,w,h)
 {
-	Position(x,y,w,h);
 	this->id = id;
 }
-Object::Object(uint id, int w, int h)
+Object::Object(uint id, int w, int h) : Position(0,0,w,h)
 {
-	Position(x,y);
 	this->id = id;
 }
 
-Object::Object(uint id)
+Object::Object(uint id) : Position()
 {
-	Position();
 	this->id = id;
 }
 
@@ -34,5 +31,5 @@ bool Object::IsCollidingWith(Object& b)
 
 void Object::Render(SDL_Renderer* r)
 {
-	return;
+
 }
