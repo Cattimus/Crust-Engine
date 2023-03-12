@@ -7,6 +7,7 @@ using namespace std;
 
 class Engine;
 #include "Object.hpp"
+#include "Entity.hpp"
 #include "Engine.hpp"
 #include "EventHandler.hpp"
 
@@ -35,7 +36,8 @@ public:
 
 	//Create a new object from parameters
 	//Returns: a reference to the created object
-	Object* CreateObject(string texPath, int x, int y, int w, int h);
+	Object* CreateEntity(string texPath, int x, int y, int w, int h);
+	Object* CreateObject(int x, int y, int w, int h);
 
 	//Get an object by ID
 	//Returns: a reference to the object if it exists. NULL if it does not.

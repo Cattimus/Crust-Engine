@@ -24,6 +24,9 @@ set(SOURCES
 
 	src/Hitbox.hpp
 	src/Hitbox.cpp
+
+	src/Position.hpp
+	src/Position.cpp
 )
 
 set(SOURCES_PROTOTYPE

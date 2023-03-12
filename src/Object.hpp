@@ -4,6 +4,8 @@
 #include <unordered_map>
 using namespace std;
 
+#include <SDL.h>
+
 #include "EventHandler.hpp"
 #include "Position.hpp"
 
@@ -21,6 +23,8 @@ public:
 	Object(uint id, int x, int y, int w, int h);
 	Object(uint id, int w, int h);
 	Object(uint id);
+
+	virtual ~Object(){};
 
 	//Return the object ID
 	uint GetID();

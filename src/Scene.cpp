@@ -13,10 +13,18 @@ Scene::~Scene()
 	objects = unordered_map<uint, unique_ptr<Object>>();
 }
 
-Object* Scene::CreateObject(string texPath, int x, int y, int w, int h)
+Object* Scene::CreateEntity(string texPath, int x, int y, int w, int h)
 {
 	Texture* tex = engine->GetTexture(texPath);
-	Object* to_return = (objects[ID] = make_unique<Object>(ID, tex, x, y, w, h)).get();
+	Object* to_return = (objects[ID] = make_unique<Entity>(ID, tex, x, y, w, h)).get();
+	ID++;
+
+	return to_return;
+}
+
+Object* Scene::CreateObject(int x, int y, int w, int h)
+{
+	Object* to_return = (objects[ID] = make_unique<Object>(ID, x, y, w, h)).get();
 	ID++;
 
 	return to_return;

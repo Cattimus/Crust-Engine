@@ -14,25 +14,25 @@ void HandleKeyboardInput(Engine* p)
 	{
 		case SDLK_w:
 		{
-			controlled->SetVelocity(controlled->GetXVelocity(), p->KeyDown() ? maxVeloc * -1 : 0);
+			controlled->velY = p->KeyDown() ? maxVeloc * -1 : 0;
 			break;
 		}
 
 		case SDLK_s:
 		{
-			controlled->SetVelocity(controlled->GetXVelocity(), p->KeyDown() ? maxVeloc : 0);
+			controlled->velY = p->KeyDown() ? maxVeloc : 0;
 			break;
 		}
 
 		case SDLK_a:
 		{
-			controlled->SetVelocity(p->KeyDown() ? maxVeloc * -1 : 0, controlled->GetYVelocity());
+			controlled->velX = p->KeyDown() ? maxVeloc * -1 : 0;
 			break;
 		}
 
 		case SDLK_d:
 		{
-			controlled->SetVelocity(p->KeyDown() ? maxVeloc : 0, controlled->GetYVelocity());
+			controlled->velX = p->KeyDown() ? maxVeloc : 0;
 			break;
 		}
 	}
@@ -76,7 +76,7 @@ int main()
 	//enable printing for event
 	scene->GetEventHandler()->GetEvent("Object Create")->EnableDebug();
 
-	Object* obj = scene->CreateObject("../media/test.png", 200, 100, 250, 250);
+	Object* obj = scene->CreateEntity("../media/test.png", 200, 100, 250, 250);
 	controlled = obj;
 
 	//Register a new event using lambda expressions
@@ -88,13 +88,7 @@ int main()
 			//action (move object)
 			[](Object* parent)
 			{
-				auto xvel = parent->GetXVelocity();
-				auto yvel = parent->GetYVelocity();
-
-				auto xpos = parent->GetXPosition();
-				auto ypos = parent->GetYPosition();
-
-				parent->SetPosition(xpos + xvel, ypos + yvel);
+				parent->MoveStep(1);
 			}
 	
 		)

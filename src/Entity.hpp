@@ -4,12 +4,14 @@
 #include <unordered_map>
 using namespace std;
 
+#include <SDL.h>
+
 #include "Texture.hpp"
 #include "Object.hpp"
 #include "EventHandler.hpp"
 #include "Position.hpp"
 
-class Entity : public Object
+class Entity final : public Object
 {
 
 	//Unique ID for the object (at least in the scene)
