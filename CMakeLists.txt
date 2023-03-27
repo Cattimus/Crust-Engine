@@ -5,39 +5,33 @@ project(main)
 set(SOURCES 
 	src/main.cpp
 
-	src/Event.hpp
+	src/Logic/Event.hpp
 
-	src/Texture.hpp
-	src/Texture.cpp
+	src/Objects/Texture.hpp
+	src/Objects/Texture.cpp
 
-	src/Engine.cpp
-	src/Engine.hpp
+	src/Controllers/Engine.cpp
+	src/Controllers/Engine.hpp
 
-	src/Scene.hpp
-	src/Scene.cpp
+	src/Controllers/Scene.hpp
+	src/Controllers/Scene.cpp
 
-	src/Object.hpp
-	src/Object.cpp
+	src/Objects/Object.hpp
+	src/Objects/Object.cpp
 
-	src/Entity.hpp
-	src/Entity.cpp
+	src/Objects/Entity.hpp
+	src/Objects/Entity.cpp
 
-	src/Hitbox.hpp
-	src/Hitbox.cpp
+	src/Logic/Hitbox.hpp
+	src/Logic/Hitbox.cpp
 
-	src/Position.hpp
-	src/Position.cpp
-)
-
-set(SOURCES_PROTOTYPE
-	proto/main.cpp
-	proto/Event.hpp
-	proto/Testclass.hpp
+	src/Logic/Position.hpp
+	src/Logic/Position.cpp
 )
 
 include_directories(/usr/include/SDL2)
+include_directories(src)
 add_compile_options(-g -Wall)
 add_executable(main ${SOURCES})
-add_executable(proto ${SOURCES_PROTOTYPE})
 target_link_libraries(main SDL2)
 target_link_libraries(main SDL2_image)

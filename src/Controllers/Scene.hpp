@@ -6,10 +6,10 @@
 using namespace std;
 
 class Engine;
-#include "Object.hpp"
-#include "Entity.hpp"
-#include "Engine.hpp"
-#include "EventHandler.hpp"
+#include "Objects/Object.hpp"
+#include "Objects/Entity.hpp"
+#include "Controllers/Engine.hpp"
+#include "Controllers/EventHandler.hpp"
 
 class Scene
 {

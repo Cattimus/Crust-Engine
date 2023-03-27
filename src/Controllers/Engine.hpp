@@ -9,9 +9,9 @@ using namespace std;
 #include <SDL_image.h>
 
 class Scene;
-#include "Scene.hpp"
-#include "Texture.hpp"
-#include "EventHandler.hpp"
+#include "Controllers/Scene.hpp"
+#include "Objects/Texture.hpp"
+#include "Controllers/EventHandler.hpp"
 
 //TODO - Implement keeping track of average FPS
 

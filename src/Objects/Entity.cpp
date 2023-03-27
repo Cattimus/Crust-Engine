@@ -1,4 +1,4 @@
-#include "Entity.hpp"
+#include "Objects/Entity.hpp"
 
 Entity::~Entity()
 {

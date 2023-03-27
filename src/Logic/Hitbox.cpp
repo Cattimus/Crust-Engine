@@ -1,4 +1,4 @@
-#include "Hitbox.hpp"
+#include "Logic/Hitbox.hpp"
 
 Hitbox::Hitbox() : Position()
 {

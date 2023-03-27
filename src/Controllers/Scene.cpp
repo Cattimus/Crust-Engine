@@ -1,4 +1,4 @@
-#include "Scene.hpp"
+#include "Controllers/Scene.hpp"
 
 Scene::Scene(string name, Engine* engine)
 {

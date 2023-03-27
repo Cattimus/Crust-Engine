@@ -1,4 +1,4 @@
-#include "Position.hpp"
+#include "Logic/Position.hpp"
 
 void Position::Init()
 {

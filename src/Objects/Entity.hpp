@@ -6,10 +6,10 @@ using namespace std;
 
 #include <SDL.h>
 
-#include "Texture.hpp"
-#include "Object.hpp"
-#include "EventHandler.hpp"
-#include "Position.hpp"
+#include "Objects/Texture.hpp"
+#include "Objects/Object.hpp"
+#include "Controllers/EventHandler.hpp"
+#include "Logic/Position.hpp"
 
 class Entity final : public Object
 {

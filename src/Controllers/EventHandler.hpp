@@ -3,7 +3,7 @@
 #include <unordered_map>
 using namespace std;
 
-#include "Event.hpp"
+#include "Logic/Event.hpp"
 
 template <typename T>
 class EventHandler

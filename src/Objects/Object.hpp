@@ -6,8 +6,8 @@ using namespace std;
 
 #include <SDL.h>
 
-#include "EventHandler.hpp"
-#include "Position.hpp"
+#include "Controllers/EventHandler.hpp"
+#include "Logic/Position.hpp"
 
 class Object : public Position
 {

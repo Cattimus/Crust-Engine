@@ -1,4 +1,4 @@
-#include "Texture.hpp"
+#include "Objects/Texture.hpp"
 
 Texture::Texture(string path, SDL_Renderer* renderer)
 {

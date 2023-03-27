@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Position.hpp"
+#include "Logic/Position.hpp"
 #include "SDL.h"
 
 class Hitbox : Position

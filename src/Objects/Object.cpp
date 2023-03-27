@@ -1,4 +1,4 @@
-#include "Object.hpp"
+#include "Objects/Object.hpp"
 
 Object::Object(uint id, int x, int y, int w, int h) : Position(x,y,w,h)
 {
