@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Position.hpp"
+#include "SDL.h"
 
 class Hitbox : Position
 {
@@ -20,4 +21,6 @@ public:
 	void DisableDebug();
 	void SetDebugColor(int r, int g, int b);
 	int* GetDebugColor();
+
+	virtual void Render(SDL_Renderer* r);
 };

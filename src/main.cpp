@@ -35,6 +35,11 @@ void HandleKeyboardInput(Engine* p)
 			controlled->velX = p->KeyDown() ? maxVeloc : 0;
 			break;
 		}
+
+		case SDLK_r:
+		{
+			controlled->velR = p->KeyDown() ? 15 : 0;
+		}
 	}
 }
 
@@ -89,6 +94,7 @@ int main()
 			[](Object* parent)
 			{
 				parent->MoveStep(1);
+				parent->RotateStep(1);
 			}
 	
 		)
