@@ -57,9 +57,6 @@ private:
 	//Main renderer
 	SDL_Renderer* renderer;
 
-	//The background color of the window (blank color)
-	uint8_t backgroundColor[3];
-
 	//Selected scene to be rendered
 	Scene* scene;
 
@@ -101,6 +98,10 @@ private:
 	void TextureCleanup();
 
 public:
+	uint8_t backgroundR;
+	uint8_t backgroundG;
+	uint8_t backgroundB;
+
 	Engine();
 	~Engine();
 

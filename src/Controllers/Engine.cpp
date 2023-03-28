@@ -14,9 +14,9 @@ Engine::Engine()
 	delta = 0;
 	window = NULL;
 	renderer = NULL;
-	backgroundColor[0] = 0;
-	backgroundColor[1] = 0;
-	backgroundColor[2] = 0;
+	backgroundR = 0;
+	backgroundG = 0;
+	backgroundB = 0;
 	scene = NULL;
 
 	//Keyboard input event
@@ -89,14 +89,14 @@ void Engine::Quit()
 //background color functions
 void Engine::SetBackgroundColor(uint r, uint g, uint b)
 {
-	backgroundColor[0] = r;
-	backgroundColor[1] = g;
-	backgroundColor[2] = b;
+	backgroundR= r;
+	backgroundG = g;
+	backgroundB = b;
 	SetBackgroundColor();
 }
 void Engine::SetBackgroundColor()
 {
-	SDL_SetRenderDrawColor(renderer, backgroundColor[0], backgroundColor[1], backgroundColor[2], 0xFF);
+	SDL_SetRenderDrawColor(renderer, backgroundR, backgroundG, backgroundB, 0xFF);
 }
 
 //initialize SDL and create a window
@@ -148,6 +148,8 @@ void Engine::CreateWindow(string title, int x, int y, int w, int h, bool resizab
 
 	//Create renderer from window
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	//enable transparency in sdl_draw functions
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	SetBackgroundColor();
 }
 void Engine::CreateWindow(string title, int w, int h, bool resizable)
