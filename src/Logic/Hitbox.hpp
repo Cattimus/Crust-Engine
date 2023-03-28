@@ -6,21 +6,25 @@
 class Hitbox : Position
 {
 private:
-	bool debug;
-	int debugColor[3];
+	void Init();
 
 public:
+	unsigned char r = 0;
+	unsigned char g = 0;
+	unsigned char b = 0;
+	float opacity = 0;
+	bool debug;
+
 	Hitbox();
 	Hitbox(double x, double y);
 	Hitbox(double x, double y, int w, int h);
 
+	~Hitbox();
+
 	bool IsColliding(Hitbox& b);
+	void SetDebugColor(uint r, uint g, uint b);
 
 ///////////////DEBUG RENDERING//////////////////
-	void EnableDebug();
-	void DisableDebug();
-	void SetDebugColor(int r, int g, int b);
-	int* GetDebugColor();
 
 	virtual void Render(SDL_Renderer* r);
 };
