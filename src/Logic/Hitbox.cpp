@@ -29,7 +29,11 @@ Hitbox::Hitbox(double x, double y, int w, int h) : Position(x,y,w,h)
 
 bool Hitbox::IsColliding(Hitbox& b)
 {
-	return false;
+	//AABB collision detection
+	bool xOverlap = x + w >= b.x && b.x + b.w >= x;
+	bool yOverlap = y + h >= b.y && b.y + b.h >= y;
+
+	return xOverlap && yOverlap;
 }
 
 void Hitbox::SetDebugColor(uint r, uint g, uint b)

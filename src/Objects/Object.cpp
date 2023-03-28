@@ -1,17 +1,26 @@
 #include "Objects/Object.hpp"
 
-Object::Object(uint id, int x, int y, int w, int h) : Position(x,y,w,h)
+void Object::Init(uint id)
 {
 	this->id = id;
+
+	events.RegisterEvent(Event<Object>(this, "Move"));
+	events.RegisterEvent(Event<Object>(this, "Collision"));
+	events.RegisterEvent(Event<Object>(this, "Destroyed"));
+}
+
+Object::Object(uint id, int x, int y, int w, int h) : Position(x,y,w,h)
+{
+	Init(id);
 }
 Object::Object(uint id, int w, int h) : Position(0,0,w,h)
 {
-	this->id = id;
+	Init(id);
 }
 
 Object::Object(uint id) : Position()
 {
-	this->id = id;
+	Init(id);
 }
 
 uint Object::GetID()

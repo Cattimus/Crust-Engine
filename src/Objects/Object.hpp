@@ -20,6 +20,8 @@ private:
 	//Collection of all events sorted by name
 	EventHandler<Object> events;
 
+	void Init(uint id);
+
 public:
 	Object(uint id, int x, int y, int w, int h);
 	Object(uint id, int w, int h);

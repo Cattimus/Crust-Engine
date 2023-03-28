@@ -19,9 +19,7 @@ private:
 	//Function pointer to action
 	void (*action)(T* parent);
 
-	bool debug;
-	
-	bool autoExec;
+
 
 	//Helper function to null-initialize all values
 	void init()
@@ -35,6 +33,9 @@ private:
 	}
 
 public:
+	bool debug;
+	bool autoExec;
+
 	Event(T* parent, string name, bool (*condition)(T*), void (*action)(T*))
 	{
 		init();
@@ -126,25 +127,5 @@ public:
 	string GetName()
 	{
 		return name;
-	}
-
-	void EnableDebug()
-	{
-		debug = true;
-	}
-
-	void DisableDebug()
-	{
-		debug = false;
-	}
-
-	void EnableAuto()
-	{
-		autoExec = true;
-	}
-
-	void DisableAuto()
-	{
-		autoExec = false;
 	}
 };

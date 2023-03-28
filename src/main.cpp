@@ -79,7 +79,7 @@ int main()
 	);
 
 	//enable printing for event
-	scene->GetEventHandler()->GetEvent("Object Create")->EnableDebug();
+	scene->GetEventHandler()->GetEvent("Object Create")->debug = true;
 
 	Object* obj = scene->CreateEntity("../media/test.png", 200, 100, 250, 250);
 	controlled = obj;
@@ -94,33 +94,35 @@ int main()
 		h->opacity = 0.5;
 	}
 
-	//Register a new event using lambda expressions
-	obj->GetEventHandler()->RegisterEvent(
-		Event<Object>(obj, "Move", 
-			//condition(always run)
-			NULL,
+	//Register a move function
+	obj->GetEventHandler()->GetEvent("Move")->autoExec = true;
+	obj->GetEventHandler()->GetEvent("Move")->RegisterAction(
+		[](Object* parent)
+		{
+			parent->MoveStep(1);
+			parent->RotateStep(1);
 
-			//action (move object)
-			[](Object* parent)
+			//move hitbox to follow object
+			auto hitbox = parent->GetHitbox();
+			if(hitbox)
 			{
-				parent->MoveStep(1);
-				parent->RotateStep(1);
-
-				//move hitbox to follow object
-				auto hitbox = parent->GetHitbox();
-				if(hitbox)
-				{
-					hitbox->x = parent->x;
-					hitbox->y = parent->y;
-				}
+				hitbox->x = parent->x;
+				hitbox->y = parent->y;
 			}
-	
-		)
+		}
+	);
+
+	//Add an action to the collision event
+	obj->GetEventHandler()->GetEvent("Collision")->RegisterAction(
+		[](Object* parent)
+		{
+			cout << "Collision detected." << endl;
+		}
 	);
 
 	engine.GetEventHandler()->GetEvent("KeyboardInput")->RegisterAction(HandleKeyboardInput);
 	engine.GetEventHandler()->GetEvent("Quit")->RegisterAction([](auto p){return;});
-	engine.GetEventHandler()->GetEvent("Quit")->EnableDebug();
+	engine.GetEventHandler()->GetEvent("Quit")->debug = true;
 
 	//start rendering
 	engine.StartMainLoop();
