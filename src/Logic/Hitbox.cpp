@@ -1,5 +1,8 @@
 #include "Logic/Hitbox.hpp"
 
+#include "iostream"
+using namespace std;
+
 void Hitbox::Init()
 {
 	debug = false;
@@ -56,5 +59,5 @@ void Hitbox::Render(SDL_Renderer* r)
 	SDL_SetRenderDrawColor(r, this->r, g, b, 255 * opacity);
 
 	//Render to the screen
-	SDL_RenderDrawRect(r, &objPos);
+	SDL_RenderFillRect(r, &objPos);
 }

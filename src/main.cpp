@@ -84,6 +84,16 @@ int main()
 	Object* obj = scene->CreateEntity("../media/test.png", 200, 100, 250, 250);
 	controlled = obj;
 
+	auto h = obj->GetHitbox();
+	if(h)
+	{
+		h->debug = true;
+		h->r = 150;
+		h->g = 100;
+		h->b = 20;
+		h->opacity = 0.5;
+	}
+
 	//Register a new event using lambda expressions
 	obj->GetEventHandler()->RegisterEvent(
 		Event<Object>(obj, "Move", 
@@ -95,6 +105,14 @@ int main()
 			{
 				parent->MoveStep(1);
 				parent->RotateStep(1);
+
+				//move hitbox to follow object
+				auto hitbox = parent->GetHitbox();
+				if(hitbox)
+				{
+					hitbox->x = parent->x;
+					hitbox->y = parent->y;
+				}
 			}
 	
 		)

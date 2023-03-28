@@ -16,14 +16,23 @@ void Entity::Init(Texture* tex)
 	visible = true;
 }
 
+Hitbox* Entity::GetHitbox()
+{
+	return &hitbox;
+}
+
 Entity::Entity(uint id, Texture* tex, int x, int y, int w, int h) : Object(id,x,y,w,h)
 {
 	Init(tex);
+	hitbox.w = w + 100;
+	hitbox.h = h + 100;
 }
 
 Entity::Entity(uint id, Texture* tex, int w, int h) : Object(id,0,0,w,h)
 {
 	Init(tex);
+	hitbox.w = w + 100;
+	hitbox.h = h + 100;
 }
 
 //WARNING - this can cause problems if a null value is passed to this
@@ -55,4 +64,7 @@ void Entity::Render(SDL_Renderer* r)
 
 	//Render to the screen
 	SDL_RenderCopyEx(r, tex->Get(), NULL, &objPos, GetRotation(), &center, SDL_FLIP_NONE);
+
+	//Render hitbox
+	hitbox.Render(r);
 }

@@ -3,7 +3,7 @@
 #include "Logic/Position.hpp"
 #include "SDL.h"
 
-class Hitbox : Position
+class Hitbox : public Position
 {
 private:
 	void Init();
@@ -19,7 +19,7 @@ public:
 	Hitbox(double x, double y);
 	Hitbox(double x, double y, int w, int h);
 
-	~Hitbox();
+	virtual ~Hitbox(){};
 
 	bool IsColliding(Hitbox& b);
 	void SetDebugColor(uint r, uint g, uint b);

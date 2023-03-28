@@ -265,6 +265,9 @@ void Engine::StartMainLoop()
 
 void Engine::RenderCurrent()
 {
+	//Reset background color
+	SetBackgroundColor();
+
 	//Clear the existing screen by filling it with background color
 	SDL_RenderClear(renderer);
 

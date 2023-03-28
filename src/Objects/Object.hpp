@@ -8,6 +8,7 @@ using namespace std;
 
 #include "Controllers/EventHandler.hpp"
 #include "Logic/Position.hpp"
+#include "Logic/Hitbox.hpp"
 
 class Object : public Position
 {
@@ -32,6 +33,7 @@ public:
 	EventHandler<Object>* GetEventHandler();
 
 	virtual void Render(SDL_Renderer* r);
+	virtual Hitbox* GetHitbox(){return NULL;};
 
 //////////////////////COLLISIONS///////////////////////////
 
