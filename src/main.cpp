@@ -87,7 +87,7 @@ int main()
 	auto h = obj->GetHitbox();
 	if(h)
 	{
-		h->debug = false;
+		h->debug = true;
 		h->r = 150;
 		h->g = 100;
 		h->b = 20;
