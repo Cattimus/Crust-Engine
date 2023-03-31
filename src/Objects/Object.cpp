@@ -9,7 +9,7 @@ void Object::Init(uint id)
 	events.GetEvent("Move")->autoExec = true;
 
 	events.RegisterEvent(Event<Object>(this, "Collision"));
-	events.RegisterEvent(Event<Object>(this, "Destroyed"));
+	events.RegisterEvent(Event<Object>(this, "Deleted"));
 }
 
 Object::Object(uint id, int x, int y, int w, int h) : Position(x,y,w,h)
