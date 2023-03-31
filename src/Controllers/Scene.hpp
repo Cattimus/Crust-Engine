@@ -58,4 +58,7 @@ public:
 /////////////////////EVENT FUNCTIONS/////////////////////////
 	EventHandler<Scene>* GetEventHandler();
 	void CheckEvents();
+
+////////////////////COLLISION FUNCTIONS////////////////////
+	void CheckCollisions();
 };

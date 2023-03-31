@@ -90,3 +90,26 @@ void Scene::CheckEvents()
 		i.second.get()->GetEventHandler()->CheckEvents();
 	}
 }
+
+void Scene::CheckCollisions()
+{
+	//Iterate through main list
+	for(auto i = 0; i < objects.size(); i++)
+	{
+		auto cur = objects.at(i).get();
+
+		//Iterate through every object after the current one
+		for(auto x = i+1; x < objects.size(); x++)
+		{
+			auto next = objects.at(x).get();
+
+			//Activate collision event for both objects
+			if(cur->GetHitbox()->IsColliding(*next->GetHitbox()))
+			{
+				cur->GetEventHandler()->DoEvent("Collision");
+				next->GetEventHandler()->DoEvent("Collision");
+			}
+		}
+		
+	}
+}
