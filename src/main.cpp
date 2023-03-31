@@ -84,15 +84,7 @@ int main()
 	Object* obj = scene->CreateEntity("../media/test2.png", 200, 100, 250, 250);
 	controlled = obj;
 
-	auto h = obj->GetHitbox();
-	if(h)
-	{
-		h->debug = true;
-		h->r = 150;
-		h->g = 100;
-		h->b = 20;
-		h->opacity = 0.5;
-	}
+	obj->GetHitbox()->debug = true;
 
 	//Register a move function
 	obj->GetEventHandler()->GetEvent("Move")->autoExec = true;
@@ -116,13 +108,16 @@ int main()
 	obj->GetEventHandler()->GetEvent("Collision")->RegisterAction(
 		[](Object* parent)
 		{
-			cout << "Collision detected." << endl;
+			cout << "Collision detected. at xpos: " << parent->x << endl;
 		}
 	);
 
 	engine.GetEventHandler()->GetEvent("KeyboardInput")->RegisterAction(HandleKeyboardInput);
 	engine.GetEventHandler()->GetEvent("Quit")->RegisterAction([](auto p){return;});
 	engine.GetEventHandler()->GetEvent("Quit")->debug = true;
+
+	Object* obj2 = scene->CreateEntity("../media/test.png", 500, 400, 250, 250);
+	obj2->GetHitbox()->debug = true;
 
 	//start rendering
 	engine.StartMainLoop();

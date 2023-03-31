@@ -325,6 +325,7 @@ void Engine::MainLoop()
 		if(scene)
 		{
 			scene->CheckEvents();
+			scene->CheckCollisions();
 		}
 
 		//render scene
