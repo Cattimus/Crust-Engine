@@ -81,13 +81,13 @@ int main()
 	//enable printing for event
 	scene->GetEventHandler()->GetEvent("Object Create")->debug = true;
 
-	Object* obj = scene->CreateEntity("../media/test.png", 200, 100, 250, 250);
+	Object* obj = scene->CreateEntity("../media/test2.png", 200, 100, 250, 250);
 	controlled = obj;
 
 	auto h = obj->GetHitbox();
 	if(h)
 	{
-		h->debug = true;
+		h->debug = false;
 		h->r = 150;
 		h->g = 100;
 		h->b = 20;

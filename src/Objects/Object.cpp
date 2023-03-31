@@ -4,7 +4,10 @@ void Object::Init(uint id)
 {
 	this->id = id;
 
+	//Move should automatically activate every loop
 	events.RegisterEvent(Event<Object>(this, "Move"));
+	events.GetEvent("Move")->autoExec = true;
+
 	events.RegisterEvent(Event<Object>(this, "Collision"));
 	events.RegisterEvent(Event<Object>(this, "Destroyed"));
 }

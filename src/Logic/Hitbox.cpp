@@ -45,7 +45,7 @@ void Hitbox::SetDebugColor(uint r, uint g, uint b)
 
 void Hitbox::Render(SDL_Renderer* r)
 {
-	if(!r)
+	if(!r || !debug)
 	{
 		return;
 	}
