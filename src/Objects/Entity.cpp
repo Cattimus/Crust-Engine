@@ -26,6 +26,8 @@ Entity::Entity(uint id, Texture* tex, int x, int y, int w, int h) : Object(id,x,
 	Init(tex);
 	hitbox.w = w;
 	hitbox.h = h;
+	hitbox.x = x;
+	hitbox.y = y;
 }
 
 Entity::Entity(uint id, Texture* tex, int w, int h) : Object(id,0,0,w,h)
@@ -33,6 +35,8 @@ Entity::Entity(uint id, Texture* tex, int w, int h) : Object(id,0,0,w,h)
 	Init(tex);
 	hitbox.w = w;
 	hitbox.h = h;
+	hitbox.x = x;
+	hitbox.y = y;
 }
 
 //WARNING - this can cause problems if a null value is passed to this
