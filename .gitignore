@@ -2,3 +2,4 @@
 /.vscode
 /media
 /.cache
+compile_commands.json
