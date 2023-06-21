@@ -19,15 +19,15 @@ Engine::Engine()
 	backgroundB = 0;
 	scene = NULL;
 
-	//Keyboard input event
+	// Keyboard input event
 	events.RegisterEvent(Event<Engine>(this, "KeyboardInput"));
 
-	//Mouse events
+	// Mouse events
 	events.RegisterEvent(Event<Engine>(this, "MouseButton"));
 	events.RegisterEvent(Event<Engine>(this, "MouseWheel"));
 	events.RegisterEvent(Event<Engine>(this, "MouseMoved"));
 
-	//Window Events
+	// Window Events
 	events.RegisterEvent(Event<Engine>(this, "WindowFocus"));
 	events.RegisterEvent(Event<Engine>(this, "WindowUnfocus"));
 	events.RegisterEvent(Event<Engine>(this, "WindowMoved"));
@@ -35,7 +35,7 @@ Engine::Engine()
 	events.RegisterEvent(Event<Engine>(this, "WindowMaximized"));
 	events.RegisterEvent(Event<Engine>(this, "WindowRestored"));
 
-	//Quit event
+	// Quit event
 	events.RegisterEvent(Event<Engine>(this, "Quit"));
 }
 
@@ -46,16 +46,16 @@ Engine::~Engine()
 
 void Engine::Init()
 {
-	//initialize SDL
-	if(SDL_Init(SDL_INIT_VIDEO) < 0)
+	// initialize SDL
+	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		cout << "SDL failed to initialize. Error: " << SDL_GetError() << endl;
 		exit(-1);
 	}
 
-	//Initialize SDL_IMG with png, jpg, and webp support
+	// Initialize SDL_IMG with png, jpg, and webp support
 	uint imageFlags = IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_WEBP;
-	if(!(IMG_Init(imageFlags) & imageFlags))
+	if (!(IMG_Init(imageFlags) & imageFlags))
 	{
 		cout << "SDL_Image failed to initialize. Error: " << IMG_GetError() << endl;
 		exit(-1);
@@ -64,15 +64,15 @@ void Engine::Init()
 
 void Engine::Quit()
 {
-	//destroy our values before SDL goes out of scope
-	//the only reliable way I have found to do this is to overwrite the vector.
+	// destroy our values before SDL goes out of scope
+	// the only reliable way I have found to do this is to overwrite the vector.
 	scenes = unordered_map<string, unique_ptr<Scene>>();
 	textures = unordered_map<string, unique_ptr<Texture>>();
 
-	//These steps are unecessary but it is good practice
-	if(window != NULL)
+	// These steps are unecessary but it is good practice
+	if (window != NULL)
 	{
-		if(renderer != NULL)
+		if (renderer != NULL)
 		{
 			SDL_DestroyRenderer(renderer);
 			renderer = NULL;
@@ -86,10 +86,10 @@ void Engine::Quit()
 	SDL_Quit();
 }
 
-//background color functions
+// background color functions
 void Engine::SetBackgroundColor(uint r, uint g, uint b)
 {
-	backgroundR= r;
+	backgroundR = r;
 	backgroundG = g;
 	backgroundB = b;
 	SetBackgroundColor();
@@ -99,14 +99,14 @@ void Engine::SetBackgroundColor()
 	SDL_SetRenderDrawColor(renderer, backgroundR, backgroundG, backgroundB, 0xFF);
 }
 
-//initialize SDL and create a window
+// initialize SDL and create a window
 void Engine::CreateWindow(string title, int x, int y, int w, int h, bool resizable)
 {
 	Init();
 
-	//Initialize a new window. Shown is always active, resizable is optional
+	// Initialize a new window. Shown is always active, resizable is optional
 	uint flags = SDL_WINDOW_SHOWN;
-	if(resizable)
+	if (resizable)
 	{
 		flags |= SDL_WINDOW_RESIZABLE;
 	}
@@ -115,18 +115,18 @@ void Engine::CreateWindow(string title, int x, int y, int w, int h, bool resizab
 		windowResizable = false;
 	}
 
-	//If x and y are not defined, we pass SDL_WINDOWPOS_UNDEFINED for a random location
-	if(x < 1)
+	// If x and y are not defined, we pass SDL_WINDOWPOS_UNDEFINED for a random location
+	if (x < 1)
 	{
 		x = SDL_WINDOWPOS_UNDEFINED;
 	}
-	if(y < 1)
+	if (y < 1)
 	{
 		y = SDL_WINDOWPOS_UNDEFINED;
 	}
 
-	//Set the width and height
-	if(w < 1 || h < 1)
+	// Set the width and height
+	if (w < 1 || h < 1)
 	{
 		w = windowWidth;
 		h = windowHeight;
@@ -137,18 +137,18 @@ void Engine::CreateWindow(string title, int x, int y, int w, int h, bool resizab
 		windowHeight = h;
 	}
 
-	//Set our configured flags
+	// Set our configured flags
 	SetFlags();
 	window = SDL_CreateWindow(title.c_str(), x, y, w, h, flags);
-	if(!window)
+	if (!window)
 	{
 		cout << "Window creation failed. Error: " << SDL_GetError() << endl;
 		exit(-1);
 	}
 
-	//Create renderer from window
+	// Create renderer from window
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-	//enable transparency in sdl_draw functions
+	// enable transparency in sdl_draw functions
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	SetBackgroundColor();
 }
@@ -174,16 +174,16 @@ int Engine::GetWindowHeight()
 }
 void Engine::SetWindowSize(int w, int h)
 {
-	if(!windowResizable)
+	if (!windowResizable)
 	{
 		return;
 	}
 
-	if(w > 0)
+	if (w > 0)
 	{
 		windowWidth = w;
 	}
-	if(h > 0)
+	if (h > 0)
 	{
 		windowHeight = h;
 	}
@@ -191,27 +191,27 @@ void Engine::SetWindowSize(int w, int h)
 	SDL_SetWindowSize(window, windowWidth, windowHeight);
 }
 
-Texture* Engine::GetTexture(string path)
+Texture *Engine::GetTexture(string path)
 {
-	if(textures.find(path) != textures.end())
+	if (textures.find(path) != textures.end())
 	{
 		return textures[path].get();
 	}
 
-	//Create a new texture if an existing one isn't found
+	// Create a new texture if an existing one isn't found
 	return (textures[path] = make_unique<Texture>(path, renderer)).get();
 }
 
-Scene* Engine::CreateScene(string name)
+Scene *Engine::CreateScene(string name)
 {
 	auto to_return = (scenes[name] = make_unique<Scene>(name, this)).get();
 	scene = to_return;
 	return to_return;
 }
 
-Scene* Engine::GetScene(string name)
+Scene *Engine::GetScene(string name)
 {
-	if(scenes.find(name) != scenes.end())
+	if (scenes.find(name) != scenes.end())
 	{
 		return scenes[name].get();
 	}
@@ -219,24 +219,24 @@ Scene* Engine::GetScene(string name)
 	return NULL;
 }
 
-Scene* Engine::SwitchScene(string name)
+Scene *Engine::SwitchScene(string name)
 {
-	//Get scene from list
+	// Get scene from list
 	auto cur = GetScene(name);
 
-	//If scene exists, set the current scene to that
-	if(cur)
+	// If scene exists, set the current scene to that
+	if (cur)
 	{
 		scene = cur;
 	}
 
-	//If the scene does not exist, this will return null. if it does, it will return the scene
+	// If the scene does not exist, this will return null. if it does, it will return the scene
 	return cur;
 }
 
 void Engine::DeleteScene(string name)
 {
-	if(scenes.find(name) != scenes.end())
+	if (scenes.find(name) != scenes.end())
 	{
 		scenes.erase(scenes.find(name));
 	}
@@ -244,11 +244,11 @@ void Engine::DeleteScene(string name)
 
 string Engine::GetSceneList()
 {
-	//Go through each scene one by one
+	// Go through each scene one by one
 	string to_return = "";
-	for(auto &i : scenes)
+	for (auto &i : scenes)
 	{
-		//Append the scene's name to our string
+		// Append the scene's name to our string
 		auto cur = i.second.get();
 		to_return += cur->GetName();
 		to_return += ",";
@@ -265,17 +265,17 @@ void Engine::StartMainLoop()
 
 void Engine::RenderCurrent()
 {
-	//Reset background color
+	// Reset background color
 	SetBackgroundColor();
 
-	//Clear the existing screen by filling it with background color
+	// Clear the existing screen by filling it with background color
 	SDL_RenderClear(renderer);
 
-	if(scene)
+	if (scene)
 	{
-		//Iterate through the list of objects in our scene
+		// Iterate through the list of objects in our scene
 		auto objects = scene->GetObjectList();
-		for(auto &i : *objects)
+		for (auto &i : *objects)
 		{
 			auto cur = i.second.get();
 
@@ -291,62 +291,61 @@ void Engine::MainLoop()
 	bool running = true;
 	SDL_Event e;
 
-	//Time since the last frame was executed
+	// Time since the last frame was executed
 	int lastFrame = SDL_GetTicks();
 
-	while(running)
+	while (running)
 	{
-		while(SDL_PollEvent(&e) != 0)
+		while (SDL_PollEvent(&e) != 0)
 		{
-			switch(e.type)
+			switch (e.type)
 			{
-				//Quit out of the program
-				case SDL_QUIT:
-					events.DoEvent("Quit");
-					running = false;
+			// Quit out of the program
+			case SDL_QUIT:
+				events.DoEvent("Quit");
+				running = false;
 				break;
 
-				//keyboard input
-				case SDL_KEYDOWN:
-				case SDL_KEYUP:
-					keyDown = e.key.state;
-					lastKeycode = e.key.keysym.sym;
-					keyRepeat = e.key.repeat;
-					events.DoEvent("KeyboardInput");
+			// keyboard input
+			case SDL_KEYDOWN:
+			case SDL_KEYUP:
+				keyDown = e.key.state;
+				lastKeycode = e.key.keysym.sym;
+				keyRepeat = e.key.repeat;
+				events.DoEvent("KeyboardInput");
 				break;
-
 			}
 		}
 
-		//Execute events
+		// Execute events
 		events.CheckEvents();
 
-		//Execute scene events
-		if(scene)
+		// Execute scene events
+		if (scene)
 		{
 			scene->CheckEvents();
 			scene->CheckCollisions();
 		}
 
-		//render scene
+		// render scene
 		RenderCurrent();
 
-		//See how long the scene took to render
+		// See how long the scene took to render
 		int now = SDL_GetTicks();
 		auto execTime = (now - lastFrame);
 
-		//Limit framerate (if required)
-		if(maxFps > 0)
+		// Limit framerate (if required)
+		if (maxFps > 0)
 		{
 			double limit = 1000 / (double)maxFps;
 			double wait = limit - execTime;
-			if(wait > 0)
+			if (wait > 0)
 			{
 				SDL_Delay(wait);
 			}
 		}
 
-		//Update delta time
+		// Update delta time
 		now = SDL_GetTicks();
 		delta = (now - lastFrame);
 		lastFrame = now;
@@ -387,12 +386,12 @@ void Engine::SetFrameLimit(uint limit)
 
 void Engine::TextureCleanup()
 {
-	for(auto &i : textures)
+	for (auto &i : textures)
 	{
-		Texture* cur = i.second.get();
+		Texture *cur = i.second.get();
 
-		//Delete texture if it is no longer referenced
-		if(cur->GetRef() == 0)
+		// Delete texture if it is no longer referenced
+		if (cur->GetRef() == 0)
 		{
 			textures.erase(textures.find(cur->GetPath()));
 		}
@@ -409,13 +408,13 @@ void Engine::DisableDelta()
 	useDelta = false;
 }
 
-//TODO - this may need a rework
+// TODO - this may need a rework
 string Engine::GetReport()
 {
 	string toReturn = "";
 
 	toReturn += "Textures[" + to_string(textures.size()) + "]\n\n";
-	for(auto &i : scenes)
+	for (auto &i : scenes)
 	{
 		auto cur = i.second.get();
 
@@ -426,7 +425,7 @@ string Engine::GetReport()
 	return toReturn;
 }
 
-EventHandler<Engine>* Engine::GetEventHandler()
+EventHandler<Engine> *Engine::GetEventHandler()
 {
 	return &events;
 }
@@ -436,13 +435,13 @@ uint32_t Engine::GetKeycode()
 	return lastKeycode;
 }
 
-//Get key up/down status
+// Get key up/down status
 bool Engine::KeyDown()
 {
 	return keyDown;
 }
 
-//Get key repeat status
+// Get key repeat status
 bool Engine::KeyRepeat()
 {
 	return keyRepeat;

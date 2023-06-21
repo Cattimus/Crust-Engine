@@ -5,8 +5,8 @@
 #include <memory>
 using namespace std;
 
-#include <SDL.h>
-#include <SDL_image.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 class Scene;
 #include "Controllers/Scene.hpp"
@@ -186,4 +186,10 @@ public:
 
 	//Get key repeat status
 	bool KeyRepeat();
+
+/////////////////MOUSE EVENT FUNCTIONS/////////////////////////////
+
+	//Get mouse position
+	int32_t* GetMousePos();
+
 };

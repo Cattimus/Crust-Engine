@@ -4,7 +4,7 @@
 #include <unordered_map>
 using namespace std;
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 
 #include "Controllers/EventHandler.hpp"
 #include "Logic/Position.hpp"

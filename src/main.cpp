@@ -84,7 +84,7 @@ int main()
 	Object* obj = scene->CreateEntity("../media/test2.png", 200, 100, 250, 250);
 	controlled = obj;
 
-	obj->GetHitbox()->debug = true;
+	//obj->GetHitbox()->debug = true;
 
 	//Register a move function
 	obj->GetEventHandler()->GetEvent("Move")->autoExec = true;
@@ -117,7 +117,7 @@ int main()
 	engine.GetEventHandler()->GetEvent("Quit")->debug = true;
 
 	Object* obj2 = scene->CreateEntity("../media/test.png", 500, 400, 250, 250);
-	obj2->GetHitbox()->debug = true;
+	//obj2->GetHitbox()->debug = true;
 
 	//start rendering
 	engine.StartMainLoop();

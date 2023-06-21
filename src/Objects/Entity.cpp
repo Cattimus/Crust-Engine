@@ -63,8 +63,8 @@ void Entity::Render(SDL_Renderer* r)
 
 	//calculate center of object
 	SDL_Point center;
-	center.x = (w / 2) + centerOffsetX;
-	center.y = (h / 2) + centerOffsetY;
+	center.x = (w / (float)2) + centerOffsetX;
+	center.y = (h / (float)2) + centerOffsetY;
 
 	//Render to the screen
 	SDL_RenderCopyEx(r, tex->Get(), NULL, &objPos, GetRotation(), &center, SDL_FLIP_NONE);

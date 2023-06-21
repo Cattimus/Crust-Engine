@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Logic/Position.hpp"
-#include "SDL.h"
+#include <SDL2/SDL.h>
 
 class Hitbox : public Position
 {

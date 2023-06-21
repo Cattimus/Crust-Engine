@@ -29,7 +29,6 @@ set(SOURCES
 	src/Logic/Position.cpp
 )
 
-include_directories(/usr/include/SDL2)
 include_directories(src)
 add_compile_options(-g -Wall)
 add_executable(main ${SOURCES})
