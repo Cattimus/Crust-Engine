@@ -12,7 +12,7 @@ using namespace std;
 #include "Logic/Position.hpp"
 #include "Logic/Hitbox.hpp"
 
-class Entity final : public Object
+class Entity final
 {
 	//Unique ID for the object (at least in the scene)
 	uint id;
@@ -23,6 +23,7 @@ class Entity final : public Object
 	void Init(Texture* tex);
 
 	Hitbox hitbox;
+	Object object;
 
 public:
 	//Should this object be rendered in front of(+) or behind(-) other objects

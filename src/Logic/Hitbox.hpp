@@ -3,7 +3,7 @@
 #include "Logic/Position.hpp"
 #include <SDL2/SDL.h>
 
-class Hitbox : public Position
+class Hitbox
 {
 private:
 	void Init();
@@ -14,6 +14,8 @@ public:
 	unsigned char b = 0;
 	float opacity = 0;
 	bool debug;
+	
+	Position position;
 
 	Hitbox();
 	Hitbox(double x, double y);

@@ -12,16 +12,26 @@ void Object::Init(uint id)
 	events.RegisterEvent(Event<Object>(this, "Deleted"));
 }
 
-Object::Object(uint id, int x, int y, int w, int h) : Position(x,y,w,h)
+Object::Object(uint id, int x, int y, int w, int h)
 {
 	Init(id);
+
+	position.x = x;
+	position.y = y;
+	position.w = w;
+	position.h = h;
 }
-Object::Object(uint id, int w, int h) : Position(0,0,w,h)
+Object::Object(uint id, int w, int h)
 {
 	Init(id);
+
+	position.x = 0;
+	position.y = 0;
+	position.w = w;
+	position.h = h;
 }
 
-Object::Object(uint id) : Position()
+Object::Object(uint id)
 {
 	Init(id);
 }

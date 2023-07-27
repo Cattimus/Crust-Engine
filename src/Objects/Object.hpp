@@ -10,22 +10,23 @@ using namespace std;
 #include "Logic/Position.hpp"
 #include "Logic/Hitbox.hpp"
 
-class Object : public Position
+class Object
 {
 private:
-
 	//Unique ID for the object (at least in the scene)
 	uint id;
 
 	//Collection of all events sorted by name
 	EventHandler<Object> events;
 
-	void Init(uint id);
+	void Init(uint id);	
 
 public:
 	Object(uint id, int x, int y, int w, int h);
 	Object(uint id, int w, int h);
 	Object(uint id);
+
+	Position position;
 
 	virtual ~Object(){};
 
