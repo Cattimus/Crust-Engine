@@ -19,9 +19,6 @@ set(SOURCES
 	src/Objects/Object.hpp
 	src/Objects/Object.cpp
 
-	src/Objects/Entity.hpp
-	src/Objects/Entity.cpp
-
 	src/Logic/Hitbox.hpp
 	src/Logic/Hitbox.cpp
 
