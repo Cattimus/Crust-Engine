@@ -14,31 +14,31 @@ void HandleKeyboardInput(Engine* p)
 	{
 		case SDLK_w:
 		{
-			controlled->position.velY = p->KeyDown() ? maxVeloc * -1 : 0;
+			controlled->pos.velY = p->KeyDown() ? maxVeloc * -1 : 0;
 			break;
 		}
 
 		case SDLK_s:
 		{
-			controlled->position.velY = p->KeyDown() ? maxVeloc : 0;
+			controlled->pos.velY = p->KeyDown() ? maxVeloc : 0;
 			break;
 		}
 
 		case SDLK_a:
 		{
-			controlled->position.velX = p->KeyDown() ? maxVeloc * -1 : 0;
+			controlled->pos.velX = p->KeyDown() ? maxVeloc * -1 : 0;
 			break;
 		}
 
 		case SDLK_d:
 		{
-			controlled->position.velX = p->KeyDown() ? maxVeloc : 0;
+			controlled->pos.velX = p->KeyDown() ? maxVeloc : 0;
 			break;
 		}
 
 		case SDLK_r:
 		{
-			controlled->position.velR = p->KeyDown() ? 15 : 0;
+			controlled->pos.velR = p->KeyDown() ? 15 : 0;
 		}
 	}
 }
@@ -92,15 +92,15 @@ int main()
 	obj->GetEventHandler()->GetEvent("Move")->RegisterAction(
 		[](Object* parent)
 		{
-			parent->position.MoveStep(1);
-			parent->position.RotateStep(1);
+			parent->pos.MoveStep(1);
+			parent->pos.RotateStep(1);
 
 			//move hitbox to follow object
 			auto hitbox = parent->GetHitbox();
 			if(hitbox)
 			{
-				hitbox->position.x = parent->position.x;
-				hitbox->position.y = parent->position.y;
+				hitbox->pos.x = parent->pos.x;
+				hitbox->pos.y = parent->pos.y;
 			}
 		}
 	);
@@ -109,7 +109,7 @@ int main()
 	obj->GetEventHandler()->GetEvent("Collision")->RegisterAction(
 		[](Object* parent)
 		{
-			cout << "Collision detected. at xpos: " << parent->position.x << endl;
+			cout << "Collision detected. at xpos: " << parent->pos.x << endl;
 		}
 	);
 
