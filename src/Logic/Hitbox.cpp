@@ -21,25 +21,25 @@ Hitbox::Hitbox(double x, double y)
 {
 	Init();
 
-	position.x = x;
-	position.y = y;
+	pos.x = x;
+	pos.y = y;
 }
 
 Hitbox::Hitbox(double x, double y, int w, int h)
 {
 	Init();
 
-	position.x = x;
-	position.y = y;
-	position.w = w;
-	position.h = h;
+	pos.x = x;
+	pos.y = y;
+	pos.w = w;
+	pos.h = h;
 }
 
 bool Hitbox::IsColliding(Hitbox& b)
 {
 	//AABB collision detection
-	bool xOverlap = position.x + position.w >= b.position.x && b.position.x + b.position.w >= position.x;
-	bool yOverlap = position.y + position.h >= b.position.y && b.position.y + b.position.h >= position.y;
+	bool xOverlap = pos.x + pos.w >= b.pos.x && b.pos.x + b.pos.w >= pos.x;
+	bool yOverlap = pos.y + pos.h >= b.pos.y && b.pos.y + b.pos.h >= pos.y;
 
 	return xOverlap && yOverlap;
 }
@@ -61,10 +61,10 @@ void Hitbox::Render(SDL_Renderer* r)
 	//Construct an SDL_Rect for the object based on position and size
 	SDL_Rect objPos
 	{
-		.x = (int)position.x,
-		.y = (int)position.y,
-		.w = position.w,
-		.h = position.h
+		.x = (int)pos.x,
+		.y = (int)pos.y,
+		.w = pos.w,
+		.h = pos.h
 	};
 
 	//set draw color of rect

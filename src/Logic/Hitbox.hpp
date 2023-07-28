@@ -15,7 +15,7 @@ public:
 	float opacity = 0;
 	bool debug;
 	
-	Position position;
+	Position pos;
 
 	Hitbox();
 	Hitbox(double x, double y);
