@@ -12,7 +12,7 @@ using namespace std;
 #include "Logic/Position.hpp"
 #include "Logic/Hitbox.hpp"
 
-class Entity final
+class Entity
 {
 	//Unique ID for the object (at least in the scene)
 	uint id;
