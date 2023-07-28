@@ -9,6 +9,7 @@ using namespace std;
 #include "Controllers/EventHandler.hpp"
 #include "Logic/Position.hpp"
 #include "Logic/Hitbox.hpp"
+#include "Objects/Texture.hpp"
 
 class Object
 {
@@ -19,27 +20,50 @@ private:
 	//Collection of all events sorted by name
 	EventHandler<Object> events;
 
-	void Init(uint id);	
+	//Pointer to the texture object that will be used for rendering
+	Texture* tex;
+
+	Hitbox hitbox;
+
+	void Init(uint id, Texture* tex);	
 
 public:
-	Object(uint id, int x, int y, int w, int h);
-	Object(uint id, int w, int h);
+
+	//Should this object be rendered in front of(+) or behind(-) other objects
+	int renderPriority;
+
+	//Should this object be rendered
+	bool visible;
+
+	Position pos;
+
+	Object(uint id, Texture* tex, int x, int y, int w, int h);
+	Object(uint id, Texture* tex, int w, int h);
+	Object(uint id, Texture* tex);
 	Object(uint id);
-
-	Position position;
-
-	virtual ~Object(){};
 
 	//Return the object ID
 	uint GetID();
 
 	EventHandler<Object>* GetEventHandler();
 
-	virtual void Render(SDL_Renderer* r);
-	virtual Hitbox* GetHitbox(){return NULL;};
-
 //////////////////////COLLISIONS///////////////////////////
 
 	bool IsCollidingWith(Object& b);
+
+	//Decrease refcount on texture to make sure it is deleted
+	~Object();
+
+///////////////////TEXTURE FUNCTIONS//////////////////////////
+
+	//Return the SDL_Texture* for rendering
+	SDL_Texture* GetTexture();
+
+	//Return the Texture object
+	Texture* GetTextureObject();
+
+	//Render object
+	void Render(SDL_Renderer* r);
+	Hitbox* GetHitbox();
 
 };
