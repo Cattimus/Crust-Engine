@@ -16,7 +16,7 @@ Scene::~Scene()
 Object* Scene::CreateEntity(string texPath, int x, int y, int w, int h)
 {
 	Texture* tex = engine->GetTexture(texPath);
-	Object* to_return = (objects[ID] = make_unique<Entity>(ID, tex, x, y, w, h)).get();
+	Object* to_return = (objects[ID] = make_unique<Object>(ID, tex, x, y, w, h)).get();
 	ID++;
 
 	return to_return;
@@ -24,7 +24,7 @@ Object* Scene::CreateEntity(string texPath, int x, int y, int w, int h)
 
 Object* Scene::CreateObject(int x, int y, int w, int h)
 {
-	Object* to_return = (objects[ID] = make_unique<Object>(ID, x, y, w, h)).get();
+	Object* to_return = (objects[ID] = make_unique<Object>(ID, nullptr, x, y, w, h)).get();
 	ID++;
 
 	return to_return;

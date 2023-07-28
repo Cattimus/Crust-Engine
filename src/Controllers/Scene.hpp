@@ -7,9 +7,10 @@ using namespace std;
 
 class Engine;
 #include "Objects/Object.hpp"
-#include "Objects/Entity.hpp"
 #include "Controllers/Engine.hpp"
 #include "Controllers/EventHandler.hpp"
+
+//TODO - change the way objects are handled. will need a container for renderable and non-renderable objects
 
 class Scene
 {
