@@ -19,15 +19,13 @@ private:
 	//Function pointer to action
 	void (*action)(T* parent);
 
-
-
 	//Helper function to null-initialize all values
 	void init()
 	{
-		this->parent = NULL;
+		this->parent = nullptr;
 		this->name = "";
-		this->condition = NULL;
-		this->action = NULL;
+		this->condition = nullptr;
+		this->action = nullptr;
 		this->debug = false;
 		this->autoExec = false;
 	}
