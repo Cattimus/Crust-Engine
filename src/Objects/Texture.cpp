@@ -4,7 +4,7 @@ Texture::Texture(string path, SDL_Renderer* renderer)
 {
 	//Initialize values
 	ref = 0;
-	tex = NULL;
+	tex = nullptr;
 	offset[0] = 0;
 	offset[1] = 0;
 	size[0] = 0;
@@ -16,7 +16,7 @@ Texture::Texture(string path, SDL_Renderer* renderer)
 	if(!loadedImage)
 	{
 		cout << "SDL_Image failed to load " << path << ". Error: " << IMG_GetError() << endl;
-		tex = NULL;
+		tex = nullptr;
 		ref = 0;
 		this->path = "";
 		return;
@@ -28,7 +28,7 @@ Texture::Texture(string path, SDL_Renderer* renderer)
 	{
 		cout << "SDL_Image failed to create texture for image " << path << ". Error: " << IMG_GetError() << endl;
 		SDL_FreeSurface(loadedImage);
-		tex = NULL;
+		tex = nullptr;
 		ref = 0;
 		this->path = "";
 		return;
@@ -45,7 +45,7 @@ Texture::Texture(string path, SDL_Renderer* renderer)
 Texture::~Texture()
 {
 	SDL_DestroyTexture(tex);
-	tex = NULL;
+	tex = nullptr;
 }
 
 
