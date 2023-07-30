@@ -12,12 +12,12 @@ Engine::Engine()
 	cleanupTextures = true;
 	cleanupIntervalFrames = 300;
 	delta = 0;
-	window = NULL;
-	renderer = NULL;
+	window = nullptr;
+	renderer = nullptr;
 	backgroundR = 0;
 	backgroundG = 0;
 	backgroundB = 0;
-	scene = NULL;
+	scene = nullptr;
 
 	// Keyboard input event
 	events.RegisterEvent(Event<Engine>(this, "KeyboardInput"));
@@ -70,16 +70,16 @@ void Engine::Quit()
 	textures = unordered_map<string, unique_ptr<Texture>>();
 
 	// These steps are unecessary but it is good practice
-	if (window != NULL)
+	if (window)
 	{
-		if (renderer != NULL)
+		if (renderer)
 		{
 			SDL_DestroyRenderer(renderer);
-			renderer = NULL;
+			renderer = nullptr;
 		}
 
 		SDL_DestroyWindow(window);
-		window = NULL;
+		window = nullptr;
 	}
 
 	IMG_Quit();
@@ -216,7 +216,7 @@ Scene *Engine::GetScene(string name)
 		return scenes[name].get();
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 Scene *Engine::SwitchScene(string name)
