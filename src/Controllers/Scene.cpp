@@ -35,7 +35,7 @@ Object* Scene::GetObject(uint id)
 	//Object with the ID does not exist
 	if(objects.find(ID) == objects.end())
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	return objects[ID].get();
