@@ -30,13 +30,14 @@ Object::Object(uint id, Texture* tex, int x, int y, int w, int h)
 {
 	Init(id, tex);
 	pos = Position(x,y,w,h);
+	hitbox = Hitbox(x,y,w,h);
 	
 }
 Object::Object(uint id, Texture* tex, int w, int h)
 {
 	Init(id, tex);
 	pos = Position(0,0,w,h);
-
+	hitbox = Hitbox(0,0,w,h);
 }
 
 Object::Object(uint id, Texture* tex)
@@ -46,7 +47,7 @@ Object::Object(uint id, Texture* tex)
 
 Object::Object(uint id)
 {
-	Init(id, NULL);
+	Init(id, nullptr);
 }
 
 uint Object::GetID()
