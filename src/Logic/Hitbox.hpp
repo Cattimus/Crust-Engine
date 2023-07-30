@@ -21,12 +21,10 @@ public:
 	Hitbox(double x, double y);
 	Hitbox(double x, double y, int w, int h);
 
-	virtual ~Hitbox(){};
-
 	bool IsColliding(Hitbox& b);
 	void SetDebugColor(uint r, uint g, uint b);
 
 ///////////////DEBUG RENDERING//////////////////
 
-	virtual void Render(SDL_Renderer* r);
+	void Render(SDL_Renderer* r);
 };
