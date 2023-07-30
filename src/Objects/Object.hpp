@@ -65,5 +65,4 @@ public:
 	//Render object
 	void Render(SDL_Renderer* r);
 	Hitbox* GetHitbox();
-
 };
