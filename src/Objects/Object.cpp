@@ -71,7 +71,7 @@ Hitbox* Object::GetHitbox()
 
 void Object::Render(SDL_Renderer* r)
 {
-	if(!r)
+	if(!r || !tex)
 	{
 		return;
 	}
