@@ -348,11 +348,6 @@ void Engine::MainLoop()
 	}
 }
 
-void Engine::HandleInput()
-{
-	return;
-}
-
 void Engine::SetFlags()
 {
 	SDL_SetHint(SDL_HINT_RENDER_VSYNC, (vsync) ? "1" : "0");
@@ -424,23 +419,6 @@ string Engine::GetReport()
 EventHandler<Engine> *Engine::GetEventHandler()
 {
 	return &events;
-}
-
-uint32_t Engine::GetKeycode()
-{
-	return lastKeycode;
-}
-
-// Get key up/down status
-bool Engine::KeyDown()
-{
-	return keyDown;
-}
-
-// Get key repeat status
-bool Engine::KeyRepeat()
-{
-	return keyRepeat;
 }
 
 double Engine::GetDelta()

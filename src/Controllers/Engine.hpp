@@ -70,11 +70,6 @@ private:
 	//Event handler
 	EventHandler<Engine> events;
 
-////////////////////KEYBOARD INPUT VALUES////////////////////////
-	uint32_t lastKeycode;
-	bool keyDown;
-	bool keyRepeat;
-
 //////////////HELPER FUNCTIONS FOR ENGINE///////////////////////////
 
 	//Helper function to initialize SDL
@@ -88,9 +83,6 @@ private:
 
 	//The main loop that will run continuously. The "game loop"
 	void MainLoop();
-
-	//Possible helper function that might be used to handle SDL inputs and activating callbacks
-	void HandleInput();
 
 	//Helper function to set SDL flags
 	void SetFlags();
@@ -178,21 +170,5 @@ public:
 
 ///////////////////EVENT HANDLER FUNCTIONS////////////////////////
 	EventHandler<Engine>* GetEventHandler();
-
-///////////////////KEYBOARD EVENT FUNCTIONS//////////////////////
-
-	//Get keyboard keycode
-	uint32_t GetKeycode();
-
-	//Get key up/down status
-	bool KeyDown();
-
-	//Get key repeat status
-	bool KeyRepeat();
-
-/////////////////MOUSE EVENT FUNCTIONS/////////////////////////////
-
-	//Get mouse position
-	int32_t* GetMousePos();
 
 };
