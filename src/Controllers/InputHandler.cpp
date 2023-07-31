@@ -4,8 +4,18 @@ void InputHandler::Init()
 {
 	lastKeycode = 0;
 	keyDown = false;
+	keyRepeat = false;
+
 	mouseX = 0;
 	mouseY = 0;
+	
+	mouseButton = 0;
+	mouseButtonDown = false;
+	mouseButtonClicks = 0;
+
+	mouseScrolledX = 0;
+	mouseScrolledY = 0;
+	mouseWheelDirection = 0;
 
 	// Keyboard input event
 	events.RegisterEvent(Event<InputHandler>(this, "KeyboardInput"));

@@ -8,10 +8,10 @@ using namespace std;
 #include "Controllers/EventHandler.hpp"
 
 /*
- 	* The goal of this class is to handle inputs of all kinds
- 	* the Engine class will pull input values and register callbacks to this class
+ * The goal of this class is to handle inputs of all kinds
+ * the Engine class will pull input values and register callbacks to this class
  	* in order to deal with user input.
- 	*
+ *
  	*  - Keyboard events
  	*  - Mouse events
  	*  - Audio events (input only)
