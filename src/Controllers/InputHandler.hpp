@@ -7,6 +7,8 @@ using namespace std;
 
 #include "Controllers/EventHandler.hpp"
 
+//TODO - make sure to re-initialize values at the appropriate time
+
 /*
  * The goal of this class is to handle inputs of all kinds
  * the Engine class will pull input values and register callbacks to this class

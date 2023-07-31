@@ -13,6 +13,9 @@ set(SOURCES
 	src/Controllers/Engine.cpp
 	src/Controllers/Engine.hpp
 
+	src/Controllers/InputHandler.cpp
+	src/Controllers/InputHandler.hpp
+
 	src/Controllers/Scene.hpp
 	src/Controllers/Scene.cpp
 

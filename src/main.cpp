@@ -8,7 +8,7 @@ Object* controlled;
 Scene* scene;
 Engine engine;
 
-void HandleKeyboardInput(Engine* p)
+void HandleKeyboardInput(InputHandler* p)
 {
 	switch(p->GetKeycode())
 	{
@@ -113,7 +113,7 @@ int main()
 		}
 	);
 
-	engine.GetEventHandler()->GetEvent("KeyboardInput")->RegisterAction(HandleKeyboardInput);
+	engine.input.GetEventHandler()->GetEvent("KeyboardInput")->RegisterAction(HandleKeyboardInput);
 	engine.GetEventHandler()->GetEvent("Quit")->RegisterAction([](auto p){return;});
 	engine.GetEventHandler()->GetEvent("Quit")->debug = true;
 
