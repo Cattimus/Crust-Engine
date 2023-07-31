@@ -12,6 +12,7 @@ class Scene;
 #include "Controllers/Scene.hpp"
 #include "Objects/Texture.hpp"
 #include "Controllers/EventHandler.hpp"
+#include "Controllers/InputHandler.hpp"
 
 //TODO - Implement keeping track of average FPS
 
@@ -101,6 +102,8 @@ public:
 	uint8_t backgroundR;
 	uint8_t backgroundG;
 	uint8_t backgroundB;
+
+	InputHandler input;
 
 	Engine();
 	~Engine();

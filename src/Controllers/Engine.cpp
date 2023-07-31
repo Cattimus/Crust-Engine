@@ -306,13 +306,9 @@ void Engine::MainLoop()
 				running = false;
 				break;
 
-			// keyboard input
-			case SDL_KEYDOWN:
-			case SDL_KEYUP:
-				keyDown = e.key.state;
-				lastKeycode = e.key.keysym.sym;
-				keyRepeat = e.key.repeat;
-				events.DoEvent("KeyboardInput");
+			//send event to inputhandler
+			default:
+				input.ParseEvent(e);
 				break;
 			}
 		}
