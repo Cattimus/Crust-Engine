@@ -52,7 +52,7 @@ public:
 
 	EventHandler<InputHandler>* GetEventHandler();
 	
-	void HandleInput(SDL_Event &e);
+	void ParseEvent(SDL_Event &e);
 	
 ///////////////////////KEYBOARD EVENTS///////////////////////////
 	uint32_t GetKeycode();

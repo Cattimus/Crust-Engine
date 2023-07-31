@@ -51,7 +51,7 @@ int32_t InputHandler::GetMouseY()
 	return mouseY;
 }
 
-void InputHandler::HandleInput(SDL_Event &e)
+void InputHandler::ParseEvent(SDL_Event &e)
 {
 	switch (e.type)
 	{
