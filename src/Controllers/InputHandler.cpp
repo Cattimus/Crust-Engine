@@ -166,3 +166,19 @@ bool InputHandler::MiddleMouseDoubleClicked()
 bool LeftMouseDrag();
 bool RightMouseDrag();
 bool MiddleMouseDrag();
+
+
+int32_t InputHandler::GetWheelScrolledX()
+{
+	return mouseScrolledX;
+}
+
+int32_t InputHandler::GetWheelScrolledY()
+{
+	return mouseScrolledY;
+}
+
+uint32_t InputHandler::GetWheelDirection()
+{
+	return mouseWheelDirection;
+}
