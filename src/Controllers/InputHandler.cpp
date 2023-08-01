@@ -6,8 +6,10 @@ void InputHandler::Init()
 	keyDown = false;
 	keyRepeat = false;
 
-	mouseX = 0;
-	mouseY = 0;
+	mousePosX = 0;
+	mouseMovedX = 0;
+	mousePosY = 0;
+	mouseMovedY = 0;
 	
 	mouseButton = 0;
 	mouseButtonDown = false;
@@ -53,12 +55,22 @@ bool InputHandler::KeyRepeat()
 
 int32_t InputHandler::GetMouseX()
 {
-	return mouseX;
+	return mousePosX;
+}
+
+int32_t InputHandler::GetMouseMovedX()
+{
+	return mouseMovedX;
 }
 
 int32_t InputHandler::GetMouseY()
 {
-	return mouseY;
+	return mousePosY;
+}
+
+int32_t InputHandler::GetMouseMovedY()
+{
+	return mouseMovedY;
 }
 
 void InputHandler::ParseEvent(SDL_Event &e)
@@ -76,16 +88,18 @@ void InputHandler::ParseEvent(SDL_Event &e)
 		
 		//mouse motion
 		case SDL_MOUSEMOTION:
-			mouseX = e.motion.x;
-			mouseY = e.motion.y;
+			mousePosX = e.motion.x;
+			mouseMovedX = e.motion.xrel;
+			mousePosY = e.motion.y;
+			mouseMovedY = e.motion.yrel;
 			events.DoEvent("MouseMoved");
 			break;
 		
 		//mouse button
 		case SDL_MOUSEBUTTONDOWN:
 		case SDL_MOUSEBUTTONUP:
-			mouseX = e.button.x;
-			mouseY = e.button.y;
+			mousePosX = e.button.x;
+			mousePosY = e.button.y;
 			mouseButtonDown = (e.button.state == (uint8_t)SDL_MOUSEBUTTONDOWN);
 			mouseButton = e.button.button;
 			mouseButtonClicks = e.button.clicks;
@@ -99,7 +113,56 @@ void InputHandler::ParseEvent(SDL_Event &e)
 			mouseWheelDirection = e.wheel.direction;
 			events.DoEvent("MouseWheel");
 			break;
-
 	}
 }
 
+uint8_t InputHandler::GetMouseButton()
+{
+	return mouseButton;
+}
+
+uint8_t InputHandler::GetMouseButtonClicks()
+{
+	return mouseButtonClicks;
+}
+
+bool InputHandler::MouseButtonDown()
+{
+	return mouseButtonDown;
+}
+
+bool InputHandler::LeftMouseClicked()
+{
+	return (mouseButton == SDL_BUTTON_LEFT) && mouseButtonDown && (mouseButtonClicks >= 1);
+}
+
+bool InputHandler::LeftMouseDoubleClicked()
+{
+	return (mouseButton == SDL_BUTTON_LEFT) && mouseButtonDown && (mouseButtonClicks == 2);
+}
+
+bool InputHandler::RightMouseClicked()
+{
+	return (mouseButton == SDL_BUTTON_RIGHT) && mouseButtonDown && (mouseButtonClicks >= 1);
+}
+
+bool InputHandler::RightMouseDoubleClicked()
+{
+	return (mouseButton == SDL_BUTTON_RIGHT) && mouseButtonDown && (mouseButtonClicks == 2);
+}
+
+bool InputHandler::MiddleMouseClicked()
+{
+	return (mouseButton == SDL_BUTTON_MIDDLE) && mouseButtonDown && (mouseButtonClicks >= 1);
+
+}
+
+bool InputHandler::MiddleMouseDoubleClicked()
+{
+	return (mouseButton == SDL_BUTTON_MIDDLE) && mouseButtonDown && (mouseButtonClicks == 2);
+}
+
+//button specific drag
+bool LeftMouseDrag();
+bool RightMouseDrag();
+bool MiddleMouseDrag();

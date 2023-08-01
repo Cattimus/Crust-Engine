@@ -8,6 +8,7 @@ using namespace std;
 #include "Controllers/EventHandler.hpp"
 
 //TODO - make sure to re-initialize values at the appropriate time
+//TODO - add a way to know what keycode/scancode represents
 
 /*
  * The goal of this class is to handle inputs of all kinds
@@ -30,8 +31,10 @@ private:
 	bool keyRepeat;
 
 ///////////////////MOUSE POSITION VALUES//////////////////////////
-	int32_t mouseX;
-	int32_t mouseY;
+	int32_t mousePosX;   //absolute mouse X position
+	int32_t mouseMovedX; //mouse movement X (since last event/frame)
+	int32_t mousePosY;   //absolute mouse Y position
+	int32_t mouseMovedY; //mouse movement Y (since last event/frame)
 
 	//mouse click
 	uint8_t mouseButton;
@@ -63,12 +66,30 @@ public:
 
 ///////////////////MOUSE POSITION////////////////////////////////
 	int32_t GetMouseX();
+	int32_t GetMouseMovedX();
 	int32_t GetMouseY();
+	int32_t GetMouseMovedY();
 	
 	//mouse click
 	uint8_t GetMouseButton();
 	uint8_t GetMouseButtonClicks();
 	bool MouseButtonDown();
+	
+	//button specific click
+	bool LeftMouseClicked();
+	bool LeftMouseDoubleClicked();
+	bool RightMouseClicked();
+	bool RightMouseDoubleClicked();
+	bool MiddleMouseClicked();
+	bool MiddleMouseDoubleClicked();
+	
+	//button specific drag
+	bool LeftMouseDrag();
+	bool RightMouseDrag();
+	bool MiddleMouseDrag();
 
 	//mouse wheel
+	int32_t GetWheelScrolledX();
+	int32_t GetWheelScrolledY();
+	uint32_t GetWheelDirection();
 };
