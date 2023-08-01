@@ -73,6 +73,30 @@ void HandleMouseButton(InputHandler* p)
 	}
 }
 
+void HandleMouseWheel(InputHandler* p)
+{
+	int scrolledY = p->GetWheelScrolledY();
+	int scrolledX = p->GetWheelScrolledX();
+
+	if(scrolledY > 0)
+	{
+		cout << "Mouse wheel scrolled up\n";
+	}
+	else if(scrolledY < 0)
+	{
+		cout << "Mouse wheel scrolled down\n";
+	}
+
+	if(scrolledX > 0)
+	{
+		cout << "Mouse wheel scrolled right\n";
+	}
+	else if(scrolledX < 0)
+	{
+		cout << "Mouse wheel scrolled left\n";
+	}
+}
+
 int main()
 {
 	engine.SetBackgroundColor(0x32, 0x60, 0xA8);
@@ -146,6 +170,7 @@ int main()
 	//input events
 	engine.input.GetEventHandler()->GetEvent("KeyboardInput")->RegisterAction(HandleKeyboardInput);
 	engine.input.GetEventHandler()->GetEvent("MouseButton")->RegisterAction(HandleMouseButton);
+	engine.input.GetEventHandler()->GetEvent("MouseWheel")->RegisterAction(HandleMouseWheel);
 	
 	//engine events
 	engine.GetEventHandler()->GetEvent("Quit")->RegisterAction([](auto p){return;});
