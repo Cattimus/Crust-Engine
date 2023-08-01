@@ -43,6 +43,36 @@ void HandleKeyboardInput(InputHandler* p)
 	}
 }
 
+void HandleMouseButton(InputHandler* p)
+{
+	if(p->LeftMouseDoubleClicked())
+	{
+		cout << "Left mouse double click detected\n";
+	}
+	else if (p->LeftMouseClicked())
+	{
+		cout << "Left mouse click detected\n";
+	}
+
+	if(p->RightMouseDoubleClicked())
+	{
+		cout << "Right mouse double click detected\n";
+	}
+	else if (p->RightMouseClicked())
+	{
+		cout << "Right mouse click detected\n";
+	}
+
+	if(p->MiddleMouseDoubleClicked())
+	{
+		cout << "Middle mouse double click detected\n";
+	}
+	else if (p->MiddleMouseClicked())
+	{
+		cout << "Middle mouse click detected\n";
+	}
+}
+
 int main()
 {
 	engine.SetBackgroundColor(0x32, 0x60, 0xA8);
@@ -112,8 +142,12 @@ int main()
 			cout << "Collision detected. at xpos: " << parent->pos.x << endl;
 		}
 	);
-
+	
+	//input events
 	engine.input.GetEventHandler()->GetEvent("KeyboardInput")->RegisterAction(HandleKeyboardInput);
+	engine.input.GetEventHandler()->GetEvent("MouseButton")->RegisterAction(HandleMouseButton);
+	
+	//engine events
 	engine.GetEventHandler()->GetEvent("Quit")->RegisterAction([](auto p){return;});
 	engine.GetEventHandler()->GetEvent("Quit")->debug = true;
 
