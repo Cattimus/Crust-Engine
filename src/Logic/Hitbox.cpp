@@ -47,8 +47,8 @@ bool Hitbox::IsColliding(Hitbox& b)
 
 bool Hitbox::PointOverlaps(double x, double y)
 {
-	bool xOverlap = (pos.x + pos.w >= x) && (pos.x >= x);
-	bool yOverlap = (pos.y + pos.h >= y) && (pos.y >= y);
+	bool xOverlap = (pos.x + pos.w >= x) && (x >= pos.x);
+	bool yOverlap = (pos.y + pos.h >= y) && (y >= pos.y);
 
 	return xOverlap && yOverlap;
 }
