@@ -65,11 +65,6 @@ bool Object::IsCollidingWith(Object& b)
 	return false;
 }
 
-Hitbox* Object::GetHitbox()
-{
-	return &hitbox;	
-}
-
 void Object::Render(SDL_Renderer* r)
 {
 	if(!r || !tex || !visible)

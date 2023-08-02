@@ -23,8 +23,6 @@ private:
 	//Pointer to the texture object that will be used for rendering
 	Texture* tex;
 
-	Hitbox hitbox;
-
 	void Init(uint id, Texture* tex);	
 
 public:
@@ -36,6 +34,7 @@ public:
 	bool visible;
 
 	Position pos;
+	Hitbox hitbox;
 
 	Object(uint id, Texture* tex, int x, int y, int w, int h);
 	Object(uint id, Texture* tex, int w, int h);
@@ -64,5 +63,4 @@ public:
 
 	//Render object
 	void Render(SDL_Renderer* r);
-	Hitbox* GetHitbox();
 };
