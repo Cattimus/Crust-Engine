@@ -176,8 +176,8 @@ int main()
 	engine.input.GetEventHandler()->GetEvent("MouseDrag")->RegisterAction(HandleMouseDrag);
 	
 	//engine events
-	engine.GetEventHandler()->GetEvent("Quit")->RegisterAction([](auto p){return;});
-	engine.GetEventHandler()->GetEvent("Quit")->debug = true;
+	engine.events.GetEvent("Quit")->RegisterAction([](auto p){return;});
+	engine.events.GetEvent("Quit")->debug = true;
 
 	Object* obj2 = scene->CreateEntity("../media/test.png", 500, 400, 250, 250);
 	obj2->hitbox.debug = true;

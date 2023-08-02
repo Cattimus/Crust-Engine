@@ -67,9 +67,6 @@ private:
 	//List that holds scene references
 	unordered_map<string, unique_ptr<Scene>> scenes;
 
-	//Event handler
-	EventHandler<Engine> events;
-
 //////////////HELPER FUNCTIONS FOR ENGINE///////////////////////////
 
 	//Helper function to initialize SDL
@@ -96,6 +93,9 @@ public:
 	uint8_t backgroundB;
 
 	InputHandler input;
+
+	//Event handler
+	EventHandler<Engine> events;
 
 	Engine();
 	~Engine();
@@ -167,8 +167,4 @@ public:
 
 	//Generate report about the current amount of objects
 	string GetReport();
-
-///////////////////EVENT HANDLER FUNCTIONS////////////////////////
-	EventHandler<Engine>* GetEventHandler();
-
 };

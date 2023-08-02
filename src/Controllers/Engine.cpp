@@ -416,11 +416,6 @@ string Engine::GetReport()
 	return toReturn;
 }
 
-EventHandler<Engine> *Engine::GetEventHandler()
-{
-	return &events;
-}
-
 double Engine::GetDelta()
 {
 	return delta;
