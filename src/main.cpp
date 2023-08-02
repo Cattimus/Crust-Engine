@@ -147,8 +147,8 @@ int main()
 	obj->hitbox.SetDebugColor(255, 150, 0);
 
 	//Register a move function
-	obj->GetEventHandler()->GetEvent("Move")->autoExec = true;
-	obj->GetEventHandler()->GetEvent("Move")->RegisterAction(
+	obj->events.GetEvent("Move")->autoExec = true;
+	obj->events.GetEvent("Move")->RegisterAction(
 		[](Object* parent)
 		{
 			parent->pos.MoveStep(1);
@@ -162,7 +162,7 @@ int main()
 	);
 
 	//Add an action to the collision event
-	obj->GetEventHandler()->GetEvent("Collision")->RegisterAction(
+	obj->events.GetEvent("Collision")->RegisterAction(
 		[](Object* parent)
 		{
 			cout << "Collision detected. at xpos: " << parent->pos.x << endl;
@@ -183,8 +183,8 @@ int main()
 	obj2->hitbox.debug = true;
 	obj2->hitbox.SetDebugColor(35, 255, 150);
 	
-	obj2->GetEventHandler()->GetEvent("Move")->autoExec = true;
-	obj2->GetEventHandler()->GetEvent("Move")->RegisterAction(
+	obj2->events.GetEvent("Move")->autoExec = true;
+	obj2->events.GetEvent("Move")->RegisterAction(
 		[](Object* parent)
 		{
 			auto hitbox = &parent->hitbox;

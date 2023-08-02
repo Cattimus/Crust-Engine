@@ -15,10 +15,7 @@ class Object
 {
 private:
 	//Unique ID for the object (at least in the scene)
-	uint id;
-
-	//Collection of all events sorted by name
-	EventHandler<Object> events;
+	uint id;	
 
 	//Pointer to the texture object that will be used for rendering
 	Texture* tex;
@@ -26,6 +23,8 @@ private:
 	void Init(uint id, Texture* tex);	
 
 public:
+	//Collection of all events sorted by name
+	EventHandler<Object> events;
 
 	//Should this object be rendered in front of(+) or behind(-) other objects
 	int renderPriority;
@@ -43,8 +42,6 @@ public:
 
 	//Return the object ID
 	uint GetID();
-
-	EventHandler<Object>* GetEventHandler();
 
 //////////////////////COLLISIONS///////////////////////////
 

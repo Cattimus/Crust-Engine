@@ -55,11 +55,6 @@ uint Object::GetID()
 	return id;
 }
 
-EventHandler<Object>* Object::GetEventHandler()
-{
-	return &events;
-}
-
 bool Object::IsCollidingWith(Object& b)
 {
 	return false;

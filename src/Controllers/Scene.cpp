@@ -87,7 +87,7 @@ void Scene::CheckEvents()
 
 	for(auto &i : objects)
 	{
-		i.second.get()->GetEventHandler()->CheckEvents();
+		i.second.get()->events.CheckEvents();
 	}
 }
 
@@ -106,8 +106,8 @@ void Scene::CheckCollisions()
 			//Activate collision event for both objects
 			if(cur->hitbox.IsColliding(next->hitbox))
 			{
-				cur->GetEventHandler()->DoEvent("Collision");
-				next->GetEventHandler()->DoEvent("Collision");
+				cur->events.DoEvent("Collision");
+				next->events.DoEvent("Collision");
 			}
 		}
 		
