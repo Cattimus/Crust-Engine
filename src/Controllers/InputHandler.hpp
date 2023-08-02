@@ -7,7 +7,6 @@ using namespace std;
 
 #include "Controllers/EventHandler.hpp"
 
-//TODO - make sure to re-initialize values at the appropriate time
 //TODO - add a way to know what keycode/scancode represents
 
 /*
@@ -82,11 +81,6 @@ public:
 	bool RightMouseDoubleClicked();
 	bool MiddleMouseClicked();
 	bool MiddleMouseDoubleClicked();
-	
-	//button specific drag
-	bool LeftMouseDrag();
-	bool RightMouseDrag();
-	bool MiddleMouseDrag();
 
 	//mouse wheel
 	int32_t GetWheelScrolledX();

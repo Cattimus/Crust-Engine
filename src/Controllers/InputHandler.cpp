@@ -24,6 +24,7 @@ void InputHandler::Init()
 
 	// Mouse events
 	events.RegisterEvent(Event<InputHandler>(this, "MouseButton"));
+	events.RegisterEvent(Event<InputHandler>(this, "MouseDrag"));
 	events.RegisterEvent(Event<InputHandler>(this, "MouseWheel"));
 	events.RegisterEvent(Event<InputHandler>(this, "MouseMoved"));
 }
@@ -84,6 +85,8 @@ void InputHandler::ParseEvent(SDL_Event &e)
 			lastKeycode = e.key.keysym.sym;
 			keyRepeat = e.key.repeat;
 			events.DoEvent("KeyboardInput");
+
+			keyRepeat = 0;
 			break;
 		
 		//mouse motion
@@ -92,7 +95,18 @@ void InputHandler::ParseEvent(SDL_Event &e)
 			mouseMovedX = e.motion.xrel;
 			mousePosY = e.motion.y;
 			mouseMovedY = e.motion.yrel;
-			events.DoEvent("MouseMoved");
+
+			if(mouseButtonDown)
+			{
+				events.DoEvent("MouseDrag");
+			}
+			else 
+			{
+				events.DoEvent("MouseMoved");
+			}
+
+			mouseMovedX = 0;
+			mouseMovedY = 0;
 			break;
 		
 		//mouse button
@@ -112,6 +126,9 @@ void InputHandler::ParseEvent(SDL_Event &e)
 			mouseScrolledY = e.wheel.y;
 			mouseWheelDirection = e.wheel.direction;
 			events.DoEvent("MouseWheel");
+
+			mouseScrolledX = 0;
+			mouseScrolledY = 0;
 			break;
 	}
 }
@@ -161,12 +178,6 @@ bool InputHandler::MiddleMouseDoubleClicked()
 {
 	return (mouseButton == SDL_BUTTON_MIDDLE) && mouseButtonDown && (mouseButtonClicks == 2);
 }
-
-//button specific drag
-bool LeftMouseDrag();
-bool RightMouseDrag();
-bool MiddleMouseDrag();
-
 
 int32_t InputHandler::GetWheelScrolledX()
 {
