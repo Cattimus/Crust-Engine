@@ -182,6 +182,16 @@ int main()
 	Object* obj2 = scene->CreateEntity("../media/test.png", 500, 400, 250, 250);
 	obj2->hitbox.debug = true;
 	obj2->hitbox.SetDebugColor(35, 255, 150);
+	
+	obj2->GetEventHandler()->GetEvent("Move")->autoExec = true;
+	obj2->GetEventHandler()->GetEvent("Move")->RegisterAction(
+		[](Object* parent)
+		{
+			auto hitbox = &parent->hitbox;
+			hitbox->pos.x = parent->pos.x;
+			hitbox->pos.y = parent->pos.y;
+		}
+	);
 
 	//start rendering
 	engine.StartMainLoop();
