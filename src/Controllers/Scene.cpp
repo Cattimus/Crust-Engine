@@ -104,7 +104,7 @@ void Scene::CheckCollisions()
 			auto next = objects.at(x).get();
 
 			//Activate collision event for both objects
-			if(cur->GetHitbox()->IsColliding(*next->GetHitbox()))
+			if(cur->hitbox.IsColliding(next->hitbox))
 			{
 				cur->GetEventHandler()->DoEvent("Collision");
 				next->GetEventHandler()->DoEvent("Collision");
