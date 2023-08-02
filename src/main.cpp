@@ -115,7 +115,7 @@ int main()
 	engine.CreateWindow("Crust engine demo", false);
 	scene = engine.CreateScene("main");
 
-	scene->GetEventHandler()->RegisterEvent(
+	scene->events.RegisterEvent(
 		Event<Scene>(scene, "Object Create",
 
 			//condition
@@ -138,7 +138,7 @@ int main()
 	);
 
 	//enable printing for event
-	scene->GetEventHandler()->GetEvent("Object Create")->debug = true;
+	scene->events.GetEvent("Object Create")->debug = true;
 
 	Object* obj = scene->CreateEntity("../media/test2.png", 200, 100, 250, 250);
 	controlled = obj;

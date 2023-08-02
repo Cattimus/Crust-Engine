@@ -23,8 +23,7 @@ private:
 	uint ID; 
 
 	//Data storage for all of the objects that are currently active
-	unordered_map<uint, unique_ptr<Object>> objects;
-	EventHandler<Scene> events;
+	unordered_map<uint, unique_ptr<Object>> objects;	
 
 	//Reference to the engine so we can access textures
 	Engine* engine;
@@ -32,6 +31,8 @@ private:
 public:
 	Scene(string name, Engine* engine);
 	~Scene();
+
+	EventHandler<Scene> events;
 
 ////////////////OBJECT MANAGEMENT FUNCTIONS/////////////////////////////
 
@@ -57,7 +58,6 @@ public:
 	string GetName();
 
 /////////////////////EVENT FUNCTIONS/////////////////////////
-	EventHandler<Scene>* GetEventHandler();
 	void CheckEvents();
 
 ////////////////////COLLISION FUNCTIONS////////////////////

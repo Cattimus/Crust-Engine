@@ -76,11 +76,6 @@ unordered_map<uint, unique_ptr<Object>>* Scene::GetObjectList()
 	return &objects;
 }
 
-EventHandler<Scene>* Scene::GetEventHandler()
-{
-	return &events;
-}
-
 void Scene::CheckEvents()
 {
 	events.CheckEvents();
