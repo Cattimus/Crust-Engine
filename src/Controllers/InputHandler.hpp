@@ -44,17 +44,15 @@ private:
 	int32_t mouseScrolledX;
 	int32_t mouseScrolledY;
 	uint32_t mouseWheelDirection;
-	
-	//Event handler for user input
-	EventHandler<InputHandler> events;
 
 	void Init();
 
 public:
 
 	InputHandler();
-
-	EventHandler<InputHandler>* GetEventHandler();
+	
+	//Event handler for user input
+	EventHandler<InputHandler> events;
 	
 	void ParseEvent(SDL_Event &e);
 	

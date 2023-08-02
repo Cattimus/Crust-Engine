@@ -34,11 +34,6 @@ InputHandler::InputHandler()
 	Init();
 }
 
-EventHandler<InputHandler>* InputHandler::GetEventHandler()
-{
-	return &events;
-}
-
 uint32_t InputHandler::GetKeycode()
 {
 	return lastKeycode;

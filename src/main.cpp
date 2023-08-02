@@ -170,10 +170,10 @@ int main()
 	);
 	
 	//input events
-	engine.input.GetEventHandler()->GetEvent("KeyboardInput")->RegisterAction(HandleKeyboardInput);
-	engine.input.GetEventHandler()->GetEvent("MouseButton")->RegisterAction(HandleMouseButton);
-	engine.input.GetEventHandler()->GetEvent("MouseWheel")->RegisterAction(HandleMouseWheel);
-	engine.input.GetEventHandler()->GetEvent("MouseDrag")->RegisterAction(HandleMouseDrag);
+	engine.input.events.GetEvent("KeyboardInput")->RegisterAction(HandleKeyboardInput);
+	engine.input.events.GetEvent("MouseButton")->RegisterAction(HandleMouseButton);
+	engine.input.events.GetEvent("MouseWheel")->RegisterAction(HandleMouseWheel);
+	engine.input.events.GetEvent("MouseDrag")->RegisterAction(HandleMouseDrag);
 	
 	//engine events
 	engine.events.GetEvent("Quit")->RegisterAction([](auto p){return;});
