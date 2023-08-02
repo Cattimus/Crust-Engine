@@ -5,6 +5,7 @@ using namespace std;
 
 double maxVeloc = 5;
 Object* controlled;
+Object* dragged = nullptr;
 Scene* scene;
 Engine engine;
 
@@ -45,31 +46,26 @@ void HandleKeyboardInput(InputHandler* p)
 
 void HandleMouseButton(InputHandler* p)
 {
-	if(p->LeftMouseDoubleClicked())
+	//release dragged object
+	if(!p->MouseButtonDown())
 	{
-		cout << "Left mouse double click detected\n";
-	}
-	else if (p->LeftMouseClicked())
-	{
-		cout << "Left mouse click detected\n";
+		dragged = nullptr;
+		return;
 	}
 
-	if(p->RightMouseDoubleClicked())
+	if(p->LeftMouseClicked())
 	{
-		cout << "Right mouse double click detected\n";
-	}
-	else if (p->RightMouseClicked())
-	{
-		cout << "Right mouse click detected\n";
-	}
-
-	if(p->MiddleMouseDoubleClicked())
-	{
-		cout << "Middle mouse double click detected\n";
-	}
-	else if (p->MiddleMouseClicked())
-	{
-		cout << "Middle mouse click detected\n";
+		//iterate over objects to find the one clicked on
+		auto list = scene->GetObjectList();
+		for(auto &obj : *list)
+		{
+			auto cur = obj.second.get();
+			if(cur->hitbox.PointOverlaps(p->GetMouseX(), p->GetMouseY()))
+			{
+				dragged = cur;
+				break;
+			}
+		}
 	}
 }
 
@@ -94,6 +90,15 @@ void HandleMouseWheel(InputHandler* p)
 	else if(scrolledX < 0)
 	{
 		cout << "Mouse wheel scrolled left\n";
+	}
+}
+
+void HandleMouseDrag(InputHandler* p)
+{
+	if(dragged)
+	{
+		Position* pos = &dragged->pos;
+		pos->Move(p->GetMouseMovedX(), p->GetMouseMovedY());
 	}
 }
 
@@ -138,8 +143,8 @@ int main()
 	Object* obj = scene->CreateEntity("../media/test2.png", 200, 100, 250, 250);
 	controlled = obj;
 
-	obj->GetHitbox()->debug = true;
-	obj->GetHitbox()->SetDebugColor(255, 150, 0);
+	obj->hitbox.debug = true;
+	obj->hitbox.SetDebugColor(255, 150, 0);
 
 	//Register a move function
 	obj->GetEventHandler()->GetEvent("Move")->autoExec = true;
@@ -150,12 +155,9 @@ int main()
 			parent->pos.RotateStep(1);
 
 			//move hitbox to follow object
-			auto hitbox = parent->GetHitbox();
-			if(hitbox)
-			{
-				hitbox->pos.x = parent->pos.x;
-				hitbox->pos.y = parent->pos.y;
-			}
+			auto hitbox = &parent->hitbox;
+			hitbox->pos.x = parent->pos.x;
+			hitbox->pos.y = parent->pos.y;
 		}
 	);
 
@@ -171,14 +173,15 @@ int main()
 	engine.input.GetEventHandler()->GetEvent("KeyboardInput")->RegisterAction(HandleKeyboardInput);
 	engine.input.GetEventHandler()->GetEvent("MouseButton")->RegisterAction(HandleMouseButton);
 	engine.input.GetEventHandler()->GetEvent("MouseWheel")->RegisterAction(HandleMouseWheel);
+	engine.input.GetEventHandler()->GetEvent("MouseDrag")->RegisterAction(HandleMouseDrag);
 	
 	//engine events
 	engine.GetEventHandler()->GetEvent("Quit")->RegisterAction([](auto p){return;});
 	engine.GetEventHandler()->GetEvent("Quit")->debug = true;
 
 	Object* obj2 = scene->CreateEntity("../media/test.png", 500, 400, 250, 250);
-	obj2->GetHitbox()->debug = true;
-	obj2->GetHitbox()->SetDebugColor(35, 255, 150);
+	obj2->hitbox.debug = true;
+	obj2->hitbox.SetDebugColor(35, 255, 150);
 
 	//start rendering
 	engine.StartMainLoop();
