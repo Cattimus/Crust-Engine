@@ -44,6 +44,15 @@ bool Hitbox::IsColliding(Hitbox& b)
 	return xOverlap && yOverlap;
 }
 
+
+bool Hitbox::PointOverlaps(double x, double y)
+{
+	bool xOverlap = (pos.x + pos.w >= x) && (pos.x >= x);
+	bool yOverlap = (pos.y + pos.h >= y) && (pos.y >= y);
+
+	return xOverlap && yOverlap;
+}
+
 void Hitbox::SetDebugColor(uint r, uint g, uint b)
 {
 	this->r = r;

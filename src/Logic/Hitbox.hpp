@@ -22,6 +22,7 @@ public:
 	Hitbox(double x, double y, int w, int h);
 
 	bool IsColliding(Hitbox& b);
+	bool PointOverlaps(double x, double y);
 	void SetDebugColor(uint r, uint g, uint b);
 
 ///////////////DEBUG RENDERING//////////////////
