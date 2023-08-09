@@ -14,10 +14,9 @@ using namespace std;
  * the Engine class will pull input values and register callbacks to this class
  	* in order to deal with user input.
  *
- 	*  - Keyboard events
- 	*  - Mouse events
  	*  - Audio events (input only)
  	*  - Controller events
+ 	*  - Handle multiple keypresses at once
 */
 
 class InputHandler

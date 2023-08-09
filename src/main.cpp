@@ -9,6 +9,11 @@ Object* dragged = nullptr;
 Scene* scene;
 Engine engine;
 
+//TODO - timer class
+//TODO - audio playing class
+//TODO - audio recording class
+//TODO - UI class
+
 void HandleKeyboardInput(InputHandler* p)
 {
 	switch(p->GetKeycode())

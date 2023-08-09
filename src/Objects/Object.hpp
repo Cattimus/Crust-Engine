@@ -11,6 +11,11 @@ using namespace std;
 #include "Logic/Hitbox.hpp"
 #include "Objects/Texture.hpp"
 
+//TODO - implement event where object can garbage collect itself
+//TODO - change hitbox and textures to vectors (for animations and multiple hitboxes)
+//TODO - property for "active"
+//TODO - ability to link multiple objects together so they can be independantly controlled
+
 class Object
 {
 private:
