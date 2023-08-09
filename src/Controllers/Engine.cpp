@@ -19,14 +19,6 @@ Engine::Engine()
 	backgroundB = 0;
 	scene = nullptr;
 
-	// Keyboard input event
-	events.RegisterEvent(Event<Engine>(this, "KeyboardInput"));
-
-	// Mouse events
-	events.RegisterEvent(Event<Engine>(this, "MouseButton"));
-	events.RegisterEvent(Event<Engine>(this, "MouseWheel"));
-	events.RegisterEvent(Event<Engine>(this, "MouseMoved"));
-
 	// Window Events
 	events.RegisterEvent(Event<Engine>(this, "WindowFocus"));
 	events.RegisterEvent(Event<Engine>(this, "WindowUnfocus"));
