@@ -51,7 +51,7 @@ public:
 	InputHandler();
 	
 	//Event handler for user input
-	EventHandler<InputHandler> events;
+	EventHandler events;
 	
 	void ParseEvent(SDL_Event &e);
 	
