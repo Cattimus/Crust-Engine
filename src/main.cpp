@@ -9,13 +9,13 @@ Object* dragged = nullptr;
 Scene* scene;
 Engine engine;
 
-//TODO - timer class
 //TODO - audio playing class
 //TODO - audio recording class
 //TODO - UI class
 
-void HandleKeyboardInput(InputHandler* p)
+void HandleKeyboardInput(void* args)
 {
+	InputHandler* p = (InputHandler*)args;
 	switch(p->GetKeycode())
 	{
 		case SDLK_w:
@@ -49,8 +49,9 @@ void HandleKeyboardInput(InputHandler* p)
 	}
 }
 
-void HandleMouseButton(InputHandler* p)
+void HandleMouseButton(void* args)
 {
+	InputHandler* p = (InputHandler*)args;
 	//release dragged object
 	if(!p->MouseButtonDown())
 	{
@@ -74,8 +75,9 @@ void HandleMouseButton(InputHandler* p)
 	}
 }
 
-void HandleMouseWheel(InputHandler* p)
+void HandleMouseWheel(void* args)
 {
+	InputHandler* p = (InputHandler*)args;
 	int scrolledY = p->GetWheelScrolledY();
 	int scrolledX = p->GetWheelScrolledX();
 
@@ -98,8 +100,9 @@ void HandleMouseWheel(InputHandler* p)
 	}
 }
 
-void HandleMouseDrag(InputHandler* p)
+void HandleMouseDrag(void* args)
 {
+	InputHandler* p = (InputHandler*)args;
 	if(dragged)
 	{
 		Position* pos = &dragged->pos;
@@ -121,11 +124,12 @@ int main()
 	scene = engine.CreateScene("main");
 
 	scene->events.RegisterEvent(
-		Event<Scene>(scene, "Object Create",
+		Event(scene, "Object Create",
 
 			//condition
-			[](Scene* p)
+			[](void* args)
 			{
+				Scene* p = (Scene*)args;
 				static int prev_size;
 				int current_size = p->GetObjectList()->size();
 				bool to_return = (current_size > prev_size);
@@ -134,7 +138,7 @@ int main()
 			},
 
 			//action
-			[](Scene* p)
+			[](void* p)
 			{
 				return;
 			}
@@ -154,8 +158,9 @@ int main()
 	//Register a move function
 	obj->events.GetEvent("Move")->autoExec = true;
 	obj->events.GetEvent("Move")->RegisterAction(
-		[](Object* parent)
+		[](void* args)
 		{
+			Object* parent = (Object*)args;
 			parent->pos.MoveStep(1);
 			parent->pos.RotateStep(1);
 
@@ -168,8 +173,9 @@ int main()
 
 	//Add an action to the collision event
 	obj->events.GetEvent("Collision")->RegisterAction(
-		[](Object* parent)
+		[](void* args)
 		{
+			Object* parent = (Object*)args;
 			cout << "Collision detected. at xpos: " << parent->pos.x << endl;
 		}
 	);
@@ -190,8 +196,9 @@ int main()
 	
 	obj2->events.GetEvent("Move")->autoExec = true;
 	obj2->events.GetEvent("Move")->RegisterAction(
-		[](Object* parent)
+		[](void* args)
 		{
+			Object* parent = (Object*)args;
 			auto hitbox = &parent->hitbox;
 			hitbox->pos.x = parent->pos.x;
 			hitbox->pos.y = parent->pos.y;
