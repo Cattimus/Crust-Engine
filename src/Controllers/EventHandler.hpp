@@ -5,21 +5,20 @@ using namespace std;
 
 #include "Logic/Event.hpp"
 
-template <typename T>
 class EventHandler
 {
 private:
-	unordered_map<string, Event<T>> events;
+	unordered_map<string, Event> events;
 
 public:
 	//Register a new event
-	void RegisterEvent(Event<T> event)
+	void RegisterEvent(Event event)
 	{
 		events[event.GetName()] = event;
 	}
 
 	//Get a reference to an existing event
-	Event<T>* GetEvent(string name)
+	Event* GetEvent(string name)
 	{
 		if(events.find(name) == events.end())
 		{
