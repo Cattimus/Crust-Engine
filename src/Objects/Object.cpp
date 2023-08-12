@@ -5,11 +5,11 @@ void Object::Init(uint id, Texture* tex)
 	this->id = id;
 
 	//Move should automatically activate every loop
-	events.RegisterEvent(Event<Object>(this, "Move"));
+	events.RegisterEvent(Event(this, "Move"));
 	events.GetEvent("Move")->autoExec = true;
 
-	events.RegisterEvent(Event<Object>(this, "Collision"));
-	events.RegisterEvent(Event<Object>(this, "Deleted"));
+	events.RegisterEvent(Event(this, "Collision"));
+	events.RegisterEvent(Event(this, "Deleted"));
 
 	if(tex)
 	{

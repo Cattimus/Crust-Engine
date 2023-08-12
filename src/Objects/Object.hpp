@@ -29,7 +29,7 @@ private:
 
 public:
 	//Collection of all events sorted by name
-	EventHandler<Object> events;
+	EventHandler events;
 
 	//Should this object be rendered in front of(+) or behind(-) other objects
 	int renderPriority;
