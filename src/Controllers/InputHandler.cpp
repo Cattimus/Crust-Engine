@@ -20,13 +20,13 @@ void InputHandler::Init()
 	mouseWheelDirection = 0;
 
 	// Keyboard input event
-	events.RegisterEvent(Event(this, "KeyboardInput"));
+	events.RegisterEvent(Event("KeyboardInput"));
 
 	// Mouse events
-	events.RegisterEvent(Event(this, "MouseButton"));
-	events.RegisterEvent(Event(this, "MouseDrag"));
-	events.RegisterEvent(Event(this, "MouseWheel"));
-	events.RegisterEvent(Event(this, "MouseMoved"));
+	events.RegisterEvent(Event("MouseButton"));
+	events.RegisterEvent(Event("MouseDrag"));
+	events.RegisterEvent(Event("MouseWheel"));
+	events.RegisterEvent(Event("MouseMoved"));
 }
 
 InputHandler::InputHandler()

@@ -124,7 +124,7 @@ int main()
 	scene = engine.CreateScene("main");
 
 	scene->events.RegisterEvent(
-		Event(scene, "Object Create",
+		Event("Object Create",
 
 			//condition
 			[](void* args)
@@ -136,12 +136,14 @@ int main()
 				prev_size = current_size;
 				return to_return;
 			},
+			scene,
 
 			//action
 			[](void* p)
 			{
 				return;
-			}
+			},
+			nullptr
 
 		)
 	);
@@ -160,15 +162,22 @@ int main()
 	obj->events.GetEvent("Move")->RegisterAction(
 		[](void* args)
 		{
+			if(!args)
+			{
+				return;
+			}
+
 			Object* parent = (Object*)args;
 			parent->pos.MoveStep(1);
 			parent->pos.RotateStep(1);
 
 			//move hitbox to follow object
-			auto hitbox = &parent->hitbox;
+			auto hitbox = &(parent->hitbox);
 			hitbox->pos.x = parent->pos.x;
 			hitbox->pos.y = parent->pos.y;
-		}
+		},
+
+		obj
 	);
 
 	//Add an action to the collision event
@@ -177,14 +186,17 @@ int main()
 		{
 			Object* parent = (Object*)args;
 			cout << "Collision detected. at xpos: " << parent->pos.x << endl;
-		}
+		},
+
+		obj
 	);
 	
 	//input events
-	engine.input.events.GetEvent("KeyboardInput")->RegisterAction(HandleKeyboardInput);
-	engine.input.events.GetEvent("MouseButton")->RegisterAction(HandleMouseButton);
-	engine.input.events.GetEvent("MouseWheel")->RegisterAction(HandleMouseWheel);
-	engine.input.events.GetEvent("MouseDrag")->RegisterAction(HandleMouseDrag);
+	InputHandler* in = &(engine.input);
+	engine.input.events.GetEvent("KeyboardInput")->RegisterAction(HandleKeyboardInput, in);
+	engine.input.events.GetEvent("MouseButton")->RegisterAction(HandleMouseButton, in);
+	engine.input.events.GetEvent("MouseWheel")->RegisterAction(HandleMouseWheel, in);
+	engine.input.events.GetEvent("MouseDrag")->RegisterAction(HandleMouseDrag, in);
 	
 	//engine events
 	engine.events.GetEvent("Quit")->RegisterAction([](auto p){return;});
@@ -198,11 +210,18 @@ int main()
 	obj2->events.GetEvent("Move")->RegisterAction(
 		[](void* args)
 		{
+			if(!args)
+			{
+				return;
+			}
+
 			Object* parent = (Object*)args;
-			auto hitbox = &parent->hitbox;
+			auto hitbox = &(parent->hitbox);
 			hitbox->pos.x = parent->pos.x;
 			hitbox->pos.y = parent->pos.y;
-		}
+		},
+
+		obj2
 	);
 
 	//start rendering

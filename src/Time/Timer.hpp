@@ -5,6 +5,8 @@ using namespace std;
 
 #include<SDL2/SDL.h>
 
+//TODO - enable async/multithreaded callback functions
+
 class Timer
 {
 private:

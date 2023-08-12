@@ -9,8 +9,11 @@ class Event
 private:
 	string name;
 
-	//Pointer to the arguments to condition and action (usually the parent object)
-	void* args;
+	//Condition check arguments
+	void* condArgs;
+
+	//action arguments
+	void* actArgs;
 
 	//Function pointer to condition
 	bool (*condition)(void* args);
@@ -21,7 +24,8 @@ private:
 	//Helper function to null-initialize all values
 	void Init()
 	{
-		this->args = nullptr;
+		this->condArgs = nullptr;
+		this->actArgs = nullptr;
 		this->name = "";
 		this->condition = nullptr;
 		this->action = nullptr;
@@ -33,20 +37,20 @@ public:
 	bool debug;
 	bool autoExec;
 
-	Event(void* args, string name, bool (*condition)(void*), void (*action)(void*))
+	Event(string name, bool (*condition)(void*), void* condArgs, void (*action)(void*), void* actArgs)
 	{
 		Init();
-		this->args = args;
+		this->condArgs = condArgs;
+		this->actArgs = actArgs;
 		this->name = name;
 		this->condition = condition;
 		this->action = action;
 		autoExec = true;
 	}
 
-	Event(void* parent, string name)
+	Event(string name)
 	{
 		Init();
-		this->args = parent;
 		this->name = name;
 	}
 
@@ -61,10 +65,32 @@ public:
 		condition = func;
 	}
 
+	void RegisterCondition(bool (*func)(void*), void* args)
+	{
+		condition = func;
+		condArgs = args;
+	}
+
+	void ConditionArgs(void* args)
+	{
+		condArgs = args;
+	}
+
 	//Register action
 	void RegisterAction(void (*func)(void*))
 	{
 		action = func;
+	}
+
+	void RegisterAction(void (*func)(void*), void* args)
+	{
+		action = func;
+		actArgs = args;
+	}
+
+	void ActionArgs(void* args)
+	{
+		actArgs = args;
 	}
 
 	//Check to see if condition is true, if it is, activate action
@@ -76,7 +102,7 @@ public:
 		}
 
 		//check for null parent or action
-		if(!(action && args))
+		if(!(action))
 		{
 			return;
 		}
@@ -89,26 +115,26 @@ public:
 				cout << "Event: [" << name << "] is activating.\n";
 			}
 
-			action(args);
+			action(actArgs);
 		}
 
 		//perform action if condition is met
-		else if(condition(args))
+		else if(condition(condArgs))
 		{
 			if(debug)
 			{
 				cout << "Event [" << name << "] is activating.\n";
 			}
 
-			action(args);
+			action(actArgs);
 		}
 	}
 
 	//Activate event without a condition check
 	void Activate()
 	{
-		//check for null parent or action
-		if(!(action && args))
+		//check for null action
+		if(!(action))
 		{
 			return;
 		}
@@ -118,7 +144,7 @@ public:
 			cout << "Event [" << name << "] is activating.\n";
 		}
 
-		action(args);
+		action(actArgs);
 	}
 
 	string GetName()
