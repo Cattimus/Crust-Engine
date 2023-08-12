@@ -10,11 +10,13 @@ class Timer
 private:
 	int32_t startTime;
 	int32_t endTime;
-	bool elapsed;
+	bool enabled;
 
 	//callback function for when the timer elapses
 	void (*onElapse)(void* args);
 	void* args;
+
+	void Init();
 
 public:
 	bool autoReset;
