@@ -58,7 +58,7 @@ public:
 			return;
 		}
 
-		events[name].Activate();
+		events[name].action.ExecuteWithArgs();
 	}
 
 };

@@ -159,7 +159,7 @@ int main()
 
 	//Register a move function
 	obj->events.GetEvent("Move")->autoExec = true;
-	obj->events.GetEvent("Move")->RegisterAction(
+	obj->events.GetEvent("Move")->action.Set(
 		[](void* args)
 		{
 			if(!args)
@@ -181,7 +181,7 @@ int main()
 	);
 
 	//Add an action to the collision event
-	obj->events.GetEvent("Collision")->RegisterAction(
+	obj->events.GetEvent("Collision")->action.Set(
 		[](void* args)
 		{
 			Object* parent = (Object*)args;
@@ -193,13 +193,13 @@ int main()
 	
 	//input events
 	InputHandler* in = &(engine.input);
-	engine.input.events.GetEvent("KeyboardInput")->RegisterAction(HandleKeyboardInput, in);
-	engine.input.events.GetEvent("MouseButton")->RegisterAction(HandleMouseButton, in);
-	engine.input.events.GetEvent("MouseWheel")->RegisterAction(HandleMouseWheel, in);
-	engine.input.events.GetEvent("MouseDrag")->RegisterAction(HandleMouseDrag, in);
+	engine.input.events.GetEvent("KeyboardInput")->action.Set(HandleKeyboardInput, in);
+	engine.input.events.GetEvent("MouseButton")->action.Set(HandleMouseButton, in);
+	engine.input.events.GetEvent("MouseWheel")->action.Set(HandleMouseWheel, in);
+	engine.input.events.GetEvent("MouseDrag")->action.Set(HandleMouseDrag, in);
 	
 	//engine events
-	engine.events.GetEvent("Quit")->RegisterAction([](auto p){return;});
+	engine.events.GetEvent("Quit")->action.Set([](auto p){return;});
 	engine.events.GetEvent("Quit")->debug = true;
 
 	Object* obj2 = scene->CreateEntity("../media/test.png", 500, 400, 250, 250);
@@ -207,7 +207,7 @@ int main()
 	obj2->hitbox.SetDebugColor(35, 255, 150);
 	
 	obj2->events.GetEvent("Move")->autoExec = true;
-	obj2->events.GetEvent("Move")->RegisterAction(
+	obj2->events.GetEvent("Move")->action.Set(
 		[](void* args)
 		{
 			if(!args)
