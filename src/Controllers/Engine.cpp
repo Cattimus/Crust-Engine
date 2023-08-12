@@ -20,15 +20,15 @@ Engine::Engine()
 	scene = nullptr;
 
 	// Window Events
-	events.RegisterEvent(Event<Engine>(this, "WindowFocus"));
-	events.RegisterEvent(Event<Engine>(this, "WindowUnfocus"));
-	events.RegisterEvent(Event<Engine>(this, "WindowMoved"));
-	events.RegisterEvent(Event<Engine>(this, "WindowMinimized"));
-	events.RegisterEvent(Event<Engine>(this, "WindowMaximized"));
-	events.RegisterEvent(Event<Engine>(this, "WindowRestored"));
+	events.RegisterEvent(Event(this, "WindowFocus"));
+	events.RegisterEvent(Event(this, "WindowUnfocus"));
+	events.RegisterEvent(Event(this, "WindowMoved"));
+	events.RegisterEvent(Event(this, "WindowMinimized"));
+	events.RegisterEvent(Event(this, "WindowMaximized"));
+	events.RegisterEvent(Event(this, "WindowRestored"));
 
 	// Quit event
-	events.RegisterEvent(Event<Engine>(this, "Quit"));
+	events.RegisterEvent(Event(this, "Quit"));
 }
 
 Engine::~Engine()

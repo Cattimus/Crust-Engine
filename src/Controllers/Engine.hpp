@@ -95,7 +95,7 @@ public:
 	InputHandler input;
 
 	//Event handler
-	EventHandler<Engine> events;
+	EventHandler events;
 
 	Engine();
 	~Engine();
