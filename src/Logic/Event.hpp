@@ -4,25 +4,24 @@
 #include <iostream>
 using namespace std;
 
-template <typename T>
 class Event
 {
 private:
 	string name;
 
-	//Pointer to parent object that the event will act upon
-	T* parent;
+	//Pointer to the arguments to condition and action (usually the parent object)
+	void* args;
 
 	//Function pointer to condition
-	bool (*condition)(T* parent);
+	bool (*condition)(void* args);
 
 	//Function pointer to action
-	void (*action)(T* parent);
+	void (*action)(void* args);
 
 	//Helper function to null-initialize all values
-	void init()
+	void Init()
 	{
-		this->parent = nullptr;
+		this->args = nullptr;
 		this->name = "";
 		this->condition = nullptr;
 		this->action = nullptr;
@@ -34,36 +33,36 @@ public:
 	bool debug;
 	bool autoExec;
 
-	Event(T* parent, string name, bool (*condition)(T*), void (*action)(T*))
+	Event(void* args, string name, bool (*condition)(void*), void (*action)(void*))
 	{
-		init();
-		this->parent = parent;
+		Init();
+		this->args = args;
 		this->name = name;
 		this->condition = condition;
 		this->action = action;
 		autoExec = true;
 	}
 
-	Event(T* parent, string name)
+	Event(void* parent, string name)
 	{
-		init();
-		this->parent = parent;
+		Init();
+		this->args = parent;
 		this->name = name;
 	}
 
 	Event()
 	{
-		init();
+		Init();
 	}
 
 	//Register condition
-	void RegisterCondition(bool (*func)(T*))
+	void RegisterCondition(bool (*func)(void*))
 	{
 		condition = func;
 	}
 
 	//Register action
-	void RegisterAction(void (*func)(T*))
+	void RegisterAction(void (*func)(void*))
 	{
 		action = func;
 	}
@@ -77,7 +76,7 @@ public:
 		}
 
 		//check for null parent or action
-		if(!(action && parent))
+		if(!(action && args))
 		{
 			return;
 		}
@@ -90,18 +89,18 @@ public:
 				cout << "Event: [" << name << "] is activating.\n";
 			}
 
-			action(parent);
+			action(args);
 		}
 
 		//perform action if condition is met
-		else if(condition(parent))
+		else if(condition(args))
 		{
 			if(debug)
 			{
 				cout << "Event [" << name << "] is activating.\n";
 			}
 
-			action(parent);
+			action(args);
 		}
 	}
 
@@ -109,7 +108,7 @@ public:
 	void Activate()
 	{
 		//check for null parent or action
-		if(!(action && parent))
+		if(!(action && args))
 		{
 			return;
 		}
@@ -119,7 +118,7 @@ public:
 			cout << "Event [" << name << "] is activating.\n";
 		}
 
-		action(parent);
+		action(args);
 	}
 
 	string GetName()
