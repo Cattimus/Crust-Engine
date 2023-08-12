@@ -30,7 +30,7 @@ public:
 	Scene(string name, Engine* engine);
 	~Scene();
 
-	EventHandler<Scene> events;
+	EventHandler events;
 
 ////////////////OBJECT MANAGEMENT FUNCTIONS/////////////////////////////
 
