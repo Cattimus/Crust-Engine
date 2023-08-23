@@ -8,7 +8,6 @@ void Timer::Init()
   endTime = 0;
   enabled = false;
   onElapse = nullptr;
-  args = nullptr;
 }
 
 bool Timer::Elapsed()
@@ -30,7 +29,7 @@ void Timer::Start(int32_t ms)
 void Timer::Reset()
 {
   //don't enable the timer if there's no callback set
-  if(!onElapse)
+  if(!onElapse.IsSet())
   {
     return;
   }
@@ -62,15 +61,7 @@ int32_t Timer::TimeRemaining()
 
 void Timer::OnElapse(void (*callback)(void* args), void* args)
 {
-  if(callback)
-  {
-    onElapse = callback;
-  }
-
-  if(args)
-  {
-    this->args = args;
-  }
+  this->onElapse = Action(callback, args);
 }
 
 //This needs to be called from the main loop to check
@@ -79,6 +70,6 @@ void Timer::CheckElapse()
   //call callback if timer is elapsed
   if(enabled && Elapsed())
   {
-    onElapse(args);
+    onElapse.ExecuteWithArgs();
   }
 }

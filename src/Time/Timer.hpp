@@ -5,6 +5,8 @@ using namespace std;
 
 #include<SDL2/SDL.h>
 
+#include "Logic/Action.hpp"
+
 //TODO - enable async/multithreaded callback functions
 
 class Timer
@@ -14,9 +16,7 @@ private:
 	int32_t endTime;
 	bool enabled;
 
-	//callback function for when the timer elapses
-	void (*onElapse)(void* args);
-	void* args;
+	Action onElapse;
 
 	void Init();
 
