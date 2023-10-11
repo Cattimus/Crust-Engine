@@ -3,8 +3,8 @@
 #include<iostream>
 using namespace std;
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include <SDL.h>
+#include <SDL_image.h>
 
 class Texture
 {
@@ -12,7 +12,7 @@ private:
 	//Pointer to the SDL texture object
 	SDL_Texture* tex;
 	//How many things reference this texture
-	uint ref;
+	uint32_t ref;
 	//Path to the source file (for possible reconstruction)
 	string path;
 
@@ -30,7 +30,7 @@ public:
 
 	void RefInc();
 	void RefDec();
-	uint GetRef();
+	uint32_t GetRef();
 	string GetPath();
 
 	int GetWidth();

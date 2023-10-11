@@ -46,7 +46,7 @@ void Engine::Init()
 	}
 
 	// Initialize SDL_IMG with png, jpg, and webp support
-	uint imageFlags = IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_WEBP;
+	uint32_t imageFlags = IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_WEBP;
 	if (!(IMG_Init(imageFlags) & imageFlags))
 	{
 		cout << "SDL_Image failed to initialize. Error: " << IMG_GetError() << endl;
@@ -79,7 +79,7 @@ void Engine::Quit()
 }
 
 // background color functions
-void Engine::SetBackgroundColor(uint r, uint g, uint b)
+void Engine::SetBackgroundColor(uint32_t r, uint32_t g, uint32_t b)
 {
 	backgroundR = r;
 	backgroundG = g;
@@ -97,7 +97,7 @@ void Engine::CreateWindow(string title, int x, int y, int w, int h, bool resizab
 	Init();
 
 	// Initialize a new window. Shown is always active, resizable is optional
-	uint flags = SDL_WINDOW_SHOWN;
+	uint32_t flags = SDL_WINDOW_SHOWN;
 	if (resizable)
 	{
 		flags |= SDL_WINDOW_RESIZABLE;
@@ -362,7 +362,7 @@ void Engine::DisableVsync()
 {
 	vsync = false;
 }
-void Engine::SetFrameLimit(uint limit)
+void Engine::SetFrameLimit(uint32_t limit)
 {
 	maxFps = limit;
 }

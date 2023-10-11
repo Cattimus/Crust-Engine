@@ -62,7 +62,7 @@ void Texture::RefDec()
 	}
 }
 
-uint Texture::GetRef()
+uint32_t Texture::GetRef()
 {
 	return ref;
 }

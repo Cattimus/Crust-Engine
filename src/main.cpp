@@ -110,6 +110,8 @@ void HandleMouseDrag(void* args)
 	}
 }
 
+#undef main
+
 int main()
 {
 	engine.SetBackgroundColor(0x32, 0x60, 0xA8);
@@ -151,7 +153,7 @@ int main()
 	//enable printing for event
 	scene->events.GetEvent("Object Create")->debug = true;
 
-	Object* obj = scene->CreateEntity("../media/test2.png", 200, 100, 250, 250);
+	Object* obj = scene->CreateEntity("media/test2.png", 200, 100, 250, 250);
 	controlled = obj;
 
 	obj->hitbox.debug = true;
@@ -202,7 +204,7 @@ int main()
 	engine.events.GetEvent("Quit")->action.Set([](auto p){return;});
 	engine.events.GetEvent("Quit")->debug = true;
 
-	Object* obj2 = scene->CreateEntity("../media/test.png", 500, 400, 250, 250);
+	Object* obj2 = scene->CreateEntity("media/test.png", 500, 400, 250, 250);
 	obj2->hitbox.debug = true;
 	obj2->hitbox.SetDebugColor(35, 255, 150);
 	

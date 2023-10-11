@@ -18,10 +18,10 @@ private:
 	string name;
 
 	//ID of next object to be created. Increments with every object. IDs are not reused.
-	uint ID; 
+	uint32_t ID; 
 
 	//Data storage for all of the objects that are currently active
-	unordered_map<uint, unique_ptr<Object>> objects;	
+	unordered_map<uint32_t, unique_ptr<Object>> objects;	
 
 	//Reference to the engine so we can access textures
 	Engine* engine;
@@ -41,16 +41,16 @@ public:
 
 	//Get an object by ID
 	//Returns: a reference to the object if it exists. NULL if it does not.
-	Object* GetObject(uint id);
+	Object* GetObject(uint32_t id);
 
 	//Delete an object by ID
-	void DeleteObject(uint id);
+	void DeleteObject(uint32_t id);
 
 	//Returns a list of all currently active objects separated by ','
 	string GetActiveObjects();
 
 	//Return a direct pointer to the object list
-	unordered_map<uint, unique_ptr<Object>>* GetObjectList();
+	unordered_map<uint32_t, unique_ptr<Object>>* GetObjectList();
 
 	//Return the name of the Scene
 	string GetName();

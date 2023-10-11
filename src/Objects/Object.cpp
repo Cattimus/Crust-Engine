@@ -1,6 +1,6 @@
 #include "Objects/Object.hpp"
 
-void Object::Init(uint id, Texture* tex)
+void Object::Init(uint32_t id, Texture* tex)
 {
 	this->id = id;
 
@@ -26,31 +26,31 @@ void Object::Init(uint id, Texture* tex)
 	}
 }
 
-Object::Object(uint id, Texture* tex, int x, int y, int w, int h)
+Object::Object(uint32_t id, Texture* tex, int x, int y, int w, int h)
 {
 	Init(id, tex);
 	pos = Position(x,y,w,h);
 	hitbox = Hitbox(x,y,w,h);
 	
 }
-Object::Object(uint id, Texture* tex, int w, int h)
+Object::Object(uint32_t id, Texture* tex, int w, int h)
 {
 	Init(id, tex);
 	pos = Position(0,0,w,h);
 	hitbox = Hitbox(0,0,w,h);
 }
 
-Object::Object(uint id, Texture* tex)
+Object::Object(uint32_t id, Texture* tex)
 {
 	Init(id, tex);
 }
 
-Object::Object(uint id)
+Object::Object(uint32_t id)
 {
 	Init(id, nullptr);
 }
 
-uint Object::GetID()
+uint32_t Object::GetID()
 {
 	return id;
 }

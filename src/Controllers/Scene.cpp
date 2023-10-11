@@ -10,7 +10,7 @@ Scene::Scene(string name, Engine* engine)
 Scene::~Scene()
 {
 	//This will ensure our destructors are called in the proper order. This must be called before SDL_Quit()
-	objects = unordered_map<uint, unique_ptr<Object>>();
+	objects = unordered_map<uint32_t, unique_ptr<Object>>();
 }
 
 Object* Scene::CreateEntity(string texPath, int x, int y, int w, int h)
@@ -30,7 +30,7 @@ Object* Scene::CreateObject(int x, int y, int w, int h)
 	return to_return;
 }
 
-Object* Scene::GetObject(uint id)
+Object* Scene::GetObject(uint32_t id)
 {
 	//Object with the ID does not exist
 	if(objects.find(ID) == objects.end())
@@ -41,7 +41,7 @@ Object* Scene::GetObject(uint id)
 	return objects[ID].get();
 }
 
-void Scene::DeleteObject(uint id)
+void Scene::DeleteObject(uint32_t id)
 {	
 	if(objects.find(id) != objects.end())
 	{
@@ -71,7 +71,7 @@ string Scene::GetName()
 	return name;
 }
 
-unordered_map<uint, unique_ptr<Object>>* Scene::GetObjectList()
+unordered_map<uint32_t, unique_ptr<Object>>* Scene::GetObjectList()
 {
 	return &objects;
 }
@@ -89,12 +89,12 @@ void Scene::CheckEvents()
 void Scene::CheckCollisions()
 {
 	//Iterate through main list
-	for(ulong i = 0; i < objects.size(); i++)
+	for(uint64_t i = 0; i < objects.size(); i++)
 	{
 		auto cur = objects.at(i).get();
 
 		//Iterate through every object after the current one
-		for(ulong x = i+1; x < objects.size(); x++)
+		for(uint64_t x = i+1; x < objects.size(); x++)
 		{
 			auto next = objects.at(x).get();
 

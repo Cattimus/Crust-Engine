@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Logic/Position.hpp"
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 class Hitbox
 {
@@ -23,7 +23,7 @@ public:
 
 	bool IsColliding(Hitbox& b);
 	bool PointOverlaps(double x, double y);
-	void SetDebugColor(uint r, uint g, uint b);
+	void SetDebugColor(uint32_t r, uint32_t g, uint32_t b);
 
 ///////////////DEBUG RENDERING//////////////////
 

@@ -53,7 +53,7 @@ bool Hitbox::PointOverlaps(double x, double y)
 	return xOverlap && yOverlap;
 }
 
-void Hitbox::SetDebugColor(uint r, uint g, uint b)
+void Hitbox::SetDebugColor(uint32_t r, uint32_t g, uint32_t b)
 {
 	this->r = r;
 	this->g = g;

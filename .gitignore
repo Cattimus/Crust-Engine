@@ -3,3 +3,6 @@
 /media
 /.cache
 compile_commands.json
+/.vs
+/out
+/libs

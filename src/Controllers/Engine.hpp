@@ -5,8 +5,8 @@
 #include <memory>
 using namespace std;
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include <SDL.h>
+#include <SDL_image.h>
 
 class Scene;
 #include "Controllers/Scene.hpp"
@@ -131,7 +131,7 @@ public:
 
 //////////////MAIN LOOP AND RENDERING//////////////////////////
 
-	void SetBackgroundColor(uint, uint, uint);
+	void SetBackgroundColor(uint32_t, uint32_t, uint32_t);
 
 	//Render the currently selected scene. Will do nothing if 'scene' is null.
 	void RenderCurrent();
@@ -163,7 +163,7 @@ public:
 	void EnableVsync();
 	void DisableVsync();
 	
-	void SetFrameLimit(uint limit);
+	void SetFrameLimit(uint32_t limit);
 
 	//Generate report about the current amount of objects
 	string GetReport();

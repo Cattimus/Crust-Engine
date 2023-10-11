@@ -4,7 +4,7 @@
 #include <unordered_map>
 using namespace std;
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #include "Controllers/EventHandler.hpp"
 #include "Logic/Position.hpp"
@@ -20,12 +20,12 @@ class Object
 {
 private:
 	//Unique ID for the object (at least in the scene)
-	uint id;	
+	uint32_t id;	
 
 	//Pointer to the texture object that will be used for rendering
 	Texture* tex;
 
-	void Init(uint id, Texture* tex);	
+	void Init(uint32_t id, Texture* tex);	
 
 public:
 	//Collection of all events sorted by name
@@ -40,13 +40,13 @@ public:
 	Position pos;
 	Hitbox hitbox;
 
-	Object(uint id, Texture* tex, int x, int y, int w, int h);
-	Object(uint id, Texture* tex, int w, int h);
-	Object(uint id, Texture* tex);
-	Object(uint id);
+	Object(uint32_t id, Texture* tex, int x, int y, int w, int h);
+	Object(uint32_t id, Texture* tex, int w, int h);
+	Object(uint32_t id, Texture* tex);
+	Object(uint32_t id);
 
 	//Return the object ID
-	uint GetID();
+	uint32_t GetID();
 
 //////////////////////COLLISIONS///////////////////////////
 
