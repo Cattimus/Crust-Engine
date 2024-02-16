@@ -33,15 +33,18 @@ set(SOURCES
 include_directories(src)
 
 IF(WIN32)
-	include_directories(libs/SDL2/include)
-	include_directories(libs/SDL2_image/include)
+	include_directories(${CMAKE_CURRENT_SOURCE_DIR}/libs/SDL2/include/SDL2)
+	include_directories(${CMAKE_CURRENT_SOURCE_DIR}/libs/SDL2_image/include/SDL2)
+	
+	link_directories(${CMAKE_CURRENT_SOURCE_DIR}/libs/SDL2/lib)
+	link_directories(${CMAKE_CURRENT_SOURCE_DIR}/libs/SDL2_image/lib)
 endif()
 
 add_executable(main ${SOURCES})
 
 IF(WIN32)
-	target_link_libraries(main ${CMAKE_CURRENT_SOURCE_DIR}/libs/SDL2/lib/x64/SDL2.lib)
-	target_link_libraries(main ${CMAKE_CURRENT_SOURCE_DIR}/libs/SDL2_image/lib/x64/SDL2_image.lib)
+	target_link_libraries(main SDL2)
+	target_link_libraries(main SDL2_image)
 endif()
 
 if(LINUX)
