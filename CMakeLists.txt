@@ -30,8 +30,6 @@ set(SOURCES
 	src/Logic/Position.cpp
 )
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-
 include_directories(src)
 
 IF(WIN32)
