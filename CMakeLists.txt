@@ -28,6 +28,9 @@ set(SOURCES
 
 	src/Logic/Position.hpp
 	src/Logic/Position.cpp
+
+	src/Time/Timer.hpp
+	src/Time/Timer.cpp
 )
 
 include_directories(src)
