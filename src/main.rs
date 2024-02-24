@@ -1,3 +1,5 @@
+mod sdl_bindings;
+
 mod sdl;
 use sdl::*;
 
