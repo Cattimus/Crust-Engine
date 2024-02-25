@@ -1,4 +1,3 @@
-use std::ptr::*;
 use std::ffi::*;
 
 use crate::sdl_bindings::*;
