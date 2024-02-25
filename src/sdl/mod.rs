@@ -4,8 +4,10 @@ pub mod window;
 pub use window::*;
 
 pub mod texture;
+pub use texture::*;
 
 pub mod object;
+pub use object::*;
 
 use crate::sdl_bindings::*;
 
@@ -48,5 +50,17 @@ pub fn crust_exit() {
 	unsafe {
 		IMG_Quit();
 		SDL_Quit();
+	}
+}
+
+pub fn crust_renderclear(window: &CrustWindow) {
+	unsafe {
+		SDL_RenderClear(window.renderer);
+	}
+}
+
+pub fn crust_renderpresent(window: &CrustWindow) {
+	unsafe {
+		SDL_RenderPresent(window.renderer);
 	}
 }
