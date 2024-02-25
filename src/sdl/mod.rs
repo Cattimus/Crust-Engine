@@ -3,6 +3,10 @@
 pub mod window;
 pub use window::*;
 
+pub mod texture;
+
+pub mod object;
+
 use crate::sdl_bindings::*;
 
 use std::ffi::*;
@@ -12,6 +16,12 @@ pub fn crust_init() -> bool {
 		//init SDL
 		if SDL_Init(SDL_INIT_VIDEO) < 0 {
 			eprintln!("Unable to initialize SDL");
+			return false;
+		}
+
+		if IMG_Init(IMG_InitFlags_IMG_INIT_PNG) != IMG_InitFlags_IMG_INIT_PNG {
+			eprintln!("Unable to initialize SDL_Image");
+			SDL_Quit();
 			return false;
 		}
 
@@ -36,6 +46,7 @@ pub fn crust_init() -> bool {
 
 pub fn crust_exit() {
 	unsafe {
+		IMG_Quit();
 		SDL_Quit();
 	}
 }
