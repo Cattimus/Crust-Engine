@@ -4,8 +4,8 @@ use std::ffi::*;
 use crate::sdl_bindings::*;
 
 pub struct CrustWindow {
-	window: *mut SDL_Window,
-	renderer: *mut SDL_Renderer,
+	pub(super) window: *mut SDL_Window,
+	pub(super) renderer: *mut SDL_Renderer,
 	pub w: i32,
 	pub h: i32,
 	pub x: i32,
