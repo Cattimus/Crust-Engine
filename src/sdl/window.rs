@@ -5,6 +5,7 @@ use crate::sdl_bindings::*;
 
 pub struct CrustWindow {
 	window: *mut SDL_Window,
+	renderer: *mut SDL_Renderer,
 	pub w: i32,
 	pub h: i32,
 	pub x: i32,
@@ -24,8 +25,16 @@ impl CrustWindow {
 				SDL_WindowFlags_SDL_WINDOW_SHOWN as u32
 			);
 
+			let mut renderer: *mut SDL_Renderer = null_mut();
 			if window.is_null() {
 				eprintln!("Error in creating SDL window");
+			}
+			else {
+				renderer = SDL_CreateRenderer(window, -1, SDL_RendererFlags_SDL_RENDERER_ACCELERATED as u32);
+			}
+
+			if renderer.is_null() {
+				eprintln!("Error in creating SDL_Renderer");
 			}
 
 			//get position of created window
@@ -34,7 +43,8 @@ impl CrustWindow {
 			SDL_GetWindowPosition(window, &mut window_x, &mut window_y);
 
 			CrustWindow {
-				window: null_mut(),
+				window: window,
+				renderer: renderer,
 				w,
 				h,
 				x: window_x,
